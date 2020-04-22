@@ -70,6 +70,9 @@ public class UserDAO {
 		Connection con = DBUtil.getConnection();
 		
 		String sql = "select * from USERS ";
+		
+		
+		//searchVO의 용도 => 필터를 지정하여 탐색하게 한다. 0일때 ID, 1일때 이름
 		if (searchVO.getSearchCondition() != null) {
 			if (searchVO.getSearchCondition().equals("0")) {
 				sql += " where USER_ID='" + searchVO.getSearchKeyword()
@@ -82,9 +85,7 @@ public class UserDAO {
 		sql += " order by USER_ID";
 
 		PreparedStatement stmt = 
-			con.prepareStatement(	sql,
-														ResultSet.TYPE_SCROLL_INSENSITIVE,
-														ResultSet.CONCUR_UPDATABLE);
+		con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = stmt.executeQuery();
 
 		rs.last();
@@ -94,11 +95,15 @@ public class UserDAO {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		map.put("count", new Integer(total));
 
+		
+		// 지정된 위치로 커서를 이동한다.
 		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
 		System.out.println("searchVO.getPage():" + searchVO.getPage());
 		System.out.println("searchVO.getPageUnit():" + searchVO.getPageUnit());
 
 		ArrayList<UserVO> list = new ArrayList<UserVO>();
+		
+		//검색된 열이 있으면, 
 		if (total > 0) {
 			for (int i = 0; i < searchVO.getPageUnit(); i++) {
 				UserVO vo = new UserVO();
