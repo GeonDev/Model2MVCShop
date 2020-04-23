@@ -24,7 +24,7 @@ public class ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "SELECT * FROM PRODUCT WHRER PROD_NO = ?";
+		String sql = "SELECT * FROM PRODUCT WHERE PROD_NO = ?";
 		PreparedStatement pStmt = con.prepareStatement(sql);
 		pStmt.setInt(1, productNo);
 		
@@ -81,12 +81,39 @@ public class ProductDAO {
 		int total = rs.getRow();
 		System.out.println("로우의 수:" + total);
 		
-		map.put("count", new Integer(total));
-		
+		map.put("count", new Integer(total));		
 		
 		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
-				
 		
+		//searchVO.getPage() : 선택한 페이지
+		//searchVO.getPageUnit() : 페이지당 표시되는 수
+		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
+		
+		
+		
+		if(total>0) {
+			ProductVO tempProd = new ProductVO();
+			for(int i =0; i<searchVO.getPageUnit(); i++) {
+				if(rs.next()) {
+					tempProd.setProdNo(rs.getInt("PROD_NO"));
+					tempProd.setProdName(rs.getString("PROD_NAME"));
+					tempProd.setProdDetail(rs.getString("PROD_DETAIL"));
+					tempProd.setManuDate(rs.getString("MANUFACTURE_DAY"));
+					tempProd.setPrice(rs.getInt("PRICE"));		
+					tempProd.setFileName(rs.getString("IMAGE_FILE"));
+					tempProd.setRegDate(rs.getDate("REG_DATE"));
+									
+					list.add(tempProd);
+				}
+			}				
+		}
+		
+		System.out.println("list.size() : "+ list.size());
+		map.put("list", list);
+		System.out.println("map().size() : "+ map.size());
+		
+				
+		con.close();
 		return map;
 		
 	}
@@ -118,7 +145,7 @@ public class ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 
-		String sql = "INSERT INTO  PRODUCT VALUES(?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO  PRODUCT VALUES(?,?,?,?,?,?,sysdate)";
 		PreparedStatement pStmt = con.prepareStatement(sql);		
 		pStmt.setInt(1, productVO.getProdNo());
 		pStmt.setString(2, productVO.getProdName());
@@ -126,7 +153,8 @@ public class ProductDAO {
 		pStmt.setString(4, productVO.getManuDate());
 		pStmt.setInt(5, productVO.getPrice());
 		pStmt.setString(6, productVO.getFileName());
-		pStmt.setDate(7, productVO.getRegDate());
+		
+		
 		
 		pStmt.executeUpdate();		
 		

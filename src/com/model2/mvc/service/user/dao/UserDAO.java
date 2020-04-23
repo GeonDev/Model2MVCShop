@@ -96,15 +96,17 @@ public class UserDAO {
 		map.put("count", new Integer(total));
 
 		
-		// 지정된 위치로 커서를 이동한다.
+		//ResultSet.absolute() 지정된 위치로 커서를 이동한다.
+		//현재 선택한 페이지를 표시하기 위해 ResultSet의 커서를 표시할 위치로 이동시킨다??
 		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
 		System.out.println("searchVO.getPage():" + searchVO.getPage());
 		System.out.println("searchVO.getPageUnit():" + searchVO.getPageUnit());
 
 		ArrayList<UserVO> list = new ArrayList<UserVO>();
 		
-		//검색된 열이 있으면, 
+		//선택한 검색 조건으로 찾은 열이 있다면 
 		if (total > 0) {
+			//1페이지당 표시하는 개수만큼 표시한다.
 			for (int i = 0; i < searchVO.getPageUnit(); i++) {
 				UserVO vo = new UserVO();
 				vo.setUserId(rs.getString("USER_ID"));
@@ -135,7 +137,7 @@ public class UserDAO {
 		
 		Connection con = DBUtil.getConnection();
 
-		String sql = "update USERS set USER_NAME=?,CELL_PHONE=?,ADDR=?,EMAIL=? where USER_ID=?";
+		String sql = "update USERS set USER_NAME=?,CELL_PHONE=?,ADDR=?, EMAIL=? where USER_ID=?";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, userVO.getUserName());

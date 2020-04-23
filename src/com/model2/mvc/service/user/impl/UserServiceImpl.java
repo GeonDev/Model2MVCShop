@@ -7,6 +7,9 @@ import com.model2.mvc.service.user.UserService;
 import com.model2.mvc.service.user.dao.UserDAO;
 import com.model2.mvc.service.user.vo.UserVO;
 
+// 두 레이어간에 커플링 관계를 줄이기 위한 중간 메소드
+// 캡술화 =>  절차 은닉
+//
 
 public class UserServiceImpl implements UserService{
 	
