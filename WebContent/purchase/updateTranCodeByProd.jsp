@@ -1,37 +1,15 @@
-<%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-    
-    
-<%@ page import="java.util.*"  %>
-<%@ page import="com.model2.mvc.common.*" %>
-
-<%
-	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
-	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
-	
-	int total=0;
-	ArrayList<ProductVO> list=null;
-	if(map != null){
-		total=((Integer)map.get("count")).intValue();
-		list=(ArrayList<ProductVO>)map.get("list");
-	}
-	
-	int currentPage=searchVO.getPage();
-	
-	int totalPage=0;
-	if(total > 0) {
-		totalPage= total / searchVO.getPageUnit() ;
-		if(total%searchVO.getPageUnit() >0)
-			totalPage += 1;
-	}
-	
-	String mode = request.getParameter("menu");
-%>
-    
-    
-    
 <!DOCTYPE html>
+
+
+
+
+
+
+
+
+
 <html>
 <head>
 <title>상품 목록조회</title>
@@ -51,7 +29,7 @@ function fncGetProductList(){
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/listProduct.do?menu=<%=mode%>>" method="post">
+<form name="detailForm" action="/listProduct.do?menu=manage" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -62,11 +40,9 @@ function fncGetProductList(){
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="93%" class="ct_ttl01">
-					<%if(mode.equals("manage")){ %>
+					
 							상품 관리
-					<%}else if (mode.equals("search")){ %>
-							상품 목록조회
-					<%} %>
+					
 					</td>
 				</tr>
 			</table>
@@ -112,7 +88,7 @@ function fncGetProductList(){
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-		<td colspan="11" >전체  <%= total%> 건수, 현재 <%=currentPage %> 페이지</td>
+		<td colspan="11" >전체 50 건수, 현재 1 페이지</td>
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
@@ -129,27 +105,40 @@ function fncGetProductList(){
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 		
-	<%	
-		int no=list.size();
-		for(int i=0; i<list.size(); i++) {
-			ProductVO productVO = (ProductVO)list.get(i);
-	%>		
-		
 	<tr class="ct_list_pop">
-		<td align="center"><%=no--%></td>
+		<td align="center">3</td>
 		<td></td>
 				
-		<td align="left">
-			<a href="/getProduct.do?prodNo=<%=productVO.getProdNo()%>&menu=<%=mode%>"><%=productVO.getProdName() %></a></td>
+				<td align="left"><a href="/getProduct.do?prodNo=10000&menu=manage">vaio vgn FS70B</a></td>
 		
 		<td></td>
-		<td align="left"><%=productVO.getPrice() %></td>
+		<td align="left">20</td>
 		<td></td>
-		<td align="left"><%=productVO.getRegDate() %></td>
+		<td align="left">2012-12-14</td>
 		<td></td>
 		<td align="left">
 		
-		<!-- 여기 뭐 어떻게 해야 되는 거야!!!!!!!!!-->	
+			배송중
+		
+		</td>	
+	</tr>
+	<tr>
+		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
+	</tr>	
+	
+	<tr class="ct_list_pop">
+		<td align="center">2</td>
+		<td></td>
+				
+				<td align="left"><a href="/getProduct.do?prodNo=10001&menu=manage">자전거</a></td>
+		
+		<td></td>
+		<td align="left">10000</td>
+		<td></td>
+		<td align="left">2012-11-14</td>
+		<td></td>
+		<td align="left">
+		
 			판매중
 		
 		</td>	
@@ -158,20 +147,66 @@ function fncGetProductList(){
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 	</tr>	
 	
-	<% }%>
+	<tr class="ct_list_pop">
+		<td align="center">1</td>
+		<td></td>
+				
+				<td align="left"><a href="/getProduct.do?prodNo=10002&menu=manage">보르도</a></td>
+		
+		<td></td>
+		<td align="left">1170000</td>
+		<td></td>
+		<td align="left">2012-10-14</td>
+		<td></td>
+		<td align="left">
+		
+			판매중
+		
+		</td>	
+	</tr>
+	<tr>
+		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
+	</tr>	
 	
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="center">
-		<%
-			for(int i=1;i<=totalPage;i++){
-		%>
-			<a href="/listProduct.do?page=<%=i%>&menu=<%=mode%>"><%=i %></a>
-		<%
-			}
-		%>		
+		
+			<a href="/listProduct.do?page=1&menu=manage">1</a>
+		
+			<a href="/listProduct.do?page=2&menu=manage">2</a>
+		
+			<a href="/listProduct.do?page=3&menu=manage">3</a>
+		
+			<a href="/listProduct.do?page=4&menu=manage">4</a>
+		
+			<a href="/listProduct.do?page=5&menu=manage">5</a>
+		
+			<a href="/listProduct.do?page=6&menu=manage">6</a>
+		
+			<a href="/listProduct.do?page=7&menu=manage">7</a>
+		
+			<a href="/listProduct.do?page=8&menu=manage">8</a>
+		
+			<a href="/listProduct.do?page=9&menu=manage">9</a>
+		
+			<a href="/listProduct.do?page=10&menu=manage">10</a>
+		
+			<a href="/listProduct.do?page=11&menu=manage">11</a>
+		
+			<a href="/listProduct.do?page=12&menu=manage">12</a>
+		
+			<a href="/listProduct.do?page=13&menu=manage">13</a>
+		
+			<a href="/listProduct.do?page=14&menu=manage">14</a>
+		
+			<a href="/listProduct.do?page=15&menu=manage">15</a>
+		
+			<a href="/listProduct.do?page=16&menu=manage">16</a>
+		
+			<a href="/listProduct.do?page=17&menu=manage">17</a>
 		
     	</td>
 	</tr>

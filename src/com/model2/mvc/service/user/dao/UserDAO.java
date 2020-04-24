@@ -75,11 +75,9 @@ public class UserDAO {
 		//searchVO의 용도 => 필터를 지정하여 탐색하게 한다. 0일때 ID, 1일때 이름
 		if (searchVO.getSearchCondition() != null) {
 			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where USER_ID='" + searchVO.getSearchKeyword()
-						+ "'";
+				sql += " where USER_ID='" + searchVO.getSearchKeyword()	+ "'";
 			} else if (searchVO.getSearchCondition().equals("1")) {
-				sql += " where USER_NAME='" + searchVO.getSearchKeyword()
-						+ "'";
+				sql += " where USER_NAME='" + searchVO.getSearchKeyword() + "'";
 			}
 		}
 		sql += " order by USER_ID";

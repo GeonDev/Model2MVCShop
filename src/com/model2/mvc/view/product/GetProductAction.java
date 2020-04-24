@@ -17,10 +17,14 @@ public class GetProductAction extends Action{
 		String prodNo=request.getParameter("prodNo");
 		
 		ProductService service=new ProductServiceImpl();
-		ProductVO vo=service.getProduct(Integer.parseInt(prodNo));
+		ProductVO productVO=service.getProduct(Integer.parseInt(prodNo));
 		
-		request.setAttribute("vo", vo);
+		request.setAttribute("productVO", productVO);
 
-		return "forward:/product/readProduct.jsp";
+		if(request.getParameter("menu").equals("manage")) {
+			return "forward:/product/updateProduct.jsp";				
+		}		
+		
+		return "forward:/product/getProduct.jsp";
 	}
 }

@@ -29,11 +29,11 @@ public class ActionServlet extends HttpServlet {
 		String url = request.getRequestURI();
 		
 		//request.getContextPath() => 프로젝트 경로만 받아온다. 
-		String contextPath = request.getContextPath();
+		String contextPath = request.getContextPath();	
 		
 		//프로젝트 경로 다음값부터 끝까지 저장 => path에 필요한 page 정보만 저장/ "login.do" 의 형태로 저장됨		
 		String path = url.substring(contextPath.length());
-		System.out.println(path);
+		System.out.println("선택된 패스 : " +path);
 		
 		try{
 			//매핑된 객체를 저장한다.

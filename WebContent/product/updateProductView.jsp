@@ -1,13 +1,30 @@
-<%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-
+    
+<%@page import="com.model2.mvc.service.product.vo.ProductVO"%>    
+    
 <%
 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
-%>	
+%>     
+    
+    
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<html>
+<head>
+<title>회원정보수정</title>
 
-<script>
+<link rel="stylesheet" href="/css/admin.css" type="text/css">
+
+<script type="text/javascript" src="../javascript/calendar.js">
+</script>
+
+<script type="text/javascript">
+
 function fncAddProduct(){
 	//Form 유효성 검증
  	var name = document.detailForm.prodName.value;
@@ -35,55 +52,36 @@ function fncAddProduct(){
 	document.detailForm.action='/updateProduct.do';
 	document.detailForm.submit();
 
+
 </script>
-
-
-<html>
-<head>
-
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-
-<title>Insert title here</title>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm" method="post">
+<form name="detailForm" method="post" enctype="multipart/form-data">
 
-<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
+<input type="hidden" name="prodNo" value="10000"/>
+
+<table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
-		<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"	width="15" height="37"></td>
+		<td width="15" height="37">
+			<img src="/images/ct_ttl_img01.gif" width="15" height="37"/>
+		</td>
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="93%" class="ct_ttl01">상품상세조회</td>
+					<td width="93%" class="ct_ttl01">상품수정</td>
 					<td width="20%" align="right">&nbsp;</td>
 				</tr>
 			</table>
 		</td>
 		<td width="12" height="37">
-			<img src="/images/ct_ttl_img03.gif"  width="12" height="37"/>
+			<img src="/images/ct_ttl_img03.gif" width="12" height="37"/>
 		</td>
 	</tr>
 </table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 13px;">
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
-			상품번호 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="105"><%=productVO.getProdNo()%></td>
-				</tr>
-			</table>
-		</td>
-	</tr>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 13px;">
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
@@ -92,18 +90,28 @@ function fncAddProduct(){
 			상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getProdName() %></td>
+		<td class="ct_write01">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="105">
+						<input 	type="text" name="prodName" class="ct_input_g" 
+										style="width: 100px; height: 19px" maxLength="20" value="vvaio vgn FS70B">
+					</td>
+				</tr>
+			</table>
+		</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">
-			상품이미지 <img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+			상품상세정보 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<img src = "<%=productVO.getFileName() %>"/>
+			<input type="text" name="prodDetail" value="소니 바이오 노트북 신동품" class="ct_input_g" 
+						style="width: 100px; height: 19px" maxLength="10"	minLength="6">
 		</td>
 	</tr>
 	<tr>
@@ -111,34 +119,39 @@ function fncAddProduct(){
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">
-			상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+			제조일자 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getProdDetail() %></td>
+		<td class="ct_write01">
+			<input type="text" readonly="readonly" name="manuDate" value="20120514" 	
+						class="ct_input_g" style="width: 100px; height: 19px" maxLength="10" minLength="6">&nbsp;
+						<img 	src="../images/ct_icon_date.gif" width="15" height="15" 
+									onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)" />
+		</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
-		<td width="104" class="ct_write">제조일자</td>
+		<td width="104" class="ct_write">
+			가격 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getManuDate() %></td>
+		<td class="ct_write01">
+			<input type="text" name="price" value="2000000"
+						class="ct_input_g" style="width: 100px; height: 19px" maxLength="50"/>&nbsp;원
+		</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
-		<td width="104" class="ct_write">가격</td>
+		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getPrice() %></td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">등록일자</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getRegDate() %></td>
+		<td class="ct_write01">
+			<input	type="file" name="fileName" class="ct_input_g" 
+						style="width: 200px; height: 19px" maxLength="13" value="../../images/empty.GIF"/>
+		</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -149,36 +162,9 @@ function fncAddProduct(){
 	<tr>
 		<td width="53%"></td>
 		<td align="right">
-
-		<table border="0" cellspacing="0" cellpadding="0">
-			<tr>
-			
-		<%if(request.getParameter("menu").equals("search")){
-			if(session.getAttribute("user") !=null){%>
-				<td width="17" height="23">
-					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-				</td>
-				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="/addPurchaseView.do?prod_no=<%=productVO.getProdNo()%>">구매</a>
-				</td>
-				<td width="14" height="23">
-					<img src="/images/ct_btnbg03.gif" width="14" height="23">
-				</td>
-				<td width="30"></td>		
-		<% }%>	
-		
-				<td width="17" height="23">
-					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-				</td>
-				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="javascript:history.go(-1)">이전</a>
-				</td>
-				<td width="14" height="23">
-					<img src="/images/ct_btnbg03.gif" width="14" height="23">
-				</td>
-				
-		<%}else if(request.getParameter("menu").equals("manage")){%>		
-			<td width="17" height="23">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
@@ -197,11 +183,8 @@ function fncAddProduct(){
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
 					</td>
-				
-		<%}%>		
-			</tr>
-		</table>
-
+				</tr>
+			</table>
 		</td>
 	</tr>
 </table>

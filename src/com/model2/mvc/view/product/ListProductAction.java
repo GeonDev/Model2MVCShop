@@ -20,8 +20,11 @@ public class ListProductAction extends Action {
 		SearchVO searchVO=new SearchVO();
 		
 		int page=1;
-		if(request.getParameter("page") != null)
+		
+		//선택한 페이지가 있으면 해당 페이지로 세팅
+		if(request.getParameter("page") != null) {
 			page=Integer.parseInt(request.getParameter("page"));
+		}
 		
 		searchVO.setPage(page);
 		searchVO.setSearchCondition(request.getParameter("searchCondition"));
@@ -35,7 +38,7 @@ public class ListProductAction extends Action {
 
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);
-		
+				
 		return "forward:/product/listProduct.jsp";
 	}
 }

@@ -54,19 +54,20 @@ public class ProductDAO {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		Connection con = DBUtil.getConnection();
 		
-		
+		//모든 상품을 선택한다.
 		String sql = "select * from PRODUCT ";		
 		
 		//searchVO로 필터를 지정한다면, 
 		if (searchVO.getSearchCondition() != null) {
+			//상품 번호를 기준으로 조회
 			if (searchVO.getSearchCondition().equals("0")) {
-				//상품 번호를 기준으로 조회
-				sql += " where PROD_NO='" + searchVO.getSearchKeyword()
-						+ "'";
-			} else if (searchVO.getSearchCondition().equals("1")) {
-				//상품 이름을 기준으로 조회
-				sql += " where PROD_NAME='" + searchVO.getSearchKeyword()
-						+ "'";
+				sql += " where PROD_NO='" + searchVO.getSearchKeyword()	+ "'";
+			//상품 이름을 기준으로 조회
+			} else if (searchVO.getSearchCondition().equals("1")) {				
+				sql += " where PROD_NAME='" + searchVO.getSearchKeyword() + "'";
+			//상품 가격으로 조회
+			}else if(searchVO.getSearchCondition().equals("2")) {
+				sql += " where PRICE='" + searchVO.getSearchKeyword() + "'";
 			}
 		}
 		sql += " order by PROD_NO";
@@ -90,20 +91,24 @@ public class ProductDAO {
 		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
 		
 		
-		
 		if(total>0) {
-			ProductVO tempProd = new ProductVO();
+			
 			for(int i =0; i<searchVO.getPageUnit(); i++) {
-				if(rs.next()) {
-					tempProd.setProdNo(rs.getInt("PROD_NO"));
-					tempProd.setProdName(rs.getString("PROD_NAME"));
-					tempProd.setProdDetail(rs.getString("PROD_DETAIL"));
-					tempProd.setManuDate(rs.getString("MANUFACTURE_DAY"));
-					tempProd.setPrice(rs.getInt("PRICE"));		
-					tempProd.setFileName(rs.getString("IMAGE_FILE"));
-					tempProd.setRegDate(rs.getDate("REG_DATE"));
-									
-					list.add(tempProd);
+				ProductVO tempProd = new ProductVO();
+				tempProd.setProdNo(rs.getInt("PROD_NO"));
+				tempProd.setProdName(rs.getString("PROD_NAME"));
+				tempProd.setProdDetail(rs.getString("PROD_DETAIL"));
+				tempProd.setManuDate(rs.getString("MANUFACTURE_DAY"));
+				tempProd.setPrice(rs.getInt("PRICE"));		
+				tempProd.setFileName(rs.getString("IMAGE_FILE"));
+				tempProd.setRegDate(rs.getDate("REG_DATE"));
+								
+				list.add(tempProd);
+					
+				
+					if (!rs.next()) {
+						break;
+					
 				}
 			}				
 		}
@@ -145,24 +150,29 @@ public class ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 
-		String sql = "INSERT INTO  PRODUCT VALUES(?,?,?,?,?,?,sysdate)";
+			
+		String sql = "INSERT INTO PRODUCT VALUES(seq_product_prod_no.nextval,?,?,?,?,?,SYSDATE)";		
+	
+		
 		PreparedStatement pStmt = con.prepareStatement(sql);		
-		pStmt.setInt(1, productVO.getProdNo());
-		pStmt.setString(2, productVO.getProdName());
-		pStmt.setString(3, productVO.getProdDetail());
-		pStmt.setString(4, productVO.getManuDate());
-		pStmt.setInt(5, productVO.getPrice());
-		pStmt.setString(6, productVO.getFileName());
+	
+		pStmt.setString(1, productVO.getProdName());
+		pStmt.setString(2, productVO.getProdDetail());
 		
 		
+		//캘린더 JSP에서 그냥 값을 받으면 - 때문에 길이 초과
+		String manufactureDate = productVO.getManuDate();
+		manufactureDate = manufactureDate.replaceAll("-", "");		
+		manufactureDate.trim();		
+		System.out.println("등록날짜값"+ manufactureDate);
+		pStmt.setString(3, manufactureDate);
+		pStmt.setInt(4, productVO.getPrice());
+		pStmt.setString(5, productVO.getFileName());		
 		
 		pStmt.executeUpdate();		
 		
 		con.close();
 	}
-	
-	
-	
 	
 
 }
