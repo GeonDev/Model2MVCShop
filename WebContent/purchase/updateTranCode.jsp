@@ -44,7 +44,7 @@
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;">
 	<tr>
-		<td colspan="11">전체 3 건수, 현재 1 페이지</td>
+		<td colspan="11">전체 1 건수, 현재 1 페이지</td>
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
@@ -67,7 +67,7 @@
 	
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/getPurchase.do?tranNo=10001">3</a>
+			<a href="/getPurchase.do?tranNo=10001">1</a>
 		</td>
 		<td></td>
 		<td align="left">
@@ -84,62 +84,6 @@
 				상태 입니다.</td>
 		<td></td>
 		<td align="left">
-			
-		</td>
-	</tr>
-	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
-	
-	
-	<tr class="ct_list_pop">
-		<td align="center">
-			<a href="/getPurchase.do?tranNo=10018">2</a>
-		</td>
-		<td></td>
-		<td align="left">
-			<a href="/getUser.do?userId=user20">user20</a>
-		</td>
-		<td></td>
-		<td align="left">SCOTT</td>
-		<td></td>
-		<td align="left">null</td>
-		<td></td>
-		<td align="left">현재
-				
-					구매완료
-				상태 입니다.</td>
-		<td></td>
-		<td align="left">
-			
-		</td>
-	</tr>
-	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
-	
-	
-	<tr class="ct_list_pop">
-		<td align="center">
-			<a href="/getPurchase.do?tranNo=10019">1</a>
-		</td>
-		<td></td>
-		<td align="left">
-			<a href="/getUser.do?userId=user20">user20</a>
-		</td>
-		<td></td>
-		<td align="left">null</td>
-		<td></td>
-		<td align="left">null</td>
-		<td></td>
-		<td align="left">현재
-				
-					배송중
-				상태 입니다.</td>
-		<td></td>
-		<td align="left">
-			
-			<a href="/updateTranCode.do?tranNo=10019&tranCode=3">물건도착</a>
 			
 		</td>
 	</tr>

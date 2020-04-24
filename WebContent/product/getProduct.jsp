@@ -7,7 +7,8 @@
 	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
 %>	
 
-<script>
+<script type="text/javascript">
+
 function fncAddProduct(){
 	//Form 유효성 검증
  	var name = document.detailForm.prodName.value;
@@ -34,6 +35,7 @@ function fncAddProduct(){
 		
 	document.detailForm.action='/updateProduct.do';
 	document.detailForm.submit();
+}
 
 </script>
 
@@ -177,7 +179,8 @@ function fncAddProduct(){
 					<img src="/images/ct_btnbg03.gif" width="14" height="23">
 				</td>
 				
-		<%}else if(request.getParameter("menu").equals("manage")){%>		
+		<%}else if(request.getParameter("menu").equals("manage")){%>	
+			
 			<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>

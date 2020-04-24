@@ -10,8 +10,7 @@ import java.util.HashMap;
 import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.product.vo.ProductVO;
-import com.model2.mvc.service.user.vo.UserVO;
-import com.sun.org.apache.regexp.internal.recompile;
+
 
 public class ProductDAO {
 

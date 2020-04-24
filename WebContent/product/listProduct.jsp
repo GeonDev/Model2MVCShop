@@ -27,6 +27,7 @@
 	}
 	
 	String mode = request.getParameter("menu");
+
 %>
     
     
@@ -51,7 +52,7 @@ function fncGetProductList(){
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/listProduct.do?menu=<%=mode%>>" method="post">
+<form name="detailForm" action="/listProduct.do?menu=<%=mode%>" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -116,7 +117,9 @@ function fncGetProductList(){
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
-		<td class="ct_line02"></td>
+		<td class="ct_line02"></td>				
+		<td class="ct_list_b" width="150">상품번호</td>
+		<td class="ct_line02"></td>	
 		<td class="ct_list_b" width="150">상품명</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">가격</td>
@@ -138,10 +141,14 @@ function fncGetProductList(){
 	<tr class="ct_list_pop">
 		<td align="center"><%=no--%></td>
 		<td></td>
+		
+		<td align="left"><%=productVO.getProdNo()%></td>
+		<td></td>
 				
 		<td align="left">
 			<a href="/getProduct.do?prodNo=<%=productVO.getProdNo()%>&menu=<%=mode%>"><%=productVO.getProdName() %></a></td>
 		
+
 		<td></td>
 		<td align="left"><%=productVO.getPrice() %></td>
 		<td></td>
@@ -150,7 +157,10 @@ function fncGetProductList(){
 		<td align="left">
 		
 		<!-- 여기 뭐 어떻게 해야 되는 거야!!!!!!!!!-->	
-			판매중
+			판매중 
+			구매완료			
+		
+		<a href="/updateTranCodeByProd.do?prodNo=10062&tranCode=2">배송하기</a>
 		
 		</td>	
 	</tr>
