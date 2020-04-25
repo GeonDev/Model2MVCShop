@@ -7,6 +7,8 @@
 <%@ page import="com.model2.mvc.common.*" %>
 
 <%
+	String mode = request.getParameter("menu");
+
 	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
 	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
 	
@@ -26,8 +28,7 @@
 			totalPage += 1;
 	}
 	
-	String mode = request.getParameter("menu");
-
+	
 %>
     
     
@@ -159,9 +160,9 @@ function fncGetProductList(){
 		<!-- 여기 뭐 어떻게 해야 되는 거야!!!!!!!!!-->	
 			판매중 
 			구매완료			
-		
-		<a href="/updateTranCodeByProd.do?prodNo=10062&tranCode=2">배송하기</a>
-		
+		<% if(mode.equals("manage")){%>
+		<a href="/updateTranCodeByProd.do?prodNo=<%=productVO.getProdNo()%>&tranCode=2">배송하기</a>
+		<% }%>
 		</td>	
 	</tr>
 	<tr>
