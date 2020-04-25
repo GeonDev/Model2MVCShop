@@ -23,12 +23,11 @@
 	
 	int totalPage=0;
 	if(total > 0) {
+		//PageUnit: 한페이지에 몇개씩 보여줄지 결정
 		totalPage= total / searchVO.getPageUnit() ;
 		if(total%searchVO.getPageUnit() >0)
 			totalPage += 1;
-	}
-	
-	
+	}	
 %>
     
     
@@ -155,14 +154,21 @@ function fncGetProductList(){
 		<td></td>
 		<td align="left"><%=productVO.getRegDate() %></td>
 		<td></td>
-		<td align="left">
-		
-		<!-- 여기 뭐 어떻게 해야 되는 거야!!!!!!!!!-->	
+		<td align="left">		
+	 
+		<%if(productVO.getProTranCode().equals("0")){ %>
 			판매중 
-			구매완료			
-		<% if(mode.equals("manage")){%>
-		<a href="/updateTranCodeByProd.do?prodNo=<%=productVO.getProdNo()%>&tranCode=2">배송하기</a>
+		<%}else if(productVO.getProTranCode().equals("1")){ %>			
+			구매완료					
+			<% if(mode.equals("manage")){%>
+				<a href="/updateTranCodeByProd.do?prodNo=<%=productVO.getProdNo()%>&tranCode=2">배송하기</a>
+			<% }%>
+		<%}else if(productVO.getProTranCode().equals("2")){ %>
+			배송중
+		<%}else{ %>
+			배송완료
 		<% }%>
+	
 		</td>	
 	</tr>
 	<tr>
