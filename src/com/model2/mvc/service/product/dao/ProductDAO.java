@@ -131,11 +131,14 @@ public class ProductDAO {
 				tempProd.setRegDate(rs.getDate("REG_DATE"));
 				tempProd.setProTranCode("0");
 				
-				for(ProductVO temp : TransCodelist) {
-					if(tempProd.getProdNo() == temp.getProdNo()) {
-						tempProd.setProTranCode(temp.getProTranCode());	
+				//일단 구매 상품이 있다면 검색
+				if(TransCodelist.size() !=0) {
+					for(ProductVO temp : TransCodelist) {
+						if(tempProd.getProdNo() == temp.getProdNo()) {
+							tempProd.setProTranCode(temp.getProTranCode());							
+						}
 					}
-				}				
+				}
 								
 				list.add(tempProd);					
 				

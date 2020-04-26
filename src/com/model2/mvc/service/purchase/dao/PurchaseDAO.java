@@ -55,10 +55,12 @@ public class PurchaseDAO {
 	
 	
 	public void insertPurchase(PurchaseVO purchaseVO) throws Exception {
-		String sql = "INSERT into TRANSACTION VALUES (seq_transaction_tran_no.nextval,?,?,?,?,?,?,?,?,SYSDATE,?)";				
+					
 		Connection con = DBUtil.getConnection();
+		String sql = "INSERT INTO TRANSACTION VALUES(seq_transaction_tran_no.nextval,?,?,?,?,?,?,?,'1',SYSDATE,?)";	
 		PreparedStatement pStmt = con.prepareStatement(sql);
 			
+		System.out.println("여기 들어오긴 함??");
 		
 		pStmt.setInt(1, (purchaseVO.getPurchaseProd()).getProdNo());
 		pStmt.setString(2, (purchaseVO.getBuyer()).getUserId());
@@ -66,9 +68,8 @@ public class PurchaseDAO {
 		pStmt.setString(4, purchaseVO.getReceiverName());
 		pStmt.setString(5,purchaseVO.getReceiverPhone());
 		pStmt.setString(6, purchaseVO.getDivyAddr());
-		pStmt.setString(7, purchaseVO.getDivyRequest());
-		pStmt.setString(8, purchaseVO.getTranCode());
-		pStmt.setString(9, purchaseVO.getDivyDate());
+		pStmt.setString(7, purchaseVO.getDivyRequest());		
+		pStmt.setString(8, purchaseVO.getDivyDate());
 		
 		pStmt.executeUpdate();
 		con.close();

@@ -1,12 +1,13 @@
+<%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 
+<% 
+	PurchaseVO purchaseVO = new PurchaseVO();
+	//purchaseVO = (purchaseVO)request.getAttribute("purchaseVO");
 
-
-
-
-
+%>
 <html>
 <head>
 <title>Insert title here</title>
@@ -21,46 +22,48 @@
 <table border=1>
 	<tr>
 		<td>물품번호</td>
-		<td>10000</td>
+		<td><%=purchaseVO.getPurchaseProd() %></td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>구매자아이디</td>
-		<td>user20</td>
+		<td><%=(purchaseVO.getBuyer()).getUserId() %> </td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>구매방법</td>
 		<td>
-		
+		<% if(purchaseVO.getPaymentOption().equals("1")){  %>
 			현금구매
-		
+		<%}else{ %>
+			신용구매
+		<% }%>
 		</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>구매자이름</td>
-		<td>정보기입</td>
+		<td><%=purchaseVO.getReceiverName() %></td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>구매자연락처</td>
-		<td>정보기입</td>
+		<td><%=purchaseVO.getReceiverPhone() %></td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>구매자주소</td>
-		<td>정보기입</td>
+		<td><%=purchaseVO.getDivyAddr() %></td>
 		<td></td>
 	</tr>
 		<tr>
 		<td>구매요청사항</td>
-		<td>정보기입</td>
+		<td><%=purchaseVO.getDivyRequest() %></td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>배송희망일자</td>
-		<td>2020-04-01</td>
+		<td><%=purchaseVO.getDivyDate() %></td>
 		<td></td>
 	</tr>
 </table>

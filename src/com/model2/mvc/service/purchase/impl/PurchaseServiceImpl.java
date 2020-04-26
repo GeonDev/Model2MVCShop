@@ -20,8 +20,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 	
 	
 	@Override
-	public void addPurchase(PurchaseVO purchaseVO) throws Exception {
-		purchaseDAO.insertPurchase(purchaseVO);		
+	public void addPurchase(PurchaseVO purchaseVO) throws Exception {		
+		purchaseDAO.insertPurchase(purchaseVO);	
 	}
 
 	@Override

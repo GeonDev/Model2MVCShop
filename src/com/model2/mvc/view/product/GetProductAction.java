@@ -19,11 +19,11 @@ public class GetProductAction extends Action{
 		ProductService service=new ProductServiceImpl();
 		ProductVO productVO=service.getProduct(Integer.parseInt(prodNo));
 		
-		request.setAttribute("productVO", productVO);
-
+		request.setAttribute("productVO", productVO);		
+		
 		if(request.getParameter("menu").equals("manage")) {
 			return "forward:/product/updateProduct.jsp";				
-		}		
+		}	
 		
 		return "forward:/product/getProduct.jsp";
 	}

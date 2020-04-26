@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 
 <%
-	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+	ProductVO productVO = (ProductVO)request.getAttribute("productVO");	
 %>
 
 <html>
