@@ -17,7 +17,7 @@
 	if(map != null){
 		total=((Integer)map.get("count")).intValue();
 		list=(ArrayList<ProductVO>)map.get("list");
-	}
+	}	
 	
 	int currentPage=searchVO.getPage();
 	
@@ -166,7 +166,7 @@ function fncGetProductList(){
 		<%}else if(productVO.getProTranCode().equals("2")){ %>
 			배송중
 		<%}else{ %>
-			배송완료
+			배송완료 
 		<% }%>
 	
 		</td>	

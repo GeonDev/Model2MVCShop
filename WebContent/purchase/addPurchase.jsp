@@ -5,8 +5,7 @@
 
 <% 
 	PurchaseVO purchaseVO = new PurchaseVO();
-	//purchaseVO = (purchaseVO)request.getAttribute("purchaseVO");
-
+	purchaseVO = (PurchaseVO)request.getAttribute("purchaseVO");
 %>
 <html>
 <head>
@@ -15,14 +14,14 @@
 
 <body>
 
-<form name="updatePurchase" action="/updatePurchaseView.do?tranNo=0" method="post">
+<form name="updatePurchase" action="/updatePurchaseView.do?tranNo=<%=purchaseVO.getTranNo()%>" method="post">
 
 다음과 같이 구매가 되었습니다.
 
 <table border=1>
 	<tr>
 		<td>물품번호</td>
-		<td><%=purchaseVO.getPurchaseProd() %></td>
+		<td><%=(purchaseVO.getPurchaseProd()).getProdNo() %></td>
 		<td></td>
 	</tr>
 	<tr>

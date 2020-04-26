@@ -17,6 +17,9 @@ import com.model2.mvc.service.user.dao.UserDAO;
 
 
 public class PurchaseDAO {
+	
+	//기본 생성자 명시	
+	public PurchaseDAO () {	}
 
 	
 	public PurchaseVO findPurchase(int Tran_No) throws Exception {
@@ -46,8 +49,7 @@ public class PurchaseDAO {
 		
 		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");		
 		purchaseVO.setDivyDate(form.format(rs.getDate("DLYY_DATE")));
-		
-			
+					
 		
 		con.close();
 		return purchaseVO;
@@ -57,10 +59,10 @@ public class PurchaseDAO {
 	public void insertPurchase(PurchaseVO purchaseVO) throws Exception {
 					
 		Connection con = DBUtil.getConnection();
-		String sql = "INSERT INTO TRANSACTION VALUES(seq_transaction_tran_no.nextval,?,?,?,?,?,?,?,'1',SYSDATE,?)";	
+		
+		String sql = "INSERT INTO TRANSACTION VALUES(seq_transaction_tran_no.nextval,?,?,?,?,?,?,?,?,SYSDATE,?)";	
 		PreparedStatement pStmt = con.prepareStatement(sql);
-			
-		System.out.println("여기 들어오긴 함??");
+		
 		
 		pStmt.setInt(1, (purchaseVO.getPurchaseProd()).getProdNo());
 		pStmt.setString(2, (purchaseVO.getBuyer()).getUserId());
@@ -68,8 +70,9 @@ public class PurchaseDAO {
 		pStmt.setString(4, purchaseVO.getReceiverName());
 		pStmt.setString(5,purchaseVO.getReceiverPhone());
 		pStmt.setString(6, purchaseVO.getDivyAddr());
-		pStmt.setString(7, purchaseVO.getDivyRequest());		
-		pStmt.setString(8, purchaseVO.getDivyDate());
+		pStmt.setString(7, purchaseVO.getDivyRequest());
+		pStmt.setString(8, "1");
+		pStmt.setString(9, purchaseVO.getDivyDate());
 		
 		pStmt.executeUpdate();
 		con.close();
@@ -118,7 +121,7 @@ public class PurchaseDAO {
 		con.close();		
 	}
 	
-	//구매 목록 - 유저가 구매한 상품만 조회
+	//구매 목록 - 특정 유저가 구매한 상품만 조회
 	public HashMap<String,Object> getPurchaseList(SearchVO searchVO, String buyerId)  throws Exception {
 				
 		HashMap<String,Object> map = new HashMap<String,Object>();
@@ -282,8 +285,7 @@ public class PurchaseDAO {
 				
 		con.close();
 		return map;
-	}
-	
+	}	
 	
 	
 }

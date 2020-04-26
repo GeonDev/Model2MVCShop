@@ -16,8 +16,9 @@ public class PurchaseServiceImpl implements PurchaseService{
 	private PurchaseDAO purchaseDAO;
 
 	//기본 생성자 추가
-	public PurchaseServiceImpl() {}
-	
+	public PurchaseServiceImpl() {
+		purchaseDAO = new PurchaseDAO();
+	}	
 	
 	@Override
 	public void addPurchase(PurchaseVO purchaseVO) throws Exception {		

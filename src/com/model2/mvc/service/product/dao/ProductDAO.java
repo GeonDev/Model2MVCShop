@@ -65,7 +65,7 @@ public class ProductDAO {
 		Connection con = DBUtil.getConnection();
 		
 		
-		String sql = "select PROD_NO, NVL(TRAN_STATUS_CODE,0) from TRANSACTION";
+		String sql = "select PROD_NO, TRAN_STATUS_CODE from TRANSACTION";
 		
 		ProductVO tempTransCode = new ProductVO();		
 		
@@ -135,11 +135,10 @@ public class ProductDAO {
 				if(TransCodelist.size() !=0) {
 					for(ProductVO temp : TransCodelist) {
 						if(tempProd.getProdNo() == temp.getProdNo()) {
-							tempProd.setProTranCode(temp.getProTranCode());							
+							tempProd.setProTranCode(temp.getProTranCode());						
 						}
 					}
-				}
-								
+				}								
 				list.add(tempProd);					
 				
 					if (!rs.next()) {
@@ -154,8 +153,7 @@ public class ProductDAO {
 		
 				
 		con.close();
-		return map;
-		
+		return map;		
 	}
 	
 	
