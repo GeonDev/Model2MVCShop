@@ -23,7 +23,9 @@ public class ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "SELECT * FROM PRODUCT WHERE PROD_NO = ?";
+		String sql = "SELECT PRODUCT. PROD_NO, PROD_NAME, PROD_DETAIL, MANUFACTURE_DAY, PRICE, IMAGE_FILE, REG_DATE, "  
+		+ "NVL((SELECT TRANSACTION.TRAN_STATUS_CODE FROM TRANSACTION, PRODUCT WHERE TRANSACTION.PROD_NO = PRODUCT.PROD_NO) ,'0') TRAN_CODE "
+		+ "FROM PRODUCT WHERE PRODUCT.PROD_NO = ?";
 		PreparedStatement pStmt = con.prepareStatement(sql);
 		pStmt.setInt(1, productNo);
 		
@@ -40,18 +42,9 @@ public class ProductDAO {
 			productVO.setPrice(rs.getInt("PRICE"));
 			productVO.setFileName(rs.getString("IMAGE_FILE"));
 			productVO.setRegDate(rs.getDate("REG_DATE"));
-			productVO.setProTranCode("0");
+			productVO.setProTranCode(rs.getString("TRAN_CODE"));
 		}		
-		
-		sql = "SELECT TRAN_STATUS_CODE FROM TRANSACTION WHERE PROD_NO = ?";
-		pStmt = con.prepareStatement(sql);
-		pStmt.setInt(1, productNo);
-		
-		
-		if(rs.next()) {
-			productVO.setProTranCode(rs.getString("TRAN_STATUS_CODE"));
-		}
-		
+
 		
 		con.close();		
 		
@@ -64,25 +57,10 @@ public class ProductDAO {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		Connection con = DBUtil.getConnection();
 		
-		
-		String sql = "select PROD_NO, TRAN_STATUS_CODE from TRANSACTION";
-		
-		ProductVO tempTransCode = new ProductVO();		
-		
-		ArrayList<ProductVO> TransCodelist = new ArrayList<ProductVO>();
-		
-		PreparedStatement pStmt = con.prepareStatement(sql);		
-		ResultSet rs = pStmt.executeQuery();
-		
-		while (rs.next()) {			
-			tempTransCode.setProdNo(rs.getInt("PROD_NO"));
-			tempTransCode.setProTranCode(rs.getString("TRAN_STATUS_CODE"));
-			TransCodelist.add(tempTransCode);
-		}	
-		
-		
 		//모든 상품을 선택한다.
-		sql = "select * from PRODUCT ";		
+		String sql = "SELECT PRODUCT. PROD_NO, PROD_NAME, PROD_DETAIL, MANUFACTURE_DAY, PRICE, IMAGE_FILE, REG_DATE, "  
+				+ "NVL((SELECT TRANSACTION.TRAN_STATUS_CODE FROM TRANSACTION, PRODUCT WHERE TRANSACTION.PROD_NO = PRODUCT.PROD_NO) ,'0') TRAN_CODE "
+				+ "FROM PRODUCT";		
 		
 		//searchVO로 필터를 지정한다면, 
 		if (searchVO.getSearchCondition() != null) {
@@ -100,8 +78,8 @@ public class ProductDAO {
 		sql += " order by PROD_NO";
 		
 		//TYPE_SCROLL_INSENSITIVE : 커서 이동을 가능하지만 변화는 없음, CONCUR_UPDATABLE 데이터를 읽으면서 업데이트 가능
-		pStmt = con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);		
-		rs = pStmt.executeQuery();
+		PreparedStatement pStmt = con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);		
+		ResultSet rs = pStmt.executeQuery();
 		
 		//커서를 가장 아래로 이동 => 검색된 Raw 개수를 구하려고?
 		rs.last();
@@ -129,16 +107,9 @@ public class ProductDAO {
 				tempProd.setPrice(rs.getInt("PRICE"));		
 				tempProd.setFileName(rs.getString("IMAGE_FILE"));
 				tempProd.setRegDate(rs.getDate("REG_DATE"));
-				tempProd.setProTranCode("0");
+				tempProd.setProTranCode(rs.getString("TRAN_CODE"));
 				
-				//일단 구매 상품이 있다면 검색
-				if(TransCodelist.size() !=0) {
-					for(ProductVO temp : TransCodelist) {
-						if(tempProd.getProdNo() == temp.getProdNo()) {
-							tempProd.setProTranCode(temp.getProTranCode());						
-						}
-					}
-				}								
+									
 				list.add(tempProd);					
 				
 					if (!rs.next()) {
