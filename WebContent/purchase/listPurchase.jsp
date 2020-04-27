@@ -1,12 +1,33 @@
+<%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
+<%@ page import="java.util.*"  %>
+<%@ page import="com.model2.mvc.common.*" %>
+
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 
+<%	
 
-
-
-
-
+	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
+	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
+	
+	int total=0;
+	ArrayList<PurchaseVO> list=null;
+	if(map != null){
+		total=((Integer)map.get("count")).intValue();
+		list=(ArrayList<PurchaseVO>)map.get("list");
+	}	
+	
+	int currentPage=searchVO.getPage();
+	
+	int totalPage=0;
+	if(total > 0) {
+		//PageUnit: 한페이지에 몇개씩 보여줄지 결정
+		totalPage= total / searchVO.getPageUnit() ;
+		if(total%searchVO.getPageUnit() >0)
+			totalPage += 1;
+	}	
+%>
 
 
 <html>
@@ -63,85 +84,46 @@
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 
-	
-	
-	<tr class="ct_list_pop">
-		<td align="center">
-			<a href="/getPurchase.do?tranNo=10001">3</a>
-		</td>
-		<td></td>
-		<td align="left">
-			<a href="/getUser.do?userId=user20">user20</a>
-		</td>
-		<td></td>
-		<td align="left">정보기입</td>
-		<td></td>
-		<td align="left">정보기입</td>
-		<td></td>
-		<td align="left">현재
-				
-					배송완료
-				상태 입니다.</td>
-		<td></td>
-		<td align="left">
-			
-		</td>
-	</tr>
-	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
-	
+	<%	
+		int no=list.size();
+		for(int i=0; i<list.size(); i++) {
+			PurchaseVO purchaseVO = (PurchaseVO)list.get(i);
+			String state = (purchaseVO.getTranCode()).trim();
+	%>	
 	
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/getPurchase.do?tranNo=10018">2</a>
+			<a href="/getPurchase.do?tranNo=<%=purchaseVO.getTranNo() %>"><%=i+1 %></a>
 		</td>
 		<td></td>
 		<td align="left">
-			<a href="/getUser.do?userId=user20">user20</a>
+			<a href="/getUser.do?userId=<%=(purchaseVO.getBuyer()).getUserId() %>"><%=(purchaseVO.getBuyer()).getUserId() %></a>
 		</td>
 		<td></td>
-		<td align="left">SCOTT</td>
+		<td align="left"><%=purchaseVO.getReceiverName() %></td>
 		<td></td>
-		<td align="left">null</td>
+		<td align="left"><%=purchaseVO.getReceiverPhone() %></td>
 		<td></td>
 		<td align="left">현재
-				
+			<%if(state.equals("1")){ %>	
 					구매완료
-				상태 입니다.</td>
-		<td></td>
-		<td align="left">
-			
-		</td>
-	</tr>
-	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
-	
-	
-	<tr class="ct_list_pop">
-		<td align="center">
-			<a href="/getPurchase.do?tranNo=10019">1</a>
-		</td>
-		<td></td>
-		<td align="left">
-			<a href="/getUser.do?userId=user20">user20</a>
-		</td>
-		<td></td>
-		<td align="left">null</td>
-		<td></td>
-		<td align="left">null</td>
-		<td></td>
-		<td align="left">현재
-				
+			<%}else if(state.equals("2")){ %>
 					배송중
+			<% }else if(state.equals("3")){%>
+					배송완료
+			<% }%>
 				상태 입니다.</td>
 		<td></td>
 		<td align="left">
-			
-			<a href="/updateTranCode.do?tranNo=10019&tranCode=3">물건도착</a>
-			
+			<%if(state.equals("2")){ %>
+			<a href="/updateTranCode.do?tranNo=<%=purchaseVO.getTranNo() %>&tranCode=3">물건도착</a>
+			<% }else if(state.equals("1")){%>
+				배송 대기중
+			<% }%>
 		</td>
+		
+		<% }%>
+		
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
@@ -152,9 +134,13 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
 	<tr>
 		<td align="center">
-		 
-			<a href="/listPurchase.do?page=1">1</a> 
-		
+		<%
+			for(int i=1;i<=totalPage;i++){
+		%>
+			<a href="/listPurchase.do?page=<%=i %>>"><%=i %></a> 
+		<%
+			}
+		%>
 		</td>
 	</tr>
 </table>
