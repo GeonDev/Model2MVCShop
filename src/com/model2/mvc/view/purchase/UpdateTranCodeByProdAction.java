@@ -32,25 +32,7 @@ public class UpdateTranCodeByProdAction extends Action{
 		//TransCode 업데이트
 		service.updateTranCode(purchaseVO);
 		
-		//**********************************************************//
-				
-		SearchVO searchVO=new SearchVO();
-		
-		searchVO.setPage(1);
-		searchVO.setSearchCondition(null);
-		searchVO.setSearchKeyword(null);
-		
-		String pageUnit=getServletContext().getInitParameter("pageSize");
-		searchVO.setPageUnit(Integer.parseInt(pageUnit));
-		
-		HashMap<String,Object> map=prodService.getProductList(searchVO);
-
-		request.setAttribute("map", map);
-		request.setAttribute("searchVO", searchVO);
-				
-		
-		
-		return "forward:/product/listProduct.jsp?menu=manage";
+		return "redirect:/listProduct.do?menu=manage";
 	}
 
 }
