@@ -10,6 +10,8 @@ import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.user.vo.UserVO;
 
+import sun.nio.ch.SelChImpl;
+
 
 public class UserDAO {
 	
@@ -67,7 +69,7 @@ public class UserDAO {
 
 	public HashMap<String,Object> getUserList(SearchVO searchVO) throws Exception {
 		
-		Connection con = DBUtil.getConnection();
+		Connection con = DBUtil.getConnection();		
 		
 		String sql = "select * from USERS ";
 		
@@ -87,6 +89,7 @@ public class UserDAO {
 		ResultSet rs = stmt.executeQuery();
 
 		rs.last();
+		
 		int total = rs.getRow();
 		System.out.println("로우의 수:" + total);
 
@@ -116,10 +119,7 @@ public class UserDAO {
 				vo.setPhone(rs.getString("CELL_PHONE"));
 				vo.setAddr(rs.getString("ADDR"));
 				vo.setEmail(rs.getString("EMAIL"));
-				vo.setRegDate(rs.getDate("REG_DATE"));
-				
-				
-				//System.out.println("VO : "+vo);
+				vo.setRegDate(rs.getDate("REG_DATE"));							
 
 				list.add(vo);
 				if (!rs.next())
@@ -135,6 +135,85 @@ public class UserDAO {
 			
 		return map;
 	}
+	
+	
+	public HashMap<String,Object> getUserList(SearchVO searchVO, int page) throws Exception {
+		
+		Connection con = DBUtil.getConnection();		
+		
+		String Countsql = "select count(user_ID) from users";
+		PreparedStatement stmt = con.prepareStatement(Countsql);
+		ResultSet rs = stmt.executeQuery();
+		
+		int total = 0;
+		if(rs.next()) {
+			total = rs.getInt("count(user_ID)");			
+		}		
+		
+		//*********************************************************************//
+		
+		System.out.println("로우의 수:" + total);
+
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("count", new Integer(total));
+
+		String sql = "SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY USER_ID) num, USERS.* FROM USERS";
+		
+		
+		//searchVO의 용도 => 필터를 지정하여 탐색하게 한다. 0일때 ID, 1일때 이름
+		if (searchVO.getSearchCondition() != null) {
+			if (searchVO.getSearchCondition().equals("0")) {
+				sql += " where USER_ID like '%" + searchVO.getSearchKeyword() + "%'";
+			} else if (searchVO.getSearchCondition().equals("1")) {
+				sql += " where USER_NAME like '%" + searchVO.getSearchKeyword() + "%'";
+			}
+		}		
+		sql += ") WHERE num BETWEEN ? AND ? ";
+		
+		stmt = con.prepareStatement(sql);
+		
+		stmt.setInt(1, 1+ (page-1)*searchVO.getPageUnit());
+		stmt.setInt(2, page * searchVO.getPageUnit());		
+
+		rs = stmt.executeQuery();
+		
+		System.out.println("searchVO.getPage():" + searchVO.getPage());
+		System.out.println("searchVO.getPageUnit():" + searchVO.getPageUnit());
+		System.out.println("searchVO.getSearchKeyword():" + searchVO.getSearchKeyword());
+		
+		ArrayList<UserVO> list = new ArrayList<UserVO>();
+		
+		//선택한 검색 조건으로 찾은 열이 있다면 
+		if (total > 0) {
+			while(rs.next()) {
+				
+				UserVO vo = new UserVO();
+				vo.setUserId(rs.getString("USER_ID"));
+				vo.setUserName(rs.getString("USER_NAME"));
+				vo.setPassword(rs.getString("PASSWORD"));
+				vo.setRole(rs.getString("ROLE"));
+				vo.setSsn(rs.getString("SSN"));
+				vo.setPhone(rs.getString("CELL_PHONE"));
+				vo.setAddr(rs.getString("ADDR"));
+				vo.setEmail(rs.getString("EMAIL"));
+				vo.setRegDate(rs.getDate("REG_DATE"));							
+
+				list.add(vo);
+			}			
+			
+		}
+		
+		System.out.println("list.size() : "+ list.size());
+		map.put("list", list);
+		System.out.println("map().size() : "+ map.size());
+
+		con.close();
+			
+		return map;
+	}
+	
+	
+	
 
 	public void updateUser(UserVO userVO) throws Exception {
 		

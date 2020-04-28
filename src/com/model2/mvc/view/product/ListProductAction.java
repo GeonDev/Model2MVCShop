@@ -35,6 +35,8 @@ public class ListProductAction extends Action {
 		
 		ProductService service=new ProductServiceImpl();
 		HashMap<String,Object> map=service.getProductList(searchVO);
+		
+		System.out.println("검색키워드 :" + request.getParameter("searchKeyword"));
 
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);

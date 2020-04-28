@@ -125,6 +125,15 @@ VALUES ( 'user21', 'SCOTT', '2121', 'user', NULL, NULL, NULL, NULL, sysdate);
 
 INSERT INTO users 
 VALUES ( 'user22', 'SCOTT', '2222', 'user', NULL, NULL, NULL, NULL, sysdate);
+
+INSERT INTO users 
+VALUES ( 'user23', 'SCOTT', '2323', 'user', NULL, NULL, NULL, NULL, sysdate);
+
+INSERT INTO users 
+VALUES ( 'user24', 'SCOTT', '2424', 'user', NULL, NULL, NULL, NULL, sysdate);
+
+INSERT INTO users 
+VALUES ( 'user25', 'SCOTT', '2525', 'user', NULL, NULL, NULL, NULL, sysdate);
            
            
 insert into product values (seq_product_prod_no.nextval,'vaio vgn FS70B','¼Ò´Ï ¹ÙÀÌ¿À ³ëÆ®ºÏ ½Åµ¿Ç°','20120514',2000000, 'AHlbAAAAtBqyWAAA.jpg',to_date('2012/12/14 11:27:27', 'YYYY/MM/DD HH24:MI:SS'));
@@ -135,6 +144,24 @@ insert into product values (seq_product_prod_no.nextval,'ÀÎ¶óÀÎ','ÁÁ¾Æ¿é','20120
 insert into product values (seq_product_prod_no.nextval,'»ï¼º¼¾½º 2G','sens ¸Þ¸ð¸® 2Giga','20121121',800000, 'AHlbAAAAtBqyWAAA.jpg',to_date('2012/11/14 18:46:58', 'YYYY/MM/DD HH24:MI:SS'));
 insert into product values (seq_product_prod_no.nextval,'¿¬²É','Á¤¿øÀ» °¡²ãº¸¼¼¿ä','20121022',232300, 'AHlbAAAAtDPSiQAA.jpg',to_date('2012/11/15 17:39:01', 'YYYY/MM/DD HH24:MI:SS'));
 insert into product values (seq_product_prod_no.nextval,'»ï¼º¼¾½º','³ëÆ®ºÏ','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã A','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã A10','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã A30','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã A50','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã A70','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã A80','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã A90','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã S','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã S10','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã S20','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã S2','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã S3','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã S4','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã S5','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'»ï¼º °¶·°½Ã ','½º¸¶Æ®Æù','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+
+
 
 
 commit;

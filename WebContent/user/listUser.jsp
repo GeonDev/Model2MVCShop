@@ -15,12 +15,12 @@
 		list=(ArrayList<UserVO>)map.get("list");
 	}
 	
-	int currentPage=searchVO.getPage();
+	int currentPage = searchVO.getPage();
 	
 	int totalPage=0;
 	if(total > 0) {
-		totalPage= total / searchVO.getPageUnit() ;
-		if(total%searchVO.getPageUnit() >0)
+		totalPage = total / searchVO.getPageUnit() ;
+		if(total%searchVO.getPageUnit() > 0)
 			totalPage += 1;
 	}
 %>
@@ -83,7 +83,7 @@ function fncGetUserList(){
 				}
 		%>
 			</select>
-			<input 	type="text" name="searchKeyword"  value="<%=searchVO.getSearchKeyword() %>" 
+			<input 	type="text" name="searchKeyword"  value="" 
 							class="ct_input_g" style="width:200px; height:19px" >
 		</td>
 	<%
@@ -157,6 +157,8 @@ function fncGetUserList(){
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
+
+<%-- 
 	<tr>
 		<td align="center">
 		<%
@@ -172,13 +174,13 @@ function fncGetUserList(){
 		%>	
     	</td>     	
 	</tr>	
-	
+--%>	
 	
 	
 	<tr>
 		<td align="center">
 		<% 
-		if((currentPage-3) > 1){
+		if((currentPage-3) >= 1){
 		%>
 			<a href="/listUser.do?page=<%=(currentPage-3)%>&searchCondition=<%=searchVO.getSearchCondition()%>&searchKeyword=<%=searchVO.getSearchKeyword()%>"><b>&lt;</b></a>			
 		<%
@@ -186,8 +188,12 @@ function fncGetUserList(){
 		%>
 		
 		<% 
-		for(int i = (currentPage-2); i<(currentPage+3);i++ ){
-			if(i>0 && i<totalPage){		
+		for(int i = (currentPage-2); i<= (currentPage+2);i++ ){
+			if(i>0 && i<=totalPage){		
+				
+				session = request.getSession();
+				session.setAttribute("searchVO", searchVO);
+				
 		%>
 			<a href="/listUser.do?page=<%=i%>&searchCondition=<%=searchVO.getSearchCondition()%>&searchKeyword=<%=searchVO.getSearchKeyword()%>"><%=i %></a>
 		<%
@@ -196,7 +202,7 @@ function fncGetUserList(){
 		%>
 		
 		<%
-		if((currentPage+3) < totalPage){
+		if((currentPage+3) <= totalPage){
 		%>
 			<a href="/listUser.do?page=<%=(currentPage+3)%>&searchCondition=<%=searchVO.getSearchCondition()%>&searchKeyword=<%=searchVO.getSearchKeyword()%>"><b>&gt;</b></a>
 		<%

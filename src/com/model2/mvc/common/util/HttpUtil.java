@@ -25,4 +25,23 @@ public class HttpUtil {
 			throw new RuntimeException("redirect 오류  : " + ex);
 		}
 	}
+	
+	public static String convertKO(String paramValue) {		
+		String result = null;
+		
+		try {
+			byte[] b = paramValue.getBytes("8859_1");
+			result = new String(b,"EUC_KR");
+			
+		}catch (Exception e) {
+			System.out.println("한글변환중 문제 발생");
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+	
+	
+	
 }

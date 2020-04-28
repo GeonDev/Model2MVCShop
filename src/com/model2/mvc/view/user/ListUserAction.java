@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.framework.Action;
@@ -23,6 +24,7 @@ public class ListUserAction extends Action {
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 		
+
 		searchVO.setPage(page);
 		searchVO.setSearchCondition(request.getParameter("searchCondition"));
 		searchVO.setSearchKeyword(request.getParameter("searchKeyword"));
@@ -31,7 +33,8 @@ public class ListUserAction extends Action {
 		searchVO.setPageUnit(Integer.parseInt(pageUnit));
 		
 		UserService service=new UserServiceImpl();
-		HashMap<String,Object> map=service.getUserList(searchVO);
+		//HashMap<String,Object> map=service.getUserList(searchVO);
+		HashMap<String,Object> map=service.getUserList(searchVO, page);
 
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);

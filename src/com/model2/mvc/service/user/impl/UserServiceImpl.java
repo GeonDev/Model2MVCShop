@@ -39,6 +39,10 @@ public class UserServiceImpl implements UserService{
 	public HashMap<String,Object> getUserList(SearchVO searchVO) throws Exception {
 		return userDAO.getUserList(searchVO);
 	}
+	
+	public HashMap<String,Object> getUserList(SearchVO searchVO,int page) throws Exception {
+		return userDAO.getUserList(searchVO,page);
+	}
 
 	public void updateUser(UserVO userVO) throws Exception {
 		userDAO.updateUser(userVO);

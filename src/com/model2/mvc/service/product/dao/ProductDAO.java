@@ -66,13 +66,13 @@ public class ProductDAO {
 		if (searchVO.getSearchCondition() != null) {
 			//상품 번호를 기준으로 조회
 			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where PROD_NO='" + searchVO.getSearchKeyword()	+ "'";
+				sql += " where PROD_NO='" + Integer.parseInt(searchVO.getSearchKeyword())+ "'";
 			//상품 이름을 기준으로 조회
 			} else if (searchVO.getSearchCondition().equals("1")) {				
 				sql += " where PROD_NAME like '%" + searchVO.getSearchKeyword() + "%'";
 			//상품 가격으로 조회
 			}else if(searchVO.getSearchCondition().equals("2")) {
-				sql += " where PRICE='" + searchVO.getSearchKeyword() + "'";
+				sql += " where PRICE='" + Integer.parseInt(searchVO.getSearchKeyword()) + "'";
 			}
 		}
 		sql += " order by PROD_NO";
@@ -94,7 +94,7 @@ public class ProductDAO {
 		//searchVO.getPage() : 선택한 페이지
 		//searchVO.getPageUnit() : 페이지당 표시되는 수
 		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
-		
+				
 		
 		if(total>0) {
 			

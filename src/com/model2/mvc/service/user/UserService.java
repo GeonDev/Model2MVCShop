@@ -16,6 +16,8 @@ public interface UserService {
 	
 	public HashMap<String, Object> getUserList(SearchVO searchVO) throws Exception;
 	
+	public HashMap<String, Object> getUserList(SearchVO searchVO, int page) throws Exception;
+	
 	public void updateUser(UserVO userVO) throws Exception;
 	
 	public boolean checkDuplication(String userId) throws Exception;
