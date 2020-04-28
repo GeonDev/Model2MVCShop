@@ -75,9 +75,9 @@ public class UserDAO {
 		//searchVO의 용도 => 필터를 지정하여 탐색하게 한다. 0일때 ID, 1일때 이름
 		if (searchVO.getSearchCondition() != null) {
 			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where USER_ID='" + searchVO.getSearchKeyword()	+ "'";
+				sql += " where USER_ID like '%" + searchVO.getSearchKeyword() + "%'";
 			} else if (searchVO.getSearchCondition().equals("1")) {
-				sql += " where USER_NAME='" + searchVO.getSearchKeyword() + "'";
+				sql += " where USER_NAME like '%" + searchVO.getSearchKeyword() + "%'";
 			}
 		}
 		sql += " order by USER_ID";
@@ -99,7 +99,8 @@ public class UserDAO {
 		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
 		System.out.println("searchVO.getPage():" + searchVO.getPage());
 		System.out.println("searchVO.getPageUnit():" + searchVO.getPageUnit());
-
+		System.out.println("searchVO.getSearchKeyword():" + searchVO.getSearchKeyword());
+		
 		ArrayList<UserVO> list = new ArrayList<UserVO>();
 		
 		//선택한 검색 조건으로 찾은 열이 있다면 
@@ -116,12 +117,16 @@ public class UserDAO {
 				vo.setAddr(rs.getString("ADDR"));
 				vo.setEmail(rs.getString("EMAIL"));
 				vo.setRegDate(rs.getDate("REG_DATE"));
+				
+				
+				//System.out.println("VO : "+vo);
 
 				list.add(vo);
 				if (!rs.next())
 					break;
 			}
 		}
+		
 		System.out.println("list.size() : "+ list.size());
 		map.put("list", list);
 		System.out.println("map().size() : "+ map.size());

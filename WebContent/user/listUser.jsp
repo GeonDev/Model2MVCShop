@@ -161,13 +161,53 @@ function fncGetUserList(){
 		<td align="center">
 		<%
 			for(int i=1;i<=totalPage;i++){
+		if(searchVO.getSearchCondition() == null){
 		%>
 			<a href="/listUser.do?page=<%=i%>"><%=i %></a>
+		<%}else { %>
+			<a href="/listUser.do?page=<%=i%>&searchCondition=<%=searchVO.getSearchCondition()%>&searchKeyword=<%=searchVO.getSearchKeyword()%>"><%=i %></a>
 		<%
+				}
 			}
 		%>	
-    	</td>
-	</tr>
+    	</td>     	
+	</tr>	
+	
+	
+	
+	<tr>
+		<td align="center">
+		<% 
+		if((currentPage-3) > 1){
+		%>
+			<a href="/listUser.do?page=<%=(currentPage-3)%>&searchCondition=<%=searchVO.getSearchCondition()%>&searchKeyword=<%=searchVO.getSearchKeyword()%>"><b>&lt;</b></a>			
+		<%
+		}
+		%>
+		
+		<% 
+		for(int i = (currentPage-2); i<(currentPage+3);i++ ){
+			if(i>0 && i<totalPage){		
+		%>
+			<a href="/listUser.do?page=<%=i%>&searchCondition=<%=searchVO.getSearchCondition()%>&searchKeyword=<%=searchVO.getSearchKeyword()%>"><%=i %></a>
+		<%
+			}
+		}
+		%>
+		
+		<%
+		if((currentPage+3) < totalPage){
+		%>
+			<a href="/listUser.do?page=<%=(currentPage+3)%>&searchCondition=<%=searchVO.getSearchCondition()%>&searchKeyword=<%=searchVO.getSearchKeyword()%>"><b>&gt;</b></a>
+		<%
+			}
+		%>
+			
+			
+    	</td>     	
+	</tr>	
+	
+	
 </table>
 <!--  페이지 Navigator 끝 -->
 </form>

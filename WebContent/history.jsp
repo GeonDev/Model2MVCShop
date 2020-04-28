@@ -18,8 +18,8 @@
 	if (cookies!=null && cookies.length > 0) {
 		for (int i = 0; i < cookies.length; i++) {
 			Cookie cookie = cookies[i];
-			if (cookie.getName().equals("history")) {
-				history = cookie.getValue();
+			if (cookie.getName().equals("history")) {				
+				history = cookie.getValue();				
 			}
 		}
 		if (history != null) {

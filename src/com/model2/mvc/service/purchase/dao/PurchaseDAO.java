@@ -48,10 +48,10 @@ public class PurchaseDAO {
 		purchaseVO.setDivyAddr(rs.getString("DLVY_ADDR"));
 		purchaseVO.setDivyRequest(rs.getString("DLVY_REQUEST"));
 		purchaseVO.setTranCode(rs.getString("TRAN_STATUS_CODE"));
-		purchaseVO.setOrderDate(rs.getDate("ORDER_DATE"));
+		purchaseVO.setOrderDate(rs.getDate("ORDER_DATE"));		
 		
-		SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-DD");		
-		purchaseVO.setDivyDate(form.format(rs.getDate("DLVY_DATE")));
+		String date = rs.getDate("DLVY_DATE").toString();
+		purchaseVO.setDivyDate(date);
 		}			
 		
 		con.close();

@@ -69,7 +69,7 @@ public class ProductDAO {
 				sql += " where PROD_NO='" + searchVO.getSearchKeyword()	+ "'";
 			//상품 이름을 기준으로 조회
 			} else if (searchVO.getSearchCondition().equals("1")) {				
-				sql += " where PROD_NAME='" + searchVO.getSearchKeyword() + "'";
+				sql += " where PROD_NAME like '%" + searchVO.getSearchKeyword() + "%'";
 			//상품 가격으로 조회
 			}else if(searchVO.getSearchCondition().equals("2")) {
 				sql += " where PRICE='" + searchVO.getSearchKeyword() + "'";
@@ -107,8 +107,7 @@ public class ProductDAO {
 				tempProd.setPrice(rs.getInt("PRICE"));		
 				tempProd.setFileName(rs.getString("IMAGE_FILE"));
 				tempProd.setRegDate(rs.getDate("REG_DATE"));
-				tempProd.setProTranCode(rs.getString("TRAN_CODE"));
-				
+				tempProd.setProTranCode(rs.getString("TRAN_CODE"));				
 									
 				list.add(tempProd);					
 				
