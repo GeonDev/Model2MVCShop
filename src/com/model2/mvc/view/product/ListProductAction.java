@@ -1,6 +1,6 @@
 package com.model2.mvc.view.product;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,11 +30,11 @@ public class ListProductAction extends Action {
 		search.setSearchCondition(request.getParameter("searchCondition"));
 		search.setSearchKeyword(request.getParameter("searchKeyword"));
 		
-		String pageUnit=getServletContext().getInitParameter("pageSize");
+		String pageUnit = getServletContext().getInitParameter("pageSize");
 		search.setPageSize(Integer.parseInt(pageUnit));
 		
 		ProductService service=new ProductServiceImpl();
-		HashMap<String,Object> map=service.getProductList(search);
+		Map<String,Object> map=service.getProductList(search);
 		
 		System.out.println("검색키워드 :" + request.getParameter("searchKeyword"));
 

@@ -6,10 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.domain.Product;
+
+import sun.nio.ch.SelChImpl;
 
 
 
@@ -24,9 +28,9 @@ public class ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "SELECT PRODUCT. PROD_NO, PROD_NAME, PROD_DETAIL, MANUFACTURE_DAY, PRICE, IMAGE_FILE, REG_DATE, "  
-		+ "NVL((SELECT TRANSACTION.TRAN_STATUS_CODE FROM TRANSACTION WHERE TRANSACTION.PROD_NO = PRODUCT.PROD_NO) ,'0') TRAN_CODE "
-		+ "FROM PRODUCT WHERE PRODUCT.PROD_NO = ?";
+		String sql = "SELECT product.*, "  
+		+ "NVL((SELECT transaction.tran_status_code FROM transaction WHERE transaction.prod_no = product.prod_no) ,'0') TRAN_CODE "
+		+ "FROM product WHERE product.prod_no = ?";
 		PreparedStatement pStmt = con.prepareStatement(sql);
 		pStmt.setInt(1, productNo);
 		
@@ -52,7 +56,7 @@ public class ProductDAO {
 		return product;
 	} 
 	
-	//상품 목록을 반환한다.
+	/*상품 목록을 반환한다.(이전 함수가 숨어있어요!)
 	public HashMap<String,Object> getProductList(Search search) throws Exception{
 		
 		HashMap<String,Object> map = new HashMap<String,Object>();
@@ -126,6 +130,65 @@ public class ProductDAO {
 		con.close();
 		return map;		
 	}
+	*/
+	
+	
+	
+	//상품 목록을 반환한다.
+	public Map<String,Object> getProductList(Search search) throws Exception{
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		Connection con = DBUtil.getConnection();
+		List<Product> list = new ArrayList();
+		
+		String sql = "SELECT COUNT(PROD_NO) FROM PRODUCT";		
+	
+		PreparedStatement pStmt = con.prepareStatement(sql);		
+		ResultSet rs = pStmt.executeQuery();
+		int totalProductCount = 0;
+		
+		if(rs.next()) {
+		totalProductCount = rs.getInt(1);
+		}
+		
+		System.out.println("전체 물건수:" + totalProductCount);		
+		map.put("count", new Integer(totalProductCount));		
+		
+		
+		/************************************************************************/
+		
+		
+		sql = returnQarry(search);
+		pStmt = con.prepareStatement(sql);		
+		rs = pStmt.executeQuery();
+		
+		while (rs.next()) {
+			
+			Product tempProd = new Product();
+			tempProd.setProdNo(rs.getInt("PROD_NO"));
+			tempProd.setProdName(rs.getString("PROD_NAME"));
+			tempProd.setProdDetail(rs.getString("PROD_DETAIL"));
+			tempProd.setManuDate(rs.getString("MANUFACTURE_DAY"));
+			tempProd.setPrice(rs.getInt("PRICE"));		
+			tempProd.setFileName(rs.getString("IMAGE_FILE"));
+			tempProd.setRegDate(rs.getDate("REG_DATE"));
+			tempProd.setProTranCode(rs.getString("TRAN_CODE"));				
+								
+			list.add(tempProd);				
+		}
+				
+		map.put("list", list);
+
+		rs.close();
+		pStmt.close();
+		con.close();
+		
+		return map;		
+	}
+	
+	
+	
+	
 	
 	
 	//상품정보를 수정한다.
@@ -176,6 +239,34 @@ public class ProductDAO {
 		pStmt.executeUpdate();		
 		
 		con.close();
+	}
+	
+	
+	private String returnQarry(Search search) {		
+		
+		String sql = "SELECT  *  FROM "
+				+ "(SELECT ROW_NUMBER() OVER(ORDER BY product.prod_no) num, product.*, "
+				+ "NVL((SELECT tran_status_code FROM transaction WHERE transaction.prod_no = product.prod_no),'0') tran_code FROM product";	
+	
+		if(search.getSearchCondition()!=null && !search.getSearchCondition().equals("")) {
+			
+			//상품 번호로 검색
+			if (search.getSearchCondition().equals("0")) {
+				sql += " WHERE product.prod_no ='" + Integer.parseInt(search.getSearchKeyword())+ "'";
+			//상품 이름을 기준으로 조회
+			} else if (search.getSearchCondition().equals("1")) {				
+				sql += " WHERE product.prod_name like '%" + search.getSearchKeyword() + "%'";
+			//상품 가격으로 조회
+			}else if(search.getSearchCondition().equals("2")) {
+				sql += " WHERE product.price ='" + Integer.parseInt(search.getSearchKeyword()) + "'";
+			}			
+		}	
+		
+		sql += ") prod WHERE num BETWEEN"+ ((search.getCurrentPage()-1)*search.getPageSize()+1)+ "AND" + search.getCurrentPage()*search.getPageSize();
+		
+		
+		return sql;
+		
 	}
 	
 
