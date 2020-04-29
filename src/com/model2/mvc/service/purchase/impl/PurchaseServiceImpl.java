@@ -2,10 +2,11 @@ package com.model2.mvc.service.purchase.impl;
 
 import java.util.HashMap;
 
-import com.model2.mvc.common.SearchVO;
+import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.dao.PurchaseDAO;
-import com.model2.mvc.service.purchase.vo.PurchaseVO;
+
 
 
 // 두 레이어간에 커플링 관계를 줄이기 위한 중간 메소드
@@ -21,42 +22,42 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}	
 	
 	@Override
-	public void addPurchase(PurchaseVO purchaseVO) throws Exception {		
-		purchaseDAO.insertPurchase(purchaseVO);	
+	public void addPurchase(Purchase purchase) throws Exception {		
+		purchaseDAO.insertPurchase(purchase);	
 	}
 
 	@Override
-	public PurchaseVO getPurchase(int tranNo) throws Exception {
+	public Purchase getPurchase(int tranNo) throws Exception {
 		// TODO Auto-generated method stub
 		return purchaseDAO.findPurchase(tranNo);
 	}
 
 	@Override
-	public PurchaseVO getPurchase2(int ProdNo) throws Exception {
+	public Purchase getPurchase2(int ProdNo) throws Exception {
 		// TODO Auto-generated method stub
 		return  purchaseDAO.findPurchase(ProdNo);
 	}
 
 	@Override
-	public HashMap<String, Object> getPurchaseList(SearchVO searchVO, String buyerId) throws Exception {
-		return purchaseDAO.getPurchaseList(searchVO, buyerId);
+	public HashMap<String, Object> getPurchaseList(Search search, String buyerId) throws Exception {
+		return purchaseDAO.getPurchaseList(search, buyerId);
 	}
 
 	@Override
-	public HashMap<String, Object> getSaleList(SearchVO searchVO) throws Exception {
+	public HashMap<String, Object> getSaleList(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return purchaseDAO.getSaleList(searchVO);
+		return purchaseDAO.getSaleList(search);
 	}
 
 	@Override
-	public void updatePurcahse(PurchaseVO purchaseVO) throws Exception {
-		purchaseDAO.updatePurchase(purchaseVO);
+	public void updatePurcahse(Purchase purchase) throws Exception {
+		purchaseDAO.updatePurchase(purchase);
 		
 	}
 
 	@Override
-	public void updateTranCode(PurchaseVO purchaseVO) throws Exception {
-		purchaseDAO.updateTranCode(purchaseVO);		
+	public void updateTranCode(Purchase purchase) throws Exception {
+		purchaseDAO.updateTranCode(purchase);		
 	}
 	
 

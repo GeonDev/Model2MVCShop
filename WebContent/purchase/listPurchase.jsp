@@ -1,4 +1,4 @@
-<%@page import="com.model2.mvc.service.purchase.vo.PurchaseVO"%>
+<%@page import="com.model2.mvc.service.domain.*"%>
 <%@ page import="java.util.*"  %>
 <%@ page import="com.model2.mvc.common.*" %>
 
@@ -6,27 +6,26 @@
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 
-<%	
-
+<%
 	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
-	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
+	Search search=(Search)request.getAttribute("search");
 	
 	int total=0;
-	ArrayList<PurchaseVO> list=null;
+	ArrayList<Purchase> list=null;
 	if(map != null){
 		total=((Integer)map.get("count")).intValue();
-		list=(ArrayList<PurchaseVO>)map.get("list");
+		list=(ArrayList<Purchase>)map.get("list");
 	}	
 	
-	int currentPage=searchVO.getPage();
+	int currentPage=search.getCurrentPage();
 	
 	int totalPage=0;
 	if(total > 0) {
 		//PageUnit: 한페이지에 몇개씩 보여줄지 결정
-		totalPage= total / searchVO.getPageUnit() ;
-		if(total%searchVO.getPageUnit() >0)
-			totalPage += 1;
-	}	
+		totalPage= total / search.getPageSize() ;
+		if(total%search.getPageSize() >0)
+	totalPage += 1;
+	}
 %>
 
 
@@ -84,25 +83,25 @@
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 
-	<%	
+	<%
 		int no=list.size();
-		for(int i=0; i<list.size(); i++) {
-			PurchaseVO purchaseVO = (PurchaseVO)list.get(i);
-			String state = (purchaseVO.getTranCode()).trim();
+			for(int i=0; i<list.size(); i++) {
+		Purchase purchase = (Purchase)list.get(i);
+		String state = (purchase.getTranCode()).trim();
 	%>	
 	
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/getPurchase.do?tranNo=<%=purchaseVO.getTranNo() %>"><%=i+1 %></a>
+			<a href="/getPurchase.do?tranNo=<%=purchase.getTranNo() %>"><%=i+1 %></a>
 		</td>
 		<td></td>
 		<td align="left">
-			<a href="/getUser.do?userId=<%=(purchaseVO.getBuyer()).getUserId() %>"><%=(purchaseVO.getBuyer()).getUserId() %></a>
+			<a href="/getUser.do?userId=<%=(purchase.getBuyer()).getUserId() %>"><%=(purchase.getBuyer()).getUserId() %></a>
 		</td>
 		<td></td>
-		<td align="left"><%=purchaseVO.getReceiverName() %></td>
+		<td align="left"><%=purchase.getReceiverName() %></td>
 		<td></td>
-		<td align="left"><%=purchaseVO.getReceiverPhone() %></td>
+		<td align="left"><%=purchase.getReceiverPhone() %></td>
 		<td></td>
 		<td align="left">현재
 			<%if(state.equals("1")){ %>	
@@ -116,7 +115,7 @@
 		<td></td>
 		<td align="left">
 			<%if(state.equals("2")){ %>
-			<a href="/updateTranCode.do?tranNo=<%=purchaseVO.getTranNo() %>&tranCode=3">물건도착</a>
+			<a href="/updateTranCode.do?tranNo=<%=purchase.getTranNo() %>&tranCode=3">물건도착</a>
 			<% }else if(state.equals("1")){%>
 				배송 대기중
 			<% }%>

@@ -3,12 +3,13 @@ package com.model2.mvc.view.product;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
+
 
 import com.model2.mvc.framework.Action;
+import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
-import com.model2.mvc.service.product.vo.ProductVO;
+
 
 
 public class GetProductAction extends Action{
@@ -19,9 +20,9 @@ public class GetProductAction extends Action{
 		String prodNo=request.getParameter("prodNo");
 		
 		ProductService service=new ProductServiceImpl();
-		ProductVO productVO=service.getProduct(Integer.parseInt(prodNo));
+		Product product=service.getProduct(Integer.parseInt(prodNo));
 		
-		request.setAttribute("productVO", productVO);		
+		request.setAttribute("product", product);		
 		
 		
 		//현재 쿠키의 정보를 받아온다.

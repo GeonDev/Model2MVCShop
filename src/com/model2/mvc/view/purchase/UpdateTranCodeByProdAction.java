@@ -6,8 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
-import com.model2.mvc.service.purchase.vo.PurchaseVO;
-
+import com.model2.mvc.service.domain.*;
 
 public class UpdateTranCodeByProdAction extends Action{
 	
@@ -17,13 +16,13 @@ public class UpdateTranCodeByProdAction extends Action{
 		String tranCode = request.getParameter("tranCode").trim();
 		
 		PurchaseServiceImpl service = new PurchaseServiceImpl();
-		PurchaseVO purchaseVO = new PurchaseVO();			
+		Purchase purchase = new Purchase();			
 		
-		purchaseVO = service.getPurchase2(prodNo);
-		purchaseVO.setTranCode(tranCode);
+		purchase = service.getPurchase2(prodNo);
+		purchase.setTranCode(tranCode);
 		
 		//TransCode 업데이트
-		service.updateTranCode(purchaseVO);
+		service.updateTranCode(purchase);
 		
 		return "redirect:/listProduct.do?menu=manage";
 	}

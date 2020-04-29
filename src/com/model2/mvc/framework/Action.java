@@ -7,15 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 
 public abstract class Action {
 	
+	///Field
 	private ServletContext servletContext;
 	
-	public Action(){
+	///Constructor
+	public Action() {
 	}
 	
+	///Method
 	public ServletContext getServletContext() {
 		return servletContext;
 	}
-
 	public void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}

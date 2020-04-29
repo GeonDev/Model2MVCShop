@@ -1,4 +1,5 @@
-<%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
+<%@page import="com.model2.mvc.service.domain.*"%>
+<%@page import="com.model2.mvc.common.*"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     
@@ -10,24 +11,24 @@
 	String mode = request.getParameter("menu");
 
 	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
-	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
+	Search search=(Search)request.getAttribute("search");
 	
 	int total=0;
-	ArrayList<ProductVO> list=null;
+	ArrayList<Product> list=null;
 	if(map != null){
 		total=((Integer)map.get("count")).intValue();
-		list=(ArrayList<ProductVO>)map.get("list");
+		list=(ArrayList<Product>)map.get("list");
 	}	
 	
-	int currentPage=searchVO.getPage();
+	int currentPage=search.getCurrentPage();
 	
 	int totalPage=0;
 	if(total > 0) {
 		//PageUnit: 한페이지에 몇개씩 보여줄지 결정
-		totalPage= total / searchVO.getPageUnit() ;
-		if(total%searchVO.getPageUnit() >0)
-			totalPage += 1;
-	}	
+		totalPage= total / search.getPageSize();
+		if(total%search.getPageSize() >0)
+	totalPage += 1;
+	}
 %>
     
     
@@ -63,11 +64,17 @@ function fncGetProductList(){
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="93%" class="ct_ttl01">
-					<%if(mode.equals("manage")){ %>
+					<%
+						if(mode.equals("manage")){
+					%>
 							상품 관리
-					<%}else if (mode.equals("search")){ %>
+					<%
+						}else if (mode.equals("search")){
+					%>
 							상품 목록조회
-					<%} %>
+					<%
+						}
+					%>
 					</td>
 				</tr>
 			</table>
@@ -113,7 +120,7 @@ function fncGetProductList(){
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-		<td colspan="11" >전체  <%= total%> 건수, 현재 <%=currentPage %> 페이지</td>
+		<td colspan="11" >전체  <%=total%> 건수, 현재 <%=currentPage%> 페이지</td>
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
@@ -132,28 +139,28 @@ function fncGetProductList(){
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 		
-	<%	
-		int no=list.size();
-		for(int i=0; i<list.size(); i++) {
-			ProductVO productVO = (ProductVO)list.get(i);
-			String state = (productVO.getProTranCode()).trim();
-	%>		
+	<%
+				int no=list.size();
+					for(int i=0; i<list.size(); i++) {
+				Product product = (Product)list.get(i);
+				String state = (product.getProTranCode()).trim();
+			%>		
 		
 	<tr class="ct_list_pop">
 		<td align="center"><%=no--%></td>
 		<td></td>
 		
-		<td align="left"><%=productVO.getProdNo()%></td>
+		<td align="left"><%=product.getProdNo()%></td>
 		<td></td>
 				
 		<td align="left">
-			<a href="/getProduct.do?prodNo=<%=productVO.getProdNo()%>&menu=<%=mode%>"><%=productVO.getProdName() %></a></td>
+			<a href="/getProduct.do?prodNo=<%=product.getProdNo()%>&menu=<%=mode%>"><%=product.getProdName() %></a></td>
 		
 
 		<td></td>
-		<td align="left"><%=productVO.getPrice() %></td>
+		<td align="left"><%=product.getPrice() %></td>
 		<td></td>
-		<td align="left"><%=productVO.getRegDate() %></td>
+		<td align="left"><%=product.getRegDate() %></td>
 		<td></td>
 		<td align="left">		
 	 
@@ -162,7 +169,7 @@ function fncGetProductList(){
 		<%}else if(state.equals("1")){ %>			
 			구매완료					
 			<% if(mode.equals("manage")){%>
-				<a href="/updateTranCodeByProd.do?prodNo=<%=productVO.getProdNo()%>&tranCode=2">배송하기</a>
+				<a href="/updateTranCodeByProd.do?prodNo=<%=product.getProdNo()%>&tranCode=2">배송하기</a>
 			<% }%>
 		<%}else if(state.equals("2")){ %>
 			배송중
@@ -186,7 +193,7 @@ function fncGetProductList(){
 		<%
 			for(int i=1;i<=totalPage;i++){
 		%>
-			<a href="/listProduct.do?page=<%=i%>&menu=<%=mode%>&searchCondition=<%=searchVO.getSearchCondition()%>&searchKeyword=<%=searchVO.getSearchKeyword()%>"><%=i %></a>
+			<a href="/listProduct.do?page=<%=i%>&menu=<%=mode%>&searchCondition=<%=search.getSearchCondition()%>&searchKeyword=<%=search.getSearchKeyword()%>"><%=i %></a>
 		<%
 			}
 		%>		

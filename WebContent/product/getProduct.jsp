@@ -1,15 +1,13 @@
-<%@page import="com.model2.mvc.service.user.vo.UserVO"%>
-<%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
+<%@page import="com.model2.mvc.service.domain.*"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 
 <%
-	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+	Product product = (Product)request.getAttribute("product");
 	session=request.getSession();
-	UserVO user = (UserVO)session.getAttribute("user");
-	String state = productVO.getProTranCode().trim();
-	
+	User user = (User)session.getAttribute("user");
+	String state = product.getProTranCode().trim();
 %>	
 
 <script type="text/javascript">
@@ -86,7 +84,7 @@ function fncAddProduct(){
 		<td class="ct_write01">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="105"><%=productVO.getProdNo()%></td>
+					<td width="105"><%=product.getProdNo()%></td>
 				</tr>
 			</table>
 		</td>
@@ -99,7 +97,7 @@ function fncAddProduct(){
 			상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getProdName() %></td>
+		<td class="ct_write01"><%=product.getProdName() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -110,7 +108,7 @@ function fncAddProduct(){
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<img src = "<%=productVO.getFileName() %>"/>
+			<img src = "<%=product.getFileName() %>"/>
 		</td>
 	</tr>
 	<tr>
@@ -121,7 +119,7 @@ function fncAddProduct(){
 			상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getProdDetail() %></td>
+		<td class="ct_write01"><%=product.getProdDetail() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -129,7 +127,7 @@ function fncAddProduct(){
 	<tr>
 		<td width="104" class="ct_write">제조일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getManuDate() %></td>
+		<td class="ct_write01"><%=product.getManuDate() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -137,7 +135,7 @@ function fncAddProduct(){
 	<tr>
 		<td width="104" class="ct_write">가격</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getPrice() %></td>
+		<td class="ct_write01"><%=product.getPrice() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -145,7 +143,7 @@ function fncAddProduct(){
 	<tr>
 		<td width="104" class="ct_write">등록일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=productVO.getRegDate() %></td>
+		<td class="ct_write01"><%=product.getRegDate() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -167,7 +165,7 @@ function fncAddProduct(){
 				</td>
 		
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="/addPurchaseView.do?prod_no=<%=productVO.getProdNo()%>">구매</a>
+					<a href="/addPurchaseView.do?prod_no=<%=product.getProdNo()%>">구매</a>
 				</td>
 	
 				<td width="14" height="23">
@@ -192,7 +190,7 @@ function fncAddProduct(){
 			<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
-					<%if(productVO.getProTranCode().equals("0")) {%>
+					<%if(product.getProTranCode().equals("0")) {%>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
 						<a href="javascript:fncAddProduct();">수정</a>
 					</td>

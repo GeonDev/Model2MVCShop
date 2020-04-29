@@ -1,11 +1,11 @@
-<%@page import="com.model2.mvc.service.product.vo.ProductVO"%>
+<%@page import="com.model2.mvc.service.domain.*"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 
 
 <%
-	ProductVO vo=(ProductVO)request.getAttribute("productVO");
+	Product vo=(Product)request.getAttribute("product");
 %>
 
 

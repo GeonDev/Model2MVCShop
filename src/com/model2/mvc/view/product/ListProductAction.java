@@ -5,7 +5,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.model2.mvc.common.SearchVO;
+import com.model2.mvc.common.Search;
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
@@ -17,7 +17,7 @@ public class ListProductAction extends Action {
 	@Override
 	public String execute(	HttpServletRequest request,
 												HttpServletResponse response) throws Exception {
-		SearchVO searchVO=new SearchVO();
+		Search search=new Search();
 		
 		int page=1;
 		
@@ -26,20 +26,20 @@ public class ListProductAction extends Action {
 			page=Integer.parseInt(request.getParameter("page"));
 		}
 		
-		searchVO.setPage(page);
-		searchVO.setSearchCondition(request.getParameter("searchCondition"));
-		searchVO.setSearchKeyword(request.getParameter("searchKeyword"));
+		search.setCurrentPage(page);
+		search.setSearchCondition(request.getParameter("searchCondition"));
+		search.setSearchKeyword(request.getParameter("searchKeyword"));
 		
 		String pageUnit=getServletContext().getInitParameter("pageSize");
-		searchVO.setPageUnit(Integer.parseInt(pageUnit));
+		search.setPageSize(Integer.parseInt(pageUnit));
 		
 		ProductService service=new ProductServiceImpl();
-		HashMap<String,Object> map=service.getProductList(searchVO);
+		HashMap<String,Object> map=service.getProductList(search);
 		
 		System.out.println("검색키워드 :" + request.getParameter("searchKeyword"));
 
 		request.setAttribute("map", map);
-		request.setAttribute("searchVO", searchVO);
+		request.setAttribute("search", search);
 				
 		return "forward:/product/listProduct.jsp";
 	}

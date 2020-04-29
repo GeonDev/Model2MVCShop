@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.model2.mvc.common.SearchVO;
+import com.model2.mvc.common.Search;
 import com.model2.mvc.common.util.DBUtil;
-import com.model2.mvc.service.product.vo.ProductVO;
+import com.model2.mvc.service.domain.Product;
+
 
 
 public class ProductDAO {
@@ -19,7 +20,7 @@ public class ProductDAO {
 	}
 	
 	// 특정상품을 찾아 반환 한다.
-	public ProductVO findProduct(int productNo) throws SQLException {		
+	public Product findProduct(int productNo) throws SQLException {		
 		
 		Connection con = DBUtil.getConnection();
 		
@@ -32,27 +33,27 @@ public class ProductDAO {
 		ResultSet rs = pStmt.executeQuery();
 		
 		
-		ProductVO productVO = new ProductVO();
+		Product product = new Product();
 		
 		if(rs.next()) {
-			productVO.setProdNo(rs.getInt("PROD_NO"));
-			productVO.setProdName(rs.getString("PROD_NAME"));
-			productVO.setProdDetail(rs.getString("PROD_DETAIL"));
-			productVO.setManuDate(rs.getString("MANUFACTURE_DAY"));
-			productVO.setPrice(rs.getInt("PRICE"));
-			productVO.setFileName(rs.getString("IMAGE_FILE"));
-			productVO.setRegDate(rs.getDate("REG_DATE"));
-			productVO.setProTranCode(rs.getString("TRAN_CODE"));
+			product.setProdNo(rs.getInt("PROD_NO"));
+			product.setProdName(rs.getString("PROD_NAME"));
+			product.setProdDetail(rs.getString("PROD_DETAIL"));
+			product.setManuDate(rs.getString("MANUFACTURE_DAY"));
+			product.setPrice(rs.getInt("PRICE"));
+			product.setFileName(rs.getString("IMAGE_FILE"));
+			product.setRegDate(rs.getDate("REG_DATE"));
+			product.setProTranCode(rs.getString("TRAN_CODE"));
 		}		
 
 		
 		con.close();		
 		
-		return productVO;
+		return product;
 	} 
 	
 	//상품 목록을 반환한다.
-	public HashMap<String,Object> getProductList(SearchVO searchVO) throws Exception{
+	public HashMap<String,Object> getProductList(Search search) throws Exception{
 		
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		Connection con = DBUtil.getConnection();
@@ -62,17 +63,17 @@ public class ProductDAO {
 				+ "NVL((SELECT TRANSACTION.TRAN_STATUS_CODE FROM TRANSACTION WHERE TRANSACTION.PROD_NO = PRODUCT.PROD_NO) ,'0') TRAN_CODE "
 				+ "FROM PRODUCT";		
 		
-		//searchVO로 필터를 지정한다면, 
-		if (searchVO.getSearchCondition() != null) {
+		//search로 필터를 지정한다면, 
+		if (search.getSearchCondition() != null) {
 			//상품 번호를 기준으로 조회
-			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where PROD_NO='" + Integer.parseInt(searchVO.getSearchKeyword())+ "'";
+			if (search.getSearchCondition().equals("0")) {
+				sql += " where PROD_NO='" + Integer.parseInt(search.getSearchKeyword())+ "'";
 			//상품 이름을 기준으로 조회
-			} else if (searchVO.getSearchCondition().equals("1")) {				
-				sql += " where PROD_NAME like '%" + searchVO.getSearchKeyword() + "%'";
+			} else if (search.getSearchCondition().equals("1")) {				
+				sql += " where PROD_NAME like '%" + search.getSearchKeyword() + "%'";
 			//상품 가격으로 조회
-			}else if(searchVO.getSearchCondition().equals("2")) {
-				sql += " where PRICE='" + Integer.parseInt(searchVO.getSearchKeyword()) + "'";
+			}else if(search.getSearchCondition().equals("2")) {
+				sql += " where PRICE='" + Integer.parseInt(search.getSearchKeyword()) + "'";
 			}
 		}
 		sql += " order by PROD_NO";
@@ -89,17 +90,17 @@ public class ProductDAO {
 		
 		map.put("count", new Integer(total));		
 		
-		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
+		ArrayList<Product> list = new ArrayList<Product>();
 		
-		//searchVO.getPage() : 선택한 페이지
-		//searchVO.getPageUnit() : 페이지당 표시되는 수
-		rs.absolute(searchVO.getPage() * searchVO.getPageUnit() - searchVO.getPageUnit()+1);
+		//search.getPage() : 선택한 페이지
+		//search.getPageUnit() : 페이지당 표시되는 수
+		rs.absolute(search.getCurrentPage() * search.getPageSize() - search.getPageSize()+1);
 				
 		
 		if(total>0) {
 			
-			for(int i =0; i<searchVO.getPageUnit(); i++) {
-				ProductVO tempProd = new ProductVO();
+			for(int i =0; i<search.getPageSize(); i++) {
+				Product tempProd = new Product();
 				tempProd.setProdNo(rs.getInt("PROD_NO"));
 				tempProd.setProdName(rs.getString("PROD_NAME"));
 				tempProd.setProdDetail(rs.getString("PROD_DETAIL"));
@@ -128,7 +129,7 @@ public class ProductDAO {
 	
 	
 	//상품정보를 수정한다.
-	public void updateProduct(ProductVO productVO) throws Exception {
+	public void updateProduct(Product product) throws Exception {
 		
 		Connection con = DBUtil.getConnection();
 
@@ -136,12 +137,12 @@ public class ProductDAO {
 		
 		PreparedStatement pStmt = con.prepareStatement(sql);
 		
-		pStmt.setString(1, productVO.getProdName());
-		pStmt.setString(2, productVO.getProdDetail());
-		pStmt.setString(3, productVO.getManuDate());
-		pStmt.setInt(4, productVO.getPrice());
-		pStmt.setString(5, productVO.getFileName());
-		pStmt.setInt(6, productVO.getProdNo());		
+		pStmt.setString(1, product.getProdName());
+		pStmt.setString(2, product.getProdDetail());
+		pStmt.setString(3, product.getManuDate());
+		pStmt.setInt(4, product.getPrice());
+		pStmt.setString(5, product.getFileName());
+		pStmt.setInt(6, product.getProdNo());		
 		
 		pStmt.executeUpdate();
 		
@@ -149,7 +150,7 @@ public class ProductDAO {
 	}
 	
 	//상품정보를 추가한다.
-	public void insertProduct(ProductVO productVO) throws Exception {
+	public void insertProduct(Product product) throws Exception {
 		
 		Connection con = DBUtil.getConnection();
 
@@ -159,18 +160,18 @@ public class ProductDAO {
 		
 		PreparedStatement pStmt = con.prepareStatement(sql);		
 	
-		pStmt.setString(1, productVO.getProdName());
-		pStmt.setString(2, productVO.getProdDetail());
+		pStmt.setString(1, product.getProdName());
+		pStmt.setString(2, product.getProdDetail());
 		
 		
 		//캘린더 JSP에서 그냥 값을 받으면 - 때문에 길이 초과
-		String manufactureDate = productVO.getManuDate();
+		String manufactureDate = product.getManuDate();
 		manufactureDate = manufactureDate.replaceAll("-", "");		
 		manufactureDate.trim();		
 		System.out.println("등록날짜값"+ manufactureDate);
 		pStmt.setString(3, manufactureDate);
-		pStmt.setInt(4, productVO.getPrice());
-		pStmt.setString(5, productVO.getFileName());		
+		pStmt.setInt(4, product.getPrice());
+		pStmt.setString(5, product.getFileName());		
 		
 		pStmt.executeUpdate();		
 		
