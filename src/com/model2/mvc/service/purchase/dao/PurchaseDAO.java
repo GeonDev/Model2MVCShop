@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.common.util.DBUtil;
@@ -168,145 +169,156 @@ public class PurchaseDAO {
 	}
 	
 	//구매 목록 - 특정 유저가 구매한 상품만 조회
-	public HashMap<String,Object> getPurchaseList(Search search, String buyerId)  throws Exception {
-				
-		HashMap<String,Object> map = new HashMap<String,Object>();
+	public Map<String,Object> getPurchaseList(Search search, String buyerId)  throws Exception {
+		
+		Purchase purchase = new Purchase();
+		ProductDAO productDAO = new ProductDAO();
+		UserDao userDAO = new UserDao();		
+		
+		Map<String,Object> map = new HashMap<String,Object>();
 		Connection con = DBUtil.getConnection();
 		
 		//특정 유저가 구매한 모든 상품을 선택한다.
-		String sql = "select TRAN_NO, BUYER_ID, RECEIVER_NAME, RECEIVER_PHONE, TRAN_STATUS_CODE from TRANSACTION WHERE BUYER_ID = ?"
-		+ " order by TRAN_NO";
+		String sql ="SELECT COUNT(tran_no) FROM  transaction WHERE buyer_id = ?";
+		PreparedStatement pStmt = con.prepareStatement(sql);
+		pStmt.setString(1, buyerId);		
+
+		ResultSet rs = pStmt.executeQuery();
 		
-		//TYPE_SCROLL_INSENSITIVE : 커서 이동을 가능하지만 변화는 없음, CONCUR_UPDATABLE 데이터를 읽으면서 업데이트 가능
-		PreparedStatement pStmt = con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);	
+		int total = 0;
+		
+		if(rs.next()) {
+			total = rs.getInt(1);
+		}
+		
+		System.out.println("구매 횟수 :" + total);
+		
+		map.put("count", new Integer(total));
+		
+		
+		/********************************************************/
+		
+		sql = "SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY transaction.tran_no) num, transaction.* "
+				+ "FROM transaction WHERE buyer_id = ?)";
+		
+		sql += "WHERE num BETWEEN ? AND ?";
+		
+		pStmt = con.prepareStatement(sql);	
 		
 		//구매한 유저의 이름을 넣는다.
 		pStmt.setString(1, buyerId);		
-
-			
-		ResultSet rs = pStmt.executeQuery();
 		
-		//커서를 가장 아래로 이동 => 검색된 Raw 개수를 구하려고?
-		rs.last();
-		//최대 Row 개수를 저장해 둔다.
-		int total = rs.getRow();
-		System.out.println("로우의 수:" + total);
+		pStmt.setInt(2, (search.getCurrentPage()-1)*search.getPageSize()+1);
 		
-		map.put("count", new Integer(total));		
+		pStmt.setInt(3, (search.getCurrentPage()*search.getPageSize()));	
+		
+		rs = pStmt.executeQuery();
 		
 		ArrayList<Purchase> list = new ArrayList<Purchase>();		
 
-		rs.absolute(search.getCurrentPage() * search.getPageSize() - search.getPageSize()+1);
 		
+		if(rs.next()) {			
+		purchase.setTranNo(rs.getInt("TRAN_NO"));
+		purchase.setPurchaseProd(productDAO.findProduct(rs.getInt("PROD_NO")));
+		purchase.setBuyer(userDAO.findUser(rs.getString("BUYER_ID")));
+		purchase.setPaymentOption(rs.getString("PAYMENT_OPTION"));
+		purchase.setReceiverName(rs.getString("RECEIVER_NAME"));
+		purchase.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
+		purchase.setDivyAddr(rs.getString("DLVY_ADDR"));
+		purchase.setDivyRequest(rs.getString("DLVY_REQUEST"));
+		purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
+		purchase.setOrderDate(rs.getDate("ORDER_DATE"));
 		
-		if(total>0) {
-			
-			for(int i =0; i<search.getPageSize(); i++) {
-				Purchase tempPurchase = new Purchase();				
-				User buyer = new User();
-				buyer.setUserId(rs.getString("BUYER_ID"));				
-				tempPurchase.setBuyer(buyer);
-				
-				tempPurchase.setReceiverName(rs.getString("RECEIVER_NAME"));
-				tempPurchase.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
-				tempPurchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
-				tempPurchase.setTranNo(rs.getInt("TRAN_NO"));
-								
-				list.add(tempPurchase);					
-				
-					if (!rs.next()) {
-						break;
-					
-				}
-			}				
-		}		
+		SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-DD");		
+		purchase.setDivyDate(form.format(rs.getDate("DLVY_DATE")));
+		
+		list.add(purchase);	
+		}
+		
+	
 		System.out.println("list.size() : "+ list.size());
 		map.put("list", list);
 		System.out.println("map().size() : "+ map.size());
 		
-				
+		pStmt.close();		
+		rs.close();
 		con.close();
 		return map;
 	}
 	
 	//판매 목록 - 전체 판매 상품 조회
-	public HashMap<String,Object> getSaleList(Search search) throws Exception{
-		HashMap<String,Object> map = new HashMap<String,Object>();
+	public Map<String,Object> getSaleList(Search search) throws Exception{
+		
+		Purchase purchase = new Purchase();
+		ProductDAO productDAO = new ProductDAO();
+		UserDao userDAO = new UserDao();		
+		
+		Map<String,Object> map = new HashMap<String,Object>();
 		Connection con = DBUtil.getConnection();
 		
-		//모든 상품을 선택한다.
-		String sql = "select * from TRANSACTION, PRODUCT WHERE TRANSACTION.PROD_NO = PRODUCT.PROD_NO";		
-		
-		//search로 필터를 지정한 값이 있다면
-		if (search.getSearchCondition() != null) {
-			//상품 번호를 기준으로 조회
-			if (search.getSearchCondition().equals("0")) {
-				sql += " AND PRODUCT.PROD_NO=?";
-			//상품 이름을 기준으로 조회
-			} else if (search.getSearchCondition().equals("1")) {				
-				sql += " AND PRODUCT.PROD_NAME=?";
-			//상품 가격으로 조회
-			}else if(search.getSearchCondition().equals("2")) {
-				sql += " AND PRODUCT.PRICE=?";
-			}
-		}
-		sql += " order by PROD_NO";
-		
-		//TYPE_SCROLL_INSENSITIVE : 커서 이동을 가능하지만 변화는 없음, CONCUR_UPDATABLE 데이터를 읽으면서 업데이트 가능
-		PreparedStatement pStmt = con.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);	
-		
-		if(search.getSearchKeyword()!=null) {
-			pStmt.setString(1, search.getSearchKeyword());
-		}
-			
+		//유저들이 구매한 모든 상품을 선택한다.
+		String sql ="SELECT COUNT(tran_no) FROM  transaction";
+		PreparedStatement pStmt = con.prepareStatement(sql);		
+
 		ResultSet rs = pStmt.executeQuery();
 		
-		//커서를 가장 아래로 이동 => 검색된 Raw 개수를 구하려고?
-		rs.last();
-		//최대 Row 개수를 저장해 둔다.
-		int total = rs.getRow();
-		System.out.println("로우의 수:" + total);
+		int total = 0;
 		
-		map.put("count", new Integer(total));		
+		if(rs.next()) {
+			total = rs.getInt(1);
+		}
 		
-		ArrayList<Purchase> list = new ArrayList<Purchase>();
+		System.out.println("구매 횟수 :" + total);
 		
-		//search.getPage() : 선택한 페이지
-		//search.getPageUnit() : 페이지당 표시되는 수
-		rs.absolute(search.getCurrentPage() * search.getPageSize() - search.getPageSize()+1);
+		map.put("count", new Integer(total));
 		
 		
-		if(total>0) {
-			
-			for(int i =0; i<search.getPageSize(); i++) {
-				Purchase tempPurchase = new Purchase();
-				
-				Product tempProd = new Product();
-				tempProd.setProdNo(rs.getInt("PROD_NO"));
-				tempProd.setProdName(rs.getString("PROD_NAME"));
-				tempProd.setProdDetail(rs.getString("PROD_DETAIL"));
-				tempProd.setManuDate(rs.getString("MANUFACTURE_DAY"));
-				tempProd.setPrice(rs.getInt("PRICE"));		
-				tempProd.setFileName(rs.getString("IMAGE_FILE"));
-				tempProd.setRegDate(rs.getDate("REG_DATE"));
-				
-				tempPurchase.setPurchaseProd(tempProd);
-				tempPurchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
-								
-				list.add(tempPurchase);					
-				
-					if (!rs.next()) {
-						break;
-					
-				}
-			}				
-		}		
+		/********************************************************/
+		
+		sql = "SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY transaction.tran_no) num, transaction.* "
+				+ "FROM transaction)";
+		
+		sql += "WHERE num BETWEEN ? AND ?";
+		
+		pStmt = con.prepareStatement(sql);	
+		
+		//구매한 유저의 이름을 넣는다.		
+		pStmt.setInt(1, (search.getCurrentPage()-1)*search.getPageSize()+1);
+		
+		pStmt.setInt(2, (search.getCurrentPage()*search.getPageSize()));	
+		
+		rs = pStmt.executeQuery();
+		
+		ArrayList<Purchase> list = new ArrayList<Purchase>();		
+
+		
+		if(rs.next()) {			
+		purchase.setTranNo(rs.getInt("TRAN_NO"));
+		purchase.setPurchaseProd(productDAO.findProduct(rs.getInt("PROD_NO")));
+		purchase.setBuyer(userDAO.findUser(rs.getString("BUYER_ID")));
+		purchase.setPaymentOption(rs.getString("PAYMENT_OPTION"));
+		purchase.setReceiverName(rs.getString("RECEIVER_NAME"));
+		purchase.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
+		purchase.setDivyAddr(rs.getString("DLVY_ADDR"));
+		purchase.setDivyRequest(rs.getString("DLVY_REQUEST"));
+		purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
+		purchase.setOrderDate(rs.getDate("ORDER_DATE"));
+		
+		SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-DD");		
+		purchase.setDivyDate(form.format(rs.getDate("DLVY_DATE")));
+		
+		list.add(purchase);	
+		}
+		
+	
 		System.out.println("list.size() : "+ list.size());
 		map.put("list", list);
 		System.out.println("map().size() : "+ map.size());
-		
 				
-		con.close();
+		pStmt.close();		
+		rs.close();
+		con.close();	
+		
 		return map;
 	}	
 	

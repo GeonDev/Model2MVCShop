@@ -34,8 +34,7 @@ public class ProductDAO {
 		PreparedStatement pStmt = con.prepareStatement(sql);
 		pStmt.setInt(1, productNo);
 		
-		ResultSet rs = pStmt.executeQuery();
-		
+		ResultSet rs = pStmt.executeQuery();	
 		
 		Product product = new Product();
 		
@@ -139,7 +138,7 @@ public class ProductDAO {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		Connection con = DBUtil.getConnection();
-		List<Product> list = new ArrayList();
+		List<Product> list = new ArrayList<Product>();
 		
 		String sql = "SELECT COUNT(PROD_NO) FROM PRODUCT";		
 	
@@ -152,19 +151,25 @@ public class ProductDAO {
 		}
 		
 		System.out.println("전체 물건수:" + totalProductCount);		
-		map.put("count", new Integer(totalProductCount));		
-		
+		map.put("count", new Integer(totalProductCount));				
 		
 		/************************************************************************/
+		
+		System.out.println("검색 조건 : "+search.getSearchCondition());
+		System.out.println("검색 키워드 : "+search.getSearchKeyword());
+		System.out.println("현재 페이지: "+search.getCurrentPage());
+		System.out.println("페이지 사이즈: "+search.getPageSize());
+		
 		
 		
 		sql = returnQarry(search);
 		pStmt = con.prepareStatement(sql);		
 		rs = pStmt.executeQuery();
 		
-		while (rs.next()) {
+		Product tempProd = new Product();
+		
+		while (rs.next()) {			
 			
-			Product tempProd = new Product();
 			tempProd.setProdNo(rs.getInt("PROD_NO"));
 			tempProd.setProdName(rs.getString("PROD_NAME"));
 			tempProd.setProdDetail(rs.getString("PROD_DETAIL"));
@@ -185,9 +190,6 @@ public class ProductDAO {
 		
 		return map;		
 	}
-	
-	
-	
 	
 	
 	
@@ -262,7 +264,7 @@ public class ProductDAO {
 			}			
 		}	
 		
-		sql += ") prod WHERE num BETWEEN"+ ((search.getCurrentPage()-1)*search.getPageSize()+1)+ "AND" + search.getCurrentPage()*search.getPageSize();
+		sql += ") prod WHERE num BETWEEN "+ ((search.getCurrentPage()-1)*search.getPageSize()+1)+ "AND " + search.getCurrentPage()*search.getPageSize();
 		
 		
 		return sql;

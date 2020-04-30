@@ -1,6 +1,6 @@
 package com.model2.mvc.view.purchase;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +43,7 @@ public class ListPurchaseAction extends Action{
 		PurchaseServiceImpl service = new PurchaseServiceImpl();
 		String buyerId = buyer.getUserId();
 		
-		HashMap<String,Object> map=service.getPurchaseList(search, buyerId);
+		Map<String,Object> map=service.getPurchaseList(search, buyerId);
 
 		request.setAttribute("map", map);
 		request.setAttribute("search", search);

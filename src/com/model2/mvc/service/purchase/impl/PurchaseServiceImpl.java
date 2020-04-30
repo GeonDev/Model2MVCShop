@@ -1,6 +1,7 @@
 package com.model2.mvc.service.purchase.impl;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Purchase;
@@ -39,12 +40,12 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 
 	@Override
-	public HashMap<String, Object> getPurchaseList(Search search, String buyerId) throws Exception {
+	public Map<String, Object> getPurchaseList(Search search, String buyerId) throws Exception {
 		return purchaseDAO.getPurchaseList(search, buyerId);
 	}
 
 	@Override
-	public HashMap<String, Object> getSaleList(Search search) throws Exception {
+	public Map<String, Object> getSaleList(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return purchaseDAO.getSaleList(search);
 	}
