@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.product.ProductService;
@@ -19,26 +20,35 @@ public class ListProductAction extends Action {
 												HttpServletResponse response) throws Exception {
 		Search search=new Search();
 		
-		int page=1;
+		int currentPage=1;
 		
 		//선택한 페이지가 있으면 해당 페이지로 세팅
-		if(request.getParameter("page") != null) {
-			page=Integer.parseInt(request.getParameter("page"));
+		if(request.getParameter("currentPage") != null) {
+			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		search.setCurrentPage(page);
+		search.setCurrentPage(currentPage);
 		search.setSearchCondition(request.getParameter("searchCondition"));
 		search.setSearchKeyword(request.getParameter("searchKeyword"));
 		
-		String pageUnit = getServletContext().getInitParameter("pageSize");
-		search.setPageSize(Integer.parseInt(pageUnit));
+		
+		// web.xml  meta-data 로 부터 상수 추출 
+		int pageSize = Integer.parseInt( getServletContext().getInitParameter("pageSize"));
+		int pageUnit  =  Integer.parseInt(getServletContext().getInitParameter("pageUnit"));
+		search.setPageSize(pageSize);
+		search.setPageSize(pageUnit);
 		
 		ProductService service=new ProductServiceImpl();
 		Map<String,Object> map=service.getProductList(search);
 		
+		Page resultPage	= new Page( currentPage, ((Integer)map.get("count")).intValue(), pageUnit, pageSize);
+		
+		
 		System.out.println("검색키워드 :" + request.getParameter("searchKeyword"));
 
-		request.setAttribute("map", map);
+		// Model 과 View 연결
+		request.setAttribute("list", map.get("list"));
+		request.setAttribute("resultPage", resultPage);
 		request.setAttribute("search", search);
 				
 		return "forward:/product/listProduct.jsp";

@@ -38,8 +38,7 @@ public class ListUserAction extends Action {
 		UserService userService=new UserServiceImpl();
 		Map<String , Object> map=userService.getUserList(search);
 		
-		Page resultPage	= 
-					new Page( currentPage, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		Page resultPage	= new Page( currentPage, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println("ListUserAction ::"+resultPage);
 		
 		// Model °ú View ¿¬°á

@@ -159,17 +159,14 @@ public class ProductDAO {
 		System.out.println("검색 키워드 : "+search.getSearchKeyword());
 		System.out.println("현재 페이지: "+search.getCurrentPage());
 		System.out.println("페이지 사이즈: "+search.getPageSize());
-		
-		
-		
+						
 		sql = returnQarry(search);
 		pStmt = con.prepareStatement(sql);		
 		rs = pStmt.executeQuery();
-		
-		Product tempProd = new Product();
+				
 		
 		while (rs.next()) {			
-			
+			Product tempProd = new Product();
 			tempProd.setProdNo(rs.getInt("PROD_NO"));
 			tempProd.setProdName(rs.getString("PROD_NAME"));
 			tempProd.setProdDetail(rs.getString("PROD_DETAIL"));
@@ -181,6 +178,8 @@ public class ProductDAO {
 								
 			list.add(tempProd);				
 		}
+		
+		System.out.println(list);
 				
 		map.put("list", list);
 
@@ -249,22 +248,22 @@ public class ProductDAO {
 		String sql = "SELECT  *  FROM "
 				+ "(SELECT ROW_NUMBER() OVER(ORDER BY product.prod_no) num, product.*, "
 				+ "NVL((SELECT tran_status_code FROM transaction WHERE transaction.prod_no = product.prod_no),'0') tran_code FROM product";	
-	
-		if(search.getSearchCondition()!=null && !search.getSearchCondition().equals("")) {
-			
+
+		
+		if(search.getSearchCondition()!=null) {			
 			//상품 번호로 검색
-			if (search.getSearchCondition().equals("0")) {
+			if (search.getSearchCondition().equals("0") && !search.getSearchKeyword().equals("")) {
 				sql += " WHERE product.prod_no ='" + Integer.parseInt(search.getSearchKeyword())+ "'";
 			//상품 이름을 기준으로 조회
-			} else if (search.getSearchCondition().equals("1")) {				
+			} else if (search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {				
 				sql += " WHERE product.prod_name like '%" + search.getSearchKeyword() + "%'";
 			//상품 가격으로 조회
-			}else if(search.getSearchCondition().equals("2")) {
+			}else if(search.getSearchCondition().equals("2") && !search.getSearchKeyword().equals("")) {
 				sql += " WHERE product.price ='" + Integer.parseInt(search.getSearchKeyword()) + "'";
 			}			
 		}	
 		
-		sql += ") prod WHERE num BETWEEN "+ ((search.getCurrentPage()-1)*search.getPageSize()+1)+ "AND " + search.getCurrentPage()*search.getPageSize();
+		sql += ") WHERE num BETWEEN "+ (((search.getCurrentPage()-1)*search.getPageSize())+1)+ "AND " + search.getCurrentPage()*search.getPageSize();
 		
 		
 		return sql;
