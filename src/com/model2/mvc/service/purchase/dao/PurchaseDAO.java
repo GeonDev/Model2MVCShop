@@ -7,9 +7,11 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.common.util.CommonUtil;
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
@@ -171,12 +173,15 @@ public class PurchaseDAO {
 	//구매 목록 - 특정 유저가 구매한 상품만 조회
 	public Map<String,Object> getPurchaseList(Search search, String buyerId)  throws Exception {
 		
-		Purchase purchase = new Purchase();
+		
 		ProductDAO productDAO = new ProductDAO();
 		UserDao userDAO = new UserDao();		
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		Connection con = DBUtil.getConnection();
+		
+		
+		List<Purchase> list = new ArrayList<Purchase>();
 		
 		//특정 유저가 구매한 모든 상품을 선택한다.
 		String sql ="SELECT COUNT(tran_no) FROM  transaction WHERE buyer_id = ?";
@@ -185,20 +190,22 @@ public class PurchaseDAO {
 
 		ResultSet rs = pStmt.executeQuery();
 		
-		int total = 0;
+		int totalProductCount = 0;
 		
 		if(rs.next()) {
-			total = rs.getInt(1);
+			totalProductCount = rs.getInt(1);
 		}
 		
-		System.out.println("구매 횟수 :" + total);
+		System.out.println("전체 주문수:" + totalProductCount);		
+		map.put("count", new Integer(totalProductCount));
 		
-		map.put("count", new Integer(total));
+		System.out.println("현재 페이지: "+search.getCurrentPage());
+		System.out.println("페이지 사이즈: "+search.getPageSize());
 		
 		
 		/********************************************************/
 		
-		sql = "SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY transaction.tran_no) num, transaction.* "
+		sql = "SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY tran_no) num, transaction.* "
 				+ "FROM transaction WHERE buyer_id = ?)";
 		
 		sql += "WHERE num BETWEEN ? AND ?";
@@ -208,31 +215,34 @@ public class PurchaseDAO {
 		//구매한 유저의 이름을 넣는다.
 		pStmt.setString(1, buyerId);		
 		
-		pStmt.setInt(2, (search.getCurrentPage()-1)*search.getPageSize()+1);
+		pStmt.setInt(2, ((search.getCurrentPage()-1)*search.getPageSize())+1);
 		
 		pStmt.setInt(3, (search.getCurrentPage()*search.getPageSize()));	
 		
 		rs = pStmt.executeQuery();
 		
-		ArrayList<Purchase> list = new ArrayList<Purchase>();		
+				
 
 		
-		if(rs.next()) {			
-		purchase.setTranNo(rs.getInt("TRAN_NO"));
-		purchase.setPurchaseProd(productDAO.findProduct(rs.getInt("PROD_NO")));
-		purchase.setBuyer(userDAO.findUser(rs.getString("BUYER_ID")));
-		purchase.setPaymentOption(rs.getString("PAYMENT_OPTION"));
-		purchase.setReceiverName(rs.getString("RECEIVER_NAME"));
-		purchase.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
-		purchase.setDivyAddr(rs.getString("DLVY_ADDR"));
-		purchase.setDivyRequest(rs.getString("DLVY_REQUEST"));
-		purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
-		purchase.setOrderDate(rs.getDate("ORDER_DATE"));
+		while(rs.next()) {		
+			Purchase purchase = new Purchase();
+			purchase.setTranNo(rs.getInt("TRAN_NO"));
+			purchase.setPurchaseProd(productDAO.findProduct(rs.getInt("PROD_NO")));
+			purchase.setBuyer(userDAO.findUser(rs.getString("BUYER_ID")));
+			purchase.setPaymentOption(rs.getString("PAYMENT_OPTION"));
+			purchase.setReceiverName(rs.getString("RECEIVER_NAME"));
+			purchase.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
+			purchase.setDivyAddr(rs.getString("DLVY_ADDR"));
+			purchase.setDivyRequest(rs.getString("DLVY_REQUEST"));
+			purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
+			purchase.setOrderDate(rs.getDate("ORDER_DATE"));
+			
+			String date = CommonUtil.toDateStr(rs.getDate("DLVY_DATE"));
+			purchase.setDivyDate(date);
+			
+
 		
-		SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-DD");		
-		purchase.setDivyDate(form.format(rs.getDate("DLVY_DATE")));
-		
-		list.add(purchase);	
+			list.add(purchase);	
 		}
 		
 	

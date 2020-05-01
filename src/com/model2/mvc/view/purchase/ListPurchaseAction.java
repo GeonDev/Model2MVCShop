@@ -23,29 +23,34 @@ public class ListPurchaseAction extends Action{
 		Search search=new Search();
 		
 		User buyer = new User();
+		int currentPage=1;
 		
 		HttpSession session = request.getSession();		
-		buyer = (User)session.getAttribute("user");
-		
-		int page=1;
+		buyer = (User)session.getAttribute("user");		
+	
 		
 		//선택한 페이지가 있으면 해당 페이지로 세팅
-		if(request.getParameter("page") != null) {
-			page=Integer.parseInt(request.getParameter("page"));
+		if(request.getParameter("currentPage") != null) {
+			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}	
 		
-		search.setCurrentPage(page);
-
+		search.setCurrentPage(currentPage);		
 		
-		String pageUnit=getServletContext().getInitParameter("pageSize");
-		search.setPageSize(Integer.parseInt(pageUnit));
+		// web.xml  meta-data 로 부터 상수 추출 
+		int pageSize = Integer.parseInt( getServletContext().getInitParameter("pageSize"));
+		int pageUnit  =  Integer.parseInt(getServletContext().getInitParameter("pageUnit"));
+		search.setPageSize(pageSize);
+		search.setPageSize(pageUnit);
 		
 		PurchaseServiceImpl service = new PurchaseServiceImpl();
 		String buyerId = buyer.getUserId();
 		
 		Map<String,Object> map=service.getPurchaseList(search, buyerId);
-
-		request.setAttribute("map", map);
+		Page resultPage	= new Page( currentPage, ((Integer)map.get("count")).intValue(), pageUnit, pageSize);
+		
+		
+		request.setAttribute("list", map.get("list"));
+		request.setAttribute("resultPage", resultPage);
 		request.setAttribute("search", search);
 				
 		return "forward:/purchase/listPurchase.jsp";

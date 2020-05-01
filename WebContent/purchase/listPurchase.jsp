@@ -1,31 +1,18 @@
 <%@page import="com.model2.mvc.service.domain.*"%>
 <%@ page import="java.util.*"  %>
 <%@ page import="com.model2.mvc.common.*" %>
+<%@page import="com.model2.mvc.common.util.CommonUtil"%>
 
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 
 <%
-	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
-	Search search=(Search)request.getAttribute("search");
+	List<Purchase> list= (List<Purchase>)request.getAttribute("list");
+	Page resultPage=(Page)request.getAttribute("resultPage");
 	
-	int total=0;
-	ArrayList<Purchase> list=null;
-	if(map != null){
-		total=((Integer)map.get("count")).intValue();
-		list=(ArrayList<Purchase>)map.get("list");
-	}	
-	
-	int currentPage=search.getCurrentPage();
-	
-	int totalPage=0;
-	if(total > 0) {
-		//PageUnit: 한페이지에 몇개씩 보여줄지 결정
-		totalPage= total / search.getPageSize() ;
-		if(total%search.getPageSize() >0)
-	totalPage += 1;
-	}
+	Search search = (Search)request.getAttribute("search");
+	//==> null 을 ""(nullString)으로 변경
 %>
 
 
@@ -36,7 +23,8 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <script type="text/javascript">
-	function fncGetUserList() {
+	function funcGetPurchaseList(currentPage) {
+		document.getElementById("currentPage").value = currentPage;
 		document.detailForm.submit();
 	}
 </script>
@@ -46,7 +34,7 @@
 
 <div style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/listUser.do" method="post">
+<form name="detailForm" action="/listPurchase.do" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -133,14 +121,24 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
 	<tr>
 		<td align="center">
-		<%
-			for(int i=1;i<=totalPage;i++){
-		%>
-			<a href="/listPurchase.do?page=<%=i %>>"><%=i %></a> 
-		<%
-			}
-		%>
-		</td>
+		   <input type="hidden" id="currentPage" name="currentPage" value=""/>
+			<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
+					◀ 이전
+			<% }else{ %>
+					<a href="javascript:funcGetPurchaseList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
+			<% } %>
+
+			<%	for(int i=resultPage.getBeginUnitPage(); i<= resultPage.getEndUnitPage(); i++){	%>
+					<a href="javascript:funcGetPurchaseList('<%=i %>');"><%=i %></a>
+			<% 	}  %>
+	
+			<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
+					이후 ▶
+			<% }else{ %>
+					<a href="javascript:funcGetPurchaseList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
+			<% } %>
+		
+    	</td>
 	</tr>
 </table>
 

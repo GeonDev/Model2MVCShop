@@ -2,7 +2,7 @@ package com.model2.mvc.common.util;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 
 public class CommonUtil {
@@ -60,6 +60,18 @@ public class CommonUtil {
 			return sdf.format(new Date(date.getTime()));
 		}
 	}
+	
+	public static String toDateStr(Date date) {
+		if (date == null)
+			return "";
+		else {
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
+			return sdf.format(new Date(date.getTime()));
+		}
+	}
+	
+	
+	
 
 	public static String toSsnStr(String ssnStr) {
 		if (ssnStr == null)
