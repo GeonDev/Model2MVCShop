@@ -1,14 +1,10 @@
 <%@page import="com.model2.mvc.service.domain.*"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 
-<%
-	Product product = (Product)request.getAttribute("product");
-	session=request.getSession();
-	User user = (User)session.getAttribute("user");
-	String state = product.getProTranCode().trim();
-%>	
+	
 
 <script type="text/javascript">
 
@@ -157,44 +153,43 @@ function fncAddProduct(){
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-			
-		<%if(request.getParameter("menu").equals("search")){%>
-			<%if(user != null && state.equals("0")){%>
-				<td width="17" height="23">
-					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-				</td>
-		
-				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="/addPurchaseView.do?prod_no=<%=product.getProdNo()%>">구매</a>
-				</td>
-	
-				<td width="14" height="23">
-					<img src="/images/ct_btnbg03.gif" width="14" height="23">
-				</td>
-				<td width="30"></td>	
-							
-			<% }%>
-		
-				<td width="17" height="23">
-					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-				</td>
-				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="javascript:history.go(-1)">이전</a>
-				</td>
-				<td width="14" height="23">
-					<img src="/images/ct_btnbg03.gif" width="14" height="23">
-				</td>
+				<c:if test="${param.menu eq 'search'}">		
+					<c:if test="${!(empty user) && product.proTranCode == '0'}">
+						<td width="17" height="23">
+							<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
+						</td>
 				
-		<%}else if(request.getParameter("menu").equals("manage")){%>	
+						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
+							<a href="/addPurchaseView.do?prod_no=${product.prodNo}">구매</a>
+						</td>
 			
-			<td width="17" height="23">
+						<td width="14" height="23">
+							<img src="/images/ct_btnbg03.gif" width="14" height="23">
+						</td>								
+					</c:if>
+						<td width="30"></td>
+					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
-					<%if(product.getProTranCode().equals("0")) {%>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-						<a href="javascript:fncAddProduct();">수정</a>
+					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
+						<a href="javascript:history.go(-1)">이전</a>
 					</td>
-					<% }%>
+					<td width="14" height="23">
+						<img src="/images/ct_btnbg03.gif" width="14" height="23">
+					</td>
+				</c:if>
+	
+		
+			<c:if test="${menu eq 'manage'}">		
+			
+				<td width="17" height="23">
+					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
+					</td>
+						<c:if test="${product.proTranCode == '0'}">
+							<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
+								<a href="javascript:fncAddProduct();">수정</a>
+							</td>
+						</c:if>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
 					</td>
@@ -209,7 +204,8 @@ function fncAddProduct(){
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
 					</td>
 				
-		<%}%>		
+			</c:if>	
+			
 			</tr>
 		</table>
 

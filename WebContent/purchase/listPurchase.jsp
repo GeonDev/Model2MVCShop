@@ -2,18 +2,11 @@
 <%@ page import="java.util.*"  %>
 <%@ page import="com.model2.mvc.common.*" %>
 <%@page import="com.model2.mvc.common.util.CommonUtil"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
-
-<%
-	List<Purchase> list= (List<Purchase>)request.getAttribute("list");
-	Page resultPage=(Page)request.getAttribute("resultPage");
-	
-	Search search = (Search)request.getAttribute("search");
-	//==> null 을 ""(nullString)으로 변경
-%>
 
 
 <html>
@@ -23,7 +16,7 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <script type="text/javascript">
-	function funcGetPurchaseList(currentPage) {
+	function funcGetList(currentPage) {
 		document.getElementById("currentPage").value = currentPage;
 		document.detailForm.submit();
 	}
@@ -57,9 +50,9 @@
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">회원ID</td>
+		<td class="ct_list_b" width="150">상품이름</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">회원명</td>
+		<td class="ct_list_b" width="150">구매자</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">전화번호</td>
 		<td class="ct_line02"></td>
@@ -71,45 +64,58 @@
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 
-	<%
-		int no=list.size();
-			for(int i=0; i<list.size(); i++) {
-		Purchase purchase = (Purchase)list.get(i);
-		String state = (purchase.getTranCode()).trim();
-	%>	
+	<c:set var="i" value="0" />	
+	<c:forEach var="purchase" items="${list}">
+		<c:set var="i" value="${ i+1 }" />		
 	
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/getPurchase.do?tranNo=<%=purchase.getTranNo() %>"><%=i+1 %></a>
+			<a href="/getPurchase.do?tranNo=${purchase.tranNo}">${i}</a>
 		</td>
 		<td></td>
 		<td align="left">
-			<a href="/getUser.do?userId=<%=(purchase.getBuyer()).getUserId() %>"><%=(purchase.getBuyer()).getUserId() %></a>
+			<a href="/getProduct.do?prodNo=${(purchase.purchaseProd).prodNo}&menu=search">${(purchase.purchaseProd).prodName}</a>
 		</td>
 		<td></td>
-		<td align="left"><%=purchase.getReceiverName() %></td>
+		<td align="left">${purchase.receiverName}</td>
 		<td></td>
-		<td align="left"><%=purchase.getReceiverPhone() %></td>
+		<td align="left">${purchase.receiverPhone}</td>
 		<td></td>
 		<td align="left">현재
-			<%if(state.equals("1")){ %>	
-					구매완료
-			<%}else if(state.equals("2")){ %>
-					배송중
-			<% }else if(state.equals("3")){%>
-					배송완료
-			<% }%>
-				상태 입니다.</td>
+	 	<c:choose>
+
+		<c:when test="${(purchase.purchaseProd).proTranCode == '1'}">		
+			구매완료
+			</c:when>
+		<c:when test="${(purchase.purchaseProd).proTranCode == '2'}">
+			배송중
+		</c:when>
+		<c:when test="${(purchase.purchaseProd).proTranCode == '3'}">
+			배송완료 
+		</c:when>
+
+		</c:choose>
+			상태 입니다.</td>
 		<td></td>
+		
 		<td align="left">
-			<%if(state.equals("2")){ %>
-			<a href="/updateTranCode.do?tranNo=<%=purchase.getTranNo() %>&tranCode=3">물건도착</a>
-			<% }else if(state.equals("1")){%>
-				배송 대기중
-			<% }%>
+		
+			<c:choose>
+				<c:when test="${purchase.tranCode =='3'}">
+					배송 완료
+				</c:when>
+			
+				<c:when test="${purchase.tranCode =='2'}">
+					<a href="/updateTranCode.do?tranNo=${purchase.tranNo}&tranCode=3">도착 확인</a>
+				</c:when>
+				<c:when test="${purchase.tranCode =='1'}">
+					배송 대기중
+				</c:when>		
+			</c:choose>	
+
 		</td>
 		
-		<% }%>
+		</c:forEach>
 		
 	</tr>
 	<tr>
@@ -122,21 +128,7 @@
 	<tr>
 		<td align="center">
 		   <input type="hidden" id="currentPage" name="currentPage" value=""/>
-			<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
-					◀ 이전
-			<% }else{ %>
-					<a href="javascript:funcGetPurchaseList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
-			<% } %>
-
-			<%	for(int i=resultPage.getBeginUnitPage(); i<= resultPage.getEndUnitPage(); i++){	%>
-					<a href="javascript:funcGetPurchaseList('<%=i %>');"><%=i %></a>
-			<% 	}  %>
-	
-			<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
-					이후 ▶
-			<% }else{ %>
-					<a href="javascript:funcGetPurchaseList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
-			<% } %>
+			<jsp:include page="../common/pageNavigator.jsp"/>	
 		
     	</td>
 	</tr>

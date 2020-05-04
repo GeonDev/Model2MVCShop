@@ -50,6 +50,9 @@ public class ListProductAction extends Action {
 		request.setAttribute("list", map.get("list"));
 		request.setAttribute("resultPage", resultPage);
 		request.setAttribute("search", search);
+		
+		//requst에서 param으로 넘어온 값 세팅
+		request.setAttribute("menu", request.getParameter("menu"));
 				
 		return "forward:/product/listProduct.jsp";
 	}

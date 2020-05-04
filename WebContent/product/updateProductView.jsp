@@ -1,10 +1,7 @@
 <%@page import="com.model2.mvc.service.domain.*"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-    
-<%
-Product product = (Product)request.getAttribute("product");
-%>     
+ 
        
     
 <!DOCTYPE html>
@@ -14,7 +11,7 @@ Product product = (Product)request.getAttribute("product");
 <title>Insert title here</title>
 <html>
 <head>
-<title>회원정보수정</title>
+<title>상품 정보수정</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
