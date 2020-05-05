@@ -112,9 +112,20 @@
                          	</a>
                          </td>
                        </tr>
+	
                      </table>
                  </td>
                  <td width="20" height="20">&nbsp;</td>
+                </tr>
+                <tr>
+                	 <td width="30" height="100">&nbsp;</td>
+               		 <td width="100" height="100">&nbsp;</td>
+                	<td align = "center" valign="top">
+                   <c:if test="${loginState == false}">
+           				<b style="color:red; font-size: 11px;">아이디 또는 비밀번호 오류 입니다.</b>
+           			</c:if>
+           			</td>
+           			<td width="20" height="20">&nbsp;</td>
                 </tr>
               </table>
             </td>

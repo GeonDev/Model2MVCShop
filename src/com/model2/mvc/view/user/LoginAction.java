@@ -21,15 +21,16 @@ public class LoginAction extends Action{
 		
 		UserService userService=new UserServiceImpl();
 		User dbUser=userService.loginUser(user);
-		System.out.println("전달된 값" + dbUser);
-		
+	
 		HttpSession session=request.getSession();
 		session.setAttribute("user", dbUser);
 		
+		
 		if(dbUser !=null) {		
-			
+			request.setAttribute("loginState", true);
 			return "redirect:/index.jsp";	
-		}else {			
+		}else {		
+			request.setAttribute("loginState", false);
 			return "forward:/user/loginView.jsp";
 		}
 		
