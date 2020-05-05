@@ -145,10 +145,7 @@ insert into product values (seq_product_prod_no.nextval,'삼성센스 2G','sens 메모
 insert into product values (seq_product_prod_no.nextval,'연꽃','정원을 가꿔보세요','20121022',232300, 'AHlbAAAAtDPSiQAA.jpg',to_date('2012/11/15', 'YYYY/MM/DD'));
 insert into product values (seq_product_prod_no.nextval,'삼성센스','노트북','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12', 'YYYY/MM/DD'));
 
-insert into product values (seq_product_prod_no.nextval,'삼성 갤럭시 A','스마트폰','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12', 'YYYY/MM/DD'));
-
-
-
-
+insert into product values (seq_product_prod_no.nextval,'삼성 갤럭시 A','스마트폰','20120212',600000, 'galaxyA.jpg',to_date('2012/11/12', 'YYYY/MM/DD'));
+insert into product values (seq_product_prod_no.nextval,'소니 A7R3','미러리스','20190312',32000000, 'A7R3.jpg',to_date('2018/12/24', 'YYYY/MM/DD'));
 
 commit;
