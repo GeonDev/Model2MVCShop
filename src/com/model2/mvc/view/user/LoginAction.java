@@ -29,8 +29,7 @@ public class LoginAction extends Action{
 		if(dbUser !=null) {		
 			
 			return "redirect:/index.jsp";	
-		}else {	
-			
+		}else {			
 			return "forward:/user/loginView.jsp";
 		}
 		

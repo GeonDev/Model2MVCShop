@@ -54,8 +54,13 @@ public class PurchaseDAO {
 		purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
 		purchase.setOrderDate(rs.getDate("ORDER_DATE"));		
 		
-		String date = rs.getDate("DLVY_DATE").toString();
-		purchase.setDivyDate(date);
+		if(rs.getDate("DLVY_DATE") !=null) {
+			String date = rs.getDate("DLVY_DATE").toString();
+			purchase.setDivyDate(date);
+		}else {
+			purchase.setDivyDate(null);
+		}
+		
 		}			
 		
 		con.close();
@@ -237,9 +242,12 @@ public class PurchaseDAO {
 			purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
 			purchase.setOrderDate(rs.getDate("ORDER_DATE"));
 			
+			if(rs.getDate("DLVY_DATE") !=null) {
 			String date = CommonUtil.toDateStr(rs.getDate("DLVY_DATE"));
 			purchase.setDivyDate(date);
-			
+			}else {
+				purchase.setDivyDate(null);
+			}	
 
 		
 			list.add(purchase);	
@@ -314,12 +322,13 @@ public class PurchaseDAO {
 		purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
 		purchase.setOrderDate(rs.getDate("ORDER_DATE"));
 		
-		SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-DD");		
-		purchase.setDivyDate(form.format(rs.getDate("DLVY_DATE")));
-		
-		list.add(purchase);	
+			if(rs.getDate("DLVY_DATE") !=null) {
+			String date = CommonUtil.toDateStr(rs.getDate("DLVY_DATE"));
+			purchase.setDivyDate(date);
+			}else {
+				purchase.setDivyDate(null);
+			}
 		}
-		
 	
 		System.out.println("list.size() : "+ list.size());
 		map.put("list", list);
@@ -330,7 +339,7 @@ public class PurchaseDAO {
 		con.close();	
 		
 		return map;
-	}	
-	
-	
+	}		
 }
+	
+
