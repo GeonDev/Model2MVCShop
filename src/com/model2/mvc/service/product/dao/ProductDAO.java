@@ -11,6 +11,7 @@ import java.util.Map;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.common.util.DBUtil;
+import com.model2.mvc.common.util.CommonUtil;
 import com.model2.mvc.service.domain.Product;
 
 import sun.nio.ch.SelChImpl;
@@ -175,13 +176,13 @@ public class ProductDAO {
 		
 		if(search.getSearchCondition()!=null) {			
 			//상품 번호로 검색
-			if (search.getSearchCondition().equals("0") && !search.getSearchKeyword().equals("")) {
+			if (search.getSearchCondition().equals("0") && CommonUtil.checkNumber(search.getSearchKeyword())) {
 				sql += " WHERE product.prod_no ='" + Integer.parseInt(search.getSearchKeyword())+ "'";
 			//상품 이름을 기준으로 조회
 			} else if (search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {				
 				sql += " WHERE product.prod_name like '%" + search.getSearchKeyword() + "%'";
 			//상품 가격으로 조회
-			}else if(search.getSearchCondition().equals("2") && !search.getSearchKeyword().equals("")) {
+			}else if(search.getSearchCondition().equals("2") && CommonUtil.checkNumber(search.getSearchKeyword())) {
 				sql += " WHERE product.price ='" + Integer.parseInt(search.getSearchKeyword()) + "'";
 			}			
 		}	

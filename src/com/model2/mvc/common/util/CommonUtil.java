@@ -115,4 +115,25 @@ public class CommonUtil {
 			return toAmountStr(amount.toString());
 		}
 	}
+	
+	public static boolean checkNumber(String str) {
+		
+		if(str.equals("") || str==null) {
+			
+			return false;
+		}		
+		
+		
+		for(int i =0; i<str.length();i++) {
+			char c = str.charAt(i);
+			if(c<48 || c>59) {
+				return false;
+			}
+		}		
+		
+		return true;
+		
+	}
+	
+	
 }
