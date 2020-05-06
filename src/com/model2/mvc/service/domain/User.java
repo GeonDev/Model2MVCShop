@@ -15,11 +15,20 @@ public class User {
 	private String addr;
 	private String email;
 	private Date regDate;
+	private int loginState;
 	
 	///Constructor
 	public User(){
 	}
 	
+	public int getLoginState() {
+		return loginState;
+	}
+
+	public void setLoginState(int loginState) {
+		this.loginState = loginState;
+	}
+
 	///Method 
 	public String getUserId() {
 		return userId;

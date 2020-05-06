@@ -26,8 +26,8 @@ public class LoginAction extends Action{
 		session.setAttribute("user", dbUser);	
 		
 		
-		if(dbUser !=null) {		
-	
+		if(dbUser !=null && dbUser.getLoginState() == 0 ) {		
+			System.out.println("¿©±â·Î ¿È");
 			return "redirect:/index.jsp";	
 		}else {			
 			return "redirect:/user/loginfailView.jsp";

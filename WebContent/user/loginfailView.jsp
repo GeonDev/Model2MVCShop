@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +10,15 @@
 </head>
 <body>
 	<script>
-		alert('아이디 또는 비밀번호가 다릅니다.');
+	
+		var session ="<c:out value="${user.loginState}"/>"; 		
+	
+		if(session == 1){
+			alert('입력하신 비밀번호가 다릅니다.');
+		}else {
+			alert('일치하는 아이디가 없습니다.');				
+		}		
+		
 		 history.go(-1);
 	 </script>";
 
