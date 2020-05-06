@@ -1,6 +1,7 @@
 package com.model2.mvc.framework;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,8 +42,10 @@ public class ActionServlet extends HttpServlet {
 			
 			if(resultPage.startsWith("forward:")){
 				HttpUtil.forward(request, response, path);
-			}else{
+			}else if(resultPage.startsWith("redirect:")){
 				HttpUtil.redirect(response, path);
+			}else {
+					System.out.println("잘못된 path 구조가 전달됨");
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();

@@ -1,5 +1,7 @@
 package com.model2.mvc.common.util;
 
+import java.io.PrintWriter;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,4 +34,5 @@ public class HttpUtil {
 			throw new RuntimeException("redirect ¿À·ù  : " + ex);
 		}
 	}
+	
 }

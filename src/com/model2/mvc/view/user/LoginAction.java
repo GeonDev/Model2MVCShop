@@ -23,18 +23,15 @@ public class LoginAction extends Action{
 		User dbUser=userService.loginUser(user);
 	
 		HttpSession session=request.getSession();
-		session.setAttribute("user", dbUser);
+		session.setAttribute("user", dbUser);	
 		
 		
 		if(dbUser !=null) {		
-			request.setAttribute("loginState", true);
-			return "redirect:/index.jsp";	
-		}else {		
-			request.setAttribute("loginState", false);
-			return "forward:/user/loginView.jsp";
-		}
-		
-		
 	
+			return "redirect:/index.jsp";	
+		}else {			
+			return "redirect:/user/loginfailView.jsp";
+					
+		}	
 	}
 }
