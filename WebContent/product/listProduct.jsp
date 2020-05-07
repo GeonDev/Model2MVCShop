@@ -64,6 +64,15 @@ function funcGetList(currentPage){
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
+	
+			
+		<td align="left">
+			<select name="searchOrder" class="ct_input_g" style="width:90px">	
+				<option value="0"  ${ ! empty search.searchOrder && search.searchOrder==0 ? "selected" : "" }>낮은가격순</option>
+				<option value="1"  ${ ! empty search.searchOrder && search.searchOrder==1 ? "selected" : "" }>높은가격순</option>
+				<option value="2"  ${ ! empty search.searchOrder && search.searchOrder==2 ? "selected" : "" }>최신등록순</option>
+			</select>			
+		</td>
 		
 		<td align="right">
 			<select name="searchCondition" class="ct_input_g" style="width:80px">	

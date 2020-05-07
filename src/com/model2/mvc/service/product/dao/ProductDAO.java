@@ -81,6 +81,7 @@ public class ProductDAO {
 		
 		System.out.println("검색 조건 : "+search.getSearchCondition());
 		System.out.println("검색 키워드 : "+search.getSearchKeyword());
+		System.out.println("검색 정렬 : "+search.getSearchOrder());
 		System.out.println("현재 페이지: "+search.getCurrentPage());
 		System.out.println("페이지 사이즈: "+search.getPageSize());
 						
@@ -189,6 +190,16 @@ public class ProductDAO {
 		
 		sql += ") WHERE num BETWEEN "+ (((search.getCurrentPage()-1)*search.getPageSize())+1)+ "AND " + search.getCurrentPage()*search.getPageSize();
 		
+		if(search.getSearchOrder() !=null) {
+		
+			if(search.getSearchOrder().equals("0")) {
+				sql += "ORDER BY price ";
+			}else if(search.getSearchOrder().equals("1")) {
+				sql += "ORDER BY price DESC";
+			}else if(search.getSearchOrder().equals("2")) {
+				sql += "ORDER BY prod_no DESC";
+			}
+		}
 		
 		return sql;
 		
