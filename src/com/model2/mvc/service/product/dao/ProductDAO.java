@@ -114,8 +114,7 @@ public class ProductDAO {
 		
 		return map;		
 	}
-	
-	
+		
 	
 	//상품정보를 수정한다.
 	public void updateProduct(Product product) throws Exception {
@@ -184,19 +183,23 @@ public class ProductDAO {
 				sql += " WHERE product.prod_name like '%" + search.getSearchKeyword() + "%'";
 			//상품 가격으로 조회
 			}else if(search.getSearchCondition().equals("2") && CommonUtil.checkNumber(search.getSearchKeyword())) {
-				sql += " WHERE product.price ='" + Integer.parseInt(search.getSearchKeyword()) + "'";
+				if(CommonUtil.checkNumber(search.getSearchKeywordOptional())) {
+					sql += " WHERE product.price >='" + Integer.parseInt(search.getSearchKeyword()) + "'";
+				}else {
+					sql += " WHERE product.price BETWEEN '" + Integer.parseInt(search.getSearchKeyword()) + "' AND '" + Integer.parseInt(search.getSearchKeywordOptional()) +"'";
+				}
 			}			
 		}	
 		
 		sql += ") WHERE num BETWEEN "+ (((search.getCurrentPage()-1)*search.getPageSize())+1)+ "AND " + search.getCurrentPage()*search.getPageSize();
 		
-		if(search.getSearchOrder() !=null) {
-		
-			if(search.getSearchOrder().equals("0")) {
+		if(search.getSearchOrder() !=null) {			
+			// 기본순(0)일때는 정렬을 하지 않습니다 
+			if(search.getSearchOrder().equals("1")) {
 				sql += "ORDER BY price ";
-			}else if(search.getSearchOrder().equals("1")) {
-				sql += "ORDER BY price DESC";
 			}else if(search.getSearchOrder().equals("2")) {
+				sql += "ORDER BY price DESC";
+			}else if(search.getSearchOrder().equals("3")) {
 				sql += "ORDER BY prod_no DESC";
 			}
 		}

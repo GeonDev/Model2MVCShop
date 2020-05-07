@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.common.util.CommonUtil;
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
@@ -29,7 +30,9 @@ public class ListProductAction extends Action {
 		
 		search.setCurrentPage(currentPage);
 		search.setSearchCondition(request.getParameter("searchCondition"));
-		search.setSearchKeyword(request.getParameter("searchKeyword"));
+		search.setSearchKeyword(request.getParameter("searchKeyword"));	
+		
+		search.setSearchKeywordOptional(request.getParameter("searchKeywordOptional"));
 		search.setSearchOrder(request.getParameter("searchOrder"));
 		
 		

@@ -20,9 +20,23 @@
 
 <script type="text/javascript">
 
+
+
 function funcGetList(currentPage){
 	document.getElementById("currentPage").value = currentPage;
 	document.detailForm.submit();
+}
+
+function changeSearchCondition(){
+	var condition =  document.getElementById("Condition").value;
+	
+	if(condition == 2){
+		document.getElementById("Keyword").style.width = "80px";
+		document.getElementById("optional").type = "text";
+	}else{
+		document.getElementById("Keyword").style.width = "200px";
+		document.getElementById("optional").type = "hidden";
+	}
 }
 
 </script>
@@ -68,19 +82,23 @@ function funcGetList(currentPage){
 			
 		<td align="left">
 			<select name="searchOrder" class="ct_input_g" style="width:90px">	
-				<option value="0"  ${ ! empty search.searchOrder && search.searchOrder==0 ? "selected" : "" }>낮은가격순</option>
-				<option value="1"  ${ ! empty search.searchOrder && search.searchOrder==1 ? "selected" : "" }>높은가격순</option>
-				<option value="2"  ${ ! empty search.searchOrder && search.searchOrder==2 ? "selected" : "" }>최신등록순</option>
+				<option value="0"  ${ ! empty search.searchOrder && search.searchOrder==0 ? "selected" : "" }>기본순</option>
+				<option value="1"  ${ ! empty search.searchOrder && search.searchOrder==1 ? "selected" : "" }>낮은가격순</option>
+				<option value="2"  ${ ! empty search.searchOrder && search.searchOrder==2 ? "selected" : "" }>높은가격순</option>
+				<option value="3"  ${ ! empty search.searchOrder && search.searchOrder==3 ? "selected" : "" }>최신등록순</option>
 			</select>			
 		</td>
 		
 		<td align="right">
-			<select name="searchCondition" class="ct_input_g" style="width:80px">	
+			<select id="Condition" name="searchCondition" onclick="changeSearchCondition()" class="ct_input_g" style="width:80px">	
 				<option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" } >상품번호</option>
 				<option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" } >상품명</option>
 				<option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>상품가격</option>
 			</select>
-			<input type="text" name="searchKeyword" value="${search.searchKeyword}" class="ct_input_g" style="width:200px; height:19px" />
+
+			<input id="Keyword" type="text" name="searchKeyword" value="${search.searchKeyword}" class="ct_input_g" style="width:200px; height:15px"/>
+				
+			<input id="optional" type="hidden" name="searchKeywordOptional" value="${search.searchKeywordOptional}" class="ct_input_g" style="width:80px; height:15px" />			
 		</td>
 	
 		

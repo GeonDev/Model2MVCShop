@@ -7,6 +7,7 @@ public class Search {
 	private int curruntPage;
 	private String searchCondition;
 	private String searchKeyword;
+	private String searchKeywordOptional;
 	private String searchOrder;
 	private int pageSize;
 	
@@ -50,6 +51,14 @@ public class Search {
 
 	public void setSearchOrder(String searchOrder) {
 		this.searchOrder = searchOrder;
+	}
+
+	public String getSearchKeywordOptional() {
+		return searchKeywordOptional;
+	}
+
+	public void setSearchKeywordOptional(String searchKeywordOptional) {
+		this.searchKeywordOptional = searchKeywordOptional;
 	}
 
 	@Override
