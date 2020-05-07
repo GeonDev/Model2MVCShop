@@ -42,7 +42,7 @@ function changeSearchCondition(){
 </script>
 </head>
 
-<body bgcolor="#ffffff" text="#000000">
+<body bgcolor="#ffffff" text="#000000" onload = "changeSearchCondition()">
 
 <div style="width:98%; margin-left:10px;">
 
@@ -96,9 +96,9 @@ function changeSearchCondition(){
 				<option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>상품가격</option>
 			</select>
 
-			<input id="Keyword" type="text" name="searchKeyword" value="${search.searchKeyword}" class="ct_input_g" style="width:200px; height:15px"/>
-				
+			<input id="Keyword" type="text" name="searchKeyword" value="${search.searchKeyword}" class="ct_input_g" style="width:200px; height:15px"/>									
 			<input id="optional" type="hidden" name="searchKeywordOptional" value="${search.searchKeywordOptional}" class="ct_input_g" style="width:80px; height:15px" />			
+			
 		</td>
 	
 		
