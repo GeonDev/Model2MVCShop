@@ -182,10 +182,13 @@ public class ProductDAO {
 			} else if (search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {				
 				sql += " WHERE product.prod_name like '%" + search.getSearchKeyword() + "%'";
 			//상품 가격으로 조회
-			}else if(search.getSearchCondition().equals("2") && CommonUtil.checkNumber(search.getSearchKeyword())) {
-				if(CommonUtil.checkNumber(search.getSearchKeywordOptional())) {
+			}else if(search.getSearchCondition().equals("2")) {
+				if(CommonUtil.checkNumber(search.getSearchKeyword()) && !CommonUtil.checkNumber(search.getSearchKeywordOptional())) {
 					sql += " WHERE product.price >='" + Integer.parseInt(search.getSearchKeyword()) + "'";
-				}else {
+				}else if(!CommonUtil.checkNumber(search.getSearchKeyword()) && CommonUtil.checkNumber(search.getSearchKeywordOptional())) {
+					sql += " WHERE product.price <='" + Integer.parseInt(search.getSearchKeywordOptional()) + "'";
+					
+				}else if(CommonUtil.checkNumber(search.getSearchKeyword()) && CommonUtil.checkNumber(search.getSearchKeywordOptional()) ) {
 					sql += " WHERE product.price BETWEEN '" + Integer.parseInt(search.getSearchKeyword()) + "' AND '" + Integer.parseInt(search.getSearchKeywordOptional()) +"'";
 				}
 			}			
