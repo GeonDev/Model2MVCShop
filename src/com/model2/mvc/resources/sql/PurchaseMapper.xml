@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ 					
+<mapper namespace="PurchaseMapper">
+  	
+  	  	<resultMap type="com.model2.mvc.service.domain.Purchase" id="purchaseSelectMap">
+	  		<result property="tranNo" column="tran_no" jdbcType="NUMERIC"/>
+	  		<result property="paymentOption" column="payment_option" jdbcType="VARCHAR"/>
+	  		<result property="receiverName" column="receiver_name" jdbcType="VARCHAR"/>
+	  		<result property="receiverPhone" column="receiver_phone" jdbcType="VARCHAR"/>
+	  		<result property="divyAddr" column="dlvy_addr" jdbcType="VARCHAR"/>
+	  		<result property="divyRequest" column="dlvy_request" jdbcType="VARCHAR"/>
+	  		<result property="tranCode" column="tran_status_code" jdbcType="VARCHAR"/>
+	  		<result property="orderDate" column="order_date" jdbcType="DATE"/>	  		
+	  		<result property="divyDate" column="dlvy_date" jdbcType="DATE"/>  	
+  		</resultMap> 	  	
+  	
+  		<select id="getPurchaseList" resultMap="purchaseSelectMap">
+  			SELECT tran_no, payment_option, receiver_name, receiver_phone, dlvy_addr, dlvy_request, tran_status_code, order_date, dlvy_date   			
+  			FROM transaction  		
+  		</select>		
+
+  	
+</mapper>

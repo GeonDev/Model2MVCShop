@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ 					
+<mapper namespace="ProductMapper">
+  	
+  	  	<resultMap type="com.model2.mvc.service.domain.Product" id="productSelectMap">
+	  		<result property="prodNo" column="prod_no" jdbcType="NUMERIC"/>
+	  		<result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
+	  		<result property="prod_detail" column="prodDetail" jdbcType="VARCHAR"/>
+	  		<result property="manuDate" column="manufacture_day" jdbcType="VARCHAR"/>
+	  		<result property="price" column="price" jdbcType="NUMERIC"/>
+	  		<result property="image_file" column="fileName" jdbcType="VARCHAR"/>
+	  		<result property="regDate" column="reg_date" jdbcType="DATE"/>	  			
+  		</resultMap> 	  	
+  	 	
+</mapper>
