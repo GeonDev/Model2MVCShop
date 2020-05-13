@@ -32,10 +32,10 @@ public class ProdServiceTest {
 
 	//==>@RunWith,@ContextConfiguration 이용 Wiring, Test 할 instance DI
 	@Autowired
-	@Qualifier("prodServiceImpl")
+	@Qualifier("productServiceImpl")
 	private ProductService prodService;
 
-	@Test
+	//@Test
 	public void testAddProd() throws Exception {
 		
 	
@@ -44,6 +44,8 @@ public class ProdServiceTest {
 		prod.setProdName("testProd");
 		prod.setProdDetail("test Script");
 		prod.setPrice(1000);	
+		prod.setManuDate("20200505");
+		prod.setFileName("a7.jpg");
 		
 		prodService.addProduct(prod);
 		
@@ -51,8 +53,55 @@ public class ProdServiceTest {
 
 		
 		//==> API 확인
-		Assert.assertEquals("testUserId", prod.getProdNo());
+		Assert.assertEquals("testUserId", prod.getProdName());
 
 	} 
-	 
+	
+	//@Test
+	public void testGetProd() throws Exception {
+		
+		Product prod = prodService.getProduct(10000);
+		
+		//int 형으로 반환하게 했습니다.
+		Assert.assertEquals(10000, prod.getProdNo());
+		
+	}
+	
+	//@Test
+	public void updateProd() throws Exception{
+		
+		Product prod = new Product();
+		
+		prod.setProdName("test");
+		prod.setProdDetail("test");
+		prod.setManuDate("20200505");
+		prod.setPrice(1000);
+		prod.setFileName("A.jpg");
+		
+	}
+	
+	@Test
+	public void getListAll() throws Exception{
+		
+		Search search = new Search();
+	 	search.setCurrentPage(1);
+	 	search.setPageSize(3);
+	 	search.setSearchCondition("1");
+	 	search.setSearchKeyword("a");
+	 	search.setSearchOrder("1");
+	 	
+	 	Map<String,Object> map = prodService.getProductList(search);
+	 	
+	 	List<Object> list = (List<Object>)map.get("list");
+	 	
+	 	
+	 	Integer totalCount = (Integer)map.get("count");
+	 	System.out.println(totalCount);
+	 	System.out.println(list);
+	 	
+	 	Assert.assertNotNull(list);
+	 	System.out.println("==============================");
+	 	
+	 	
+	}
 }

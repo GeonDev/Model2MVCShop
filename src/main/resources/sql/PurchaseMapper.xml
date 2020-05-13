@@ -17,8 +17,22 @@
 		<result property="tranCode" 		column="tran_status_code" 	jdbcType="VARCHAR" />
 		<result property="orderDate" 		column="order_date" 		jdbcType="DATE"  />
 		<result property="divyDate" 		column="dlvy_date" 			jdbcType="DATE" />
+		<collection property="buyer" 		resultMap="userSelectMap"/>
+		<collection property="purchaseProd" resultMap="prodSelectMap"/>
 	</resultMap>
 	
+
+
+
+	<select id="getPurchaseTransNo" parameterType="int"  resultMap="purchaseSelectMap">
+		SELECT * FROM TRANSACTION WHERE TRAN_NO = #{value}	
+	</select>
+	
+	<select id="getPurchaseProdNo" parameterType="int"  resultMap="purchaseSelectMap">
+		SELECT * FROM TRANSACTION WHERE PROD_NO = #{value}	
+	</select>
+
+
 
 	 
 </mapper>

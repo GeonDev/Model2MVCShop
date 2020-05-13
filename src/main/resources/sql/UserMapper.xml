@@ -41,8 +41,8 @@
 	   	<set>
 	   		user_name 	= #{userName} ,
 			cell_phone	= #{phone},
-			addr 				= #{addr} ,
-			email				=	#{email}
+			addr 		= #{addr} ,
+			email		= #{email}
 	   	</set>
 	   	WHERE user_id = #{userId}
 	 </update>

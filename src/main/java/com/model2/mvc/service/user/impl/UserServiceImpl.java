@@ -26,11 +26,7 @@ public class UserServiceImpl implements UserService{
 	
 	
 	///Constructor
-	public UserServiceImpl() {
-		System.out.println("UserDao"+   userDao.getClass());
-		
-		//나중에 삭제해야할 내용
-		userDao = new UserDaoImpl();
+	public UserServiceImpl() {			
 	}
 
 	///Method

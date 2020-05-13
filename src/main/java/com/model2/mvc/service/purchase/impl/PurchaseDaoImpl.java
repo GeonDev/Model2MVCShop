@@ -10,6 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
+
 import com.model2.mvc.common.Search;
 import com.model2.mvc.common.util.CommonUtil;
 import com.model2.mvc.common.util.DBUtil;
@@ -21,7 +26,12 @@ import com.model2.mvc.service.purchase.PurchaseDAO;
 import com.model2.mvc.service.user.UserDao;
 import com.model2.mvc.service.user.impl.UserDaoImpl;
 
+@Repository("purchaseDaoImpl")
 public class PurchaseDaoImpl implements PurchaseDAO {
+	
+	@Autowired
+	@Qualifier("sqlSessionTemplate")
+	SqlSession sqlSession;
 	
 	//기본 생성자 명시	
 	public PurchaseDaoImpl () {	}

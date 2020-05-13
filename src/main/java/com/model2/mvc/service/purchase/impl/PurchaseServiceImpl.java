@@ -1,10 +1,14 @@
 package com.model2.mvc.service.purchase.impl;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Purchase;
+import com.model2.mvc.service.purchase.PurchaseDAO;
 import com.model2.mvc.service.purchase.PurchaseService;
 
 
@@ -12,13 +16,17 @@ import com.model2.mvc.service.purchase.PurchaseService;
 // 두 레이어간에 커플링 관계를 줄이기 위한 중간 메소드
 // 캡술화 =>  절차 은닉
 
+@Service("purchaseServiceImpl")
 public class PurchaseServiceImpl implements PurchaseService{
 	
-	private PurchaseDaoImpl purchaseDAO;
+	
+	@Autowired
+	@Qualifier("purchaseDaoImpl")
+	private PurchaseDAO purchaseDAO;
+	
 
 	//기본 생성자 추가
-	public PurchaseServiceImpl() {
-		purchaseDAO = new PurchaseDaoImpl();
+	public PurchaseServiceImpl() {		
 	}	
 	
 	@Override

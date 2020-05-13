@@ -21,7 +21,7 @@
 
 	<select id="getProduct" parameterType ="int" resultMap="prodSelectMap" >
 		SELECT
-		prod_no, prod_name, prod_detail, manufacture_day, price, image_file, reg_date 
+		prod_no, prod_name, prod_detail, manufacture_day, price, image_file, reg_date, 
 		NVL((SELECT transaction.tran_status_code FROM transaction WHERE transaction.prod_no = product.prod_no) ,'0') AS TRAN_CODE
 		FROM product		
 		WHERE product.prod_no = #{value}	
@@ -30,7 +30,7 @@
 	
 	<select id="getProductName" parameterType ="string" resultMap="prodSelectMap" >
 		SELECT
-		prod_no, prod_name, prod_detail, manufacture_day, price, image_file, reg_date 
+		prod_no, prod_name, prod_detail, manufacture_day, price, image_file, reg_date, 
 		NVL((SELECT transaction.tran_status_code FROM transaction WHERE transaction.prod_no = product.prod_no) ,'0') AS TRAN_CODE
 		FROM product		
 		WHERE product.prod_name = #{value}	
@@ -41,14 +41,14 @@
 	
 	<update id="updateProduct" parameterType="product">
 		UPDATE product 
-		SET prod_name= #{prodName}, prod_detail= #{prodDetail}, manufacture_day= #{manuDate}, price= #{price}, image_file = #{fileName} 
+		SET prod_name= #{prodName:VARCHAR}, prod_detail= #{prodDetail:VARCHAR}, manufacture_day= #{manuDate:VARCHAR}, price= #{price:NUMERIC}, image_file = #{fileName:VARCHAR} 
 		WHERE PROD_NO= #{prod_no}	
 	</update>
 	
 	
 	<insert id="insertProduct" parameterType="product">
 		INSERT INTO product 
-		VALUES(seq_product_prod_no.nextval, #{prodName}, #{prodDetail}, #{manuDate}, #{price}, #{fileName}, SYSDATE)	
+		VALUES(seq_product_prod_no.nextval, #{prodName:VARCHAR}, #{prodDetail:VARCHAR}, #{manuDate:VARCHAR}, #{price:NUMERIC}, #{fileName:VARCHAR}, SYSDATE)	
 	</insert>
 	
 	
@@ -100,7 +100,7 @@
 				</if>
 				
 				<if test="searchCondition == 1">
-					prod_name like '%'|| #{searchKeyword} ||'%'
+					prod_name like '%'||#{searchKeyword}||'%'
 				</if>
 				
 				<if test="searchCondition == 2">

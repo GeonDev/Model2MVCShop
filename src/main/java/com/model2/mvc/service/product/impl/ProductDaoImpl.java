@@ -80,52 +80,8 @@ public class ProductDaoImpl implements ProductDao {
 		
 		sqlSession.insert("ProductMapper.insertProduct", product);
 		
-	}
-	
-	
-	private String returnQarry(Search search) {		
-		
-		String sql = "SELECT  *  FROM "
-				+ "(SELECT ROW_NUMBER() OVER(ORDER BY product.prod_no) num, product.*, "
-				+ "NVL((SELECT tran_status_code FROM transaction WHERE transaction.prod_no = product.prod_no),'0') tran_code FROM product";	
+	}	
 
-		
-		if(search.getSearchCondition()!=null) {			
-			//상품 번호로 검색
-			if (search.getSearchCondition().equals("0") && CommonUtil.checkNumber(search.getSearchKeyword())) {
-				sql += " WHERE product.prod_no ='" + Integer.parseInt(search.getSearchKeyword())+ "'";
-			//상품 이름을 기준으로 조회
-			} else if (search.getSearchCondition().equals("1") && !search.getSearchKeyword().equals("")) {				
-				sql += " WHERE product.prod_name like '%" + search.getSearchKeyword() + "%'";
-			//상품 가격으로 조회
-			}else if(search.getSearchCondition().equals("2")) {
-				if(CommonUtil.checkNumber(search.getSearchKeyword()) && !CommonUtil.checkNumber(search.getSearchKeywordOptional())) {
-					sql += " WHERE product.price >='" + Integer.parseInt(search.getSearchKeyword()) + "'";
-				}else if(!CommonUtil.checkNumber(search.getSearchKeyword()) && CommonUtil.checkNumber(search.getSearchKeywordOptional())) {
-					sql += " WHERE product.price <='" + Integer.parseInt(search.getSearchKeywordOptional()) + "'";
-					
-				}else if(CommonUtil.checkNumber(search.getSearchKeyword()) && CommonUtil.checkNumber(search.getSearchKeywordOptional()) ) {
-					sql += " WHERE product.price BETWEEN '" + Integer.parseInt(search.getSearchKeyword()) + "' AND '" + Integer.parseInt(search.getSearchKeywordOptional()) +"'";
-				}
-			}			
-		}	
-		
-		sql += ") WHERE num BETWEEN "+ (((search.getCurrentPage()-1)*search.getPageSize())+1)+ "AND " + search.getCurrentPage()*search.getPageSize();
-		
-		if(search.getSearchOrder() !=null) {			
-			// 기본순(0)일때는 정렬을 하지 않습니다 
-			if(search.getSearchOrder().equals("1")) {
-				sql += "ORDER BY price ";
-			}else if(search.getSearchOrder().equals("2")) {
-				sql += "ORDER BY price DESC";
-			}else if(search.getSearchOrder().equals("3")) {
-				sql += "ORDER BY prod_no DESC";
-			}
-		}
-		
-		return sql;
-		
-	}
 
 	@Override
 	public Product findProductName(String prodName) throws Exception {
