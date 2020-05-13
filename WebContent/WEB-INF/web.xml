@@ -35,7 +35,7 @@
 		<servlet-class>com.model2.mvc.framework.ActionServlet</servlet-class>
 		<init-param>
 			<param-name>resources</param-name>
-			<param-value>com/model2/mvc/resources/actionmapping.properties</param-value>
+			<param-value>/main/resources/config/actionmapping.properties</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
