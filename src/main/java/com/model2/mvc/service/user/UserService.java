@@ -12,11 +12,8 @@ public interface UserService {
 	// 회원가입
 	public void addUser(User user) throws Exception;
 	
-	// 내정보확인 
+	// 내정보확인 / 로그인
 	public User getUser(String userId) throws Exception;
-	
-	// 로그인 정보 확인
-	public User loginUser(User user) throws Exception;
 	
 	// 회원정보리스트 
 	public Map<String , Object> getUserList(Search search) throws Exception;

@@ -1,19 +1,21 @@
 package com.model2.mvc.common;
 
 
+//==>리스트화면을 모델링(추상화/캡슐화)한 Bean 
 public class Search {
 	
 	///Field
-	private int curruntPage;
+	private int currentPage;
 	private String searchCondition;
 	private String searchKeyword;
+	private int pageSize;
+	
 	private String searchKeywordOptional;
 	private String searchOrder;
-	private int pageSize;
 	
 	private int endRowNum;
 	private int startRowNum;
-
+	
 	///Constructor
 	public Search() {
 	}
@@ -27,10 +29,10 @@ public class Search {
 	}
 	
 	public int getCurrentPage() {
-		return curruntPage;
+		return currentPage;
 	}
-	public void setCurrentPage(int curruntPage) {
-		this.curruntPage = curruntPage;
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 
 	public String getSearchCondition() {
@@ -39,6 +41,7 @@ public class Search {
 	public void setSearchCondition(String searchCondition) {
 		this.searchCondition = searchCondition;
 	}
+	
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}
@@ -46,14 +49,8 @@ public class Search {
 		this.searchKeyword = searchKeyword;
 	}
 	
-	public String getSearchOrder() {
-		return searchOrder;
-	}
-
-	public void setSearchOrder(String searchOrder) {
-		this.searchOrder = searchOrder;
-	}
-
+	
+	
 	public String getSearchKeywordOptional() {
 		return searchKeywordOptional;
 	}
@@ -62,35 +59,28 @@ public class Search {
 		this.searchKeywordOptional = searchKeywordOptional;
 	}
 
-	public int getCurruntPage() {
-		return curruntPage;
+	public String getSearchOrder() {
+		return searchOrder;
 	}
 
-	public void setCurruntPage(int curruntPage) {
-		this.curruntPage = curruntPage;
+	public void setSearchOrder(String searchOrder) {
+		this.searchOrder = searchOrder;
 	}
 
+	//==> Select Query 시 ROWNUM 마지막 값 
 	public int getEndRowNum() {
-		return endRowNum;
+		return getCurrentPage()*getPageSize();
 	}
-
-	public void setEndRowNum(int endRowNum) {
-		this.endRowNum = endRowNum;
-	}
-
+	//==> Select Query 시 ROWNUM 시작 값
 	public int getStartRowNum() {
-		return startRowNum;
-	}
-
-	public void setStartRowNum(int startRowNum) {
-		this.startRowNum = startRowNum;
+		return (getCurrentPage()-1)*getPageSize()+1;
 	}
 
 	@Override
 	public String toString() {
-		return "Search [curruntPage=" + curruntPage + ", searchCondition=" + searchCondition + ", searchKeyword="
-				+ searchKeyword + ", searchKeywordOptional=" + searchKeywordOptional + ", searchOrder=" + searchOrder
-				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + "]";
+		return "Search [currentPage=" + currentPage + ", searchCondition="
+				+ searchCondition + ", searchKeyword=" + searchKeyword
+				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
+				+ ", startRowNum=" + startRowNum + "]";
 	}
-
 }

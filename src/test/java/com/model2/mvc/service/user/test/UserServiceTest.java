@@ -61,7 +61,7 @@ public class UserServiceTest {
 		Assert.assertEquals("test@test.com", user.getEmail());
 	}
 	
-	//@Test
+	@Test
 	public void testGetUser() throws Exception {
 		
 		User user = new User();
@@ -74,24 +74,24 @@ public class UserServiceTest {
 		user.setAddr("경기도");
 		user.setEmail("test@test.com");
 		
-		user = userService.getUser("testUserId");
+		user = userService.getUser("admin");
 
 		//==> console 확인
 		//System.out.println(user);
 		
 		//==> API 확인
-		Assert.assertEquals("testUserId", user.getUserId());
-		Assert.assertEquals("testUserName", user.getUserName());
-		Assert.assertEquals("testPasswd", user.getPassword());
-		Assert.assertEquals("111-2222-3333", user.getPhone());
-		Assert.assertEquals("경기도", user.getAddr());
-		Assert.assertEquals("test@test.com", user.getEmail());
+		Assert.assertEquals("admin", user.getUserId());
+		//Assert.assertEquals("testUserName", user.getUserName());
+		//Assert.assertEquals("testPasswd", user.getPassword());
+		//Assert.assertEquals("111-2222-3333", user.getPhone());
+		//Assert.assertEquals("경기도", user.getAddr());
+		//Assert.assertEquals("test@test.com", user.getEmail());
 
-		Assert.assertNotNull(userService.getUser("user02"));
+		Assert.assertNotNull(userService.getUser("user01"));
 		Assert.assertNotNull(userService.getUser("user05"));
 	}
 	
-	@Test
+	//@Test
 	 public void testUpdateUser() throws Exception{
 		 
 		User user = userService.getUser("testUserId");

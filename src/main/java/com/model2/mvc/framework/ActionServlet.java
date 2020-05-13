@@ -17,7 +17,7 @@ public class ActionServlet extends HttpServlet {
 	private RequestMapping requestMapping;
 	
 	///Method
-	@Override
+	@Override	
 	public void init() throws ServletException {
 		super.init();
 		String resources=getServletConfig().getInitParameter("resources");

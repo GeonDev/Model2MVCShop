@@ -33,11 +33,7 @@ public class ListUserAction extends Action {
 		int pageSize = Integer.parseInt( getServletContext().getInitParameter("pageSize"));
 		int pageUnit  =  Integer.parseInt(getServletContext().getInitParameter("pageUnit"));
 		search.setPageSize(pageSize);	
-		
-		// 페이지 최대값 최소값 전달
-		search.setStartRowNum((search.getCurrentPage()-1)*search.getPageSize()+1);
-		search.setEndRowNum(search.getCurrentPage()*search.getPageSize());
-		
+				
 		
 		// Business logic 수행
 		UserService userService=new UserServiceImpl();

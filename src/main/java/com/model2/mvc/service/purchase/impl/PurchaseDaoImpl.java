@@ -1,4 +1,4 @@
-package com.model2.mvc.service.purchase.dao;
+package com.model2.mvc.service.purchase.impl;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,23 +16,21 @@ import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.domain.User;
-import com.model2.mvc.service.product.dao.ProductDAO;
+import com.model2.mvc.service.product.impl.ProductDaoImpl;
+import com.model2.mvc.service.purchase.PurchaseDAO;
 import com.model2.mvc.service.user.UserDao;
 import com.model2.mvc.service.user.impl.UserDaoImpl;
 
-
-
-
-public class PurchaseDAO {
+public class PurchaseDaoImpl implements PurchaseDAO {
 	
 	//기본 생성자 명시	
-	public PurchaseDAO () {	}
+	public PurchaseDaoImpl () {	}
 
 	
 	public Purchase findPurchase(int Tran_No) throws Exception {
 		
 		Purchase purchase = new Purchase();
-		ProductDAO productDAO = new ProductDAO();
+		ProductDaoImpl productDAO = new ProductDaoImpl();
 		UserDao userDAO = new UserDaoImpl();
 		
 		Connection con = DBUtil.getConnection();
@@ -73,7 +71,7 @@ public class PurchaseDAO {
 	public Purchase findPurchase2(int ProdNo) throws Exception {
 		
 		Purchase purchase = new Purchase();
-		ProductDAO productDAO = new ProductDAO();
+		ProductDaoImpl productDAO = new ProductDaoImpl();
 		UserDao userDAO = new UserDaoImpl();
 		
 		Connection con = DBUtil.getConnection();
@@ -181,7 +179,7 @@ public class PurchaseDAO {
 	public Map<String,Object> getPurchaseList(Search search, String buyerId)  throws Exception {
 		
 		
-		ProductDAO productDAO = new ProductDAO();
+		ProductDaoImpl productDAO = new ProductDaoImpl();
 		UserDao userDAO = new UserDaoImpl();		
 		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -270,7 +268,7 @@ public class PurchaseDAO {
 	public Map<String,Object> getSaleList(Search search) throws Exception{
 		
 		Purchase purchase = new Purchase();
-		ProductDAO productDAO = new ProductDAO();
+		ProductDaoImpl productDAO = new ProductDaoImpl();
 		UserDao userDAO = new UserDaoImpl();		
 		
 		Map<String,Object> map = new HashMap<String,Object>();
