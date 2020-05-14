@@ -8,28 +8,82 @@
  	
  	
 	<resultMap id="purchaseSelectMap" type="purchase">
-		<result property="tranNo" 			column="tran_no" 			jdbcType="VARCHAR"/>
-		<result property="paymentOption"	column="payment_option" 	jdbcType="VARCHAR" />
-		<result property="receiverName" 	column="receiver_name" 		jdbcType="VARCHAR" />
-		<result property="receiverPhone" 	column="receiver_phone" 	jdbcType="VARCHAR" />
-		<result property="divyAddr" 		column="dlvy_addr" 			jdbcType="VARCHAR" />
-		<result property="divyRequest" 		column="dlvy_request" 		jdbcType="VARCHAR" />
-		<result property="tranCode" 		column="tran_status_code" 	jdbcType="VARCHAR" />
-		<result property="orderDate" 		column="order_date" 		jdbcType="DATE"  />
-		<result property="divyDate" 		column="dlvy_date" 			jdbcType="DATE" />
-		<collection property="buyer" 		resultMap="userSelectMap"/>
-		<collection property="purchaseProd" resultMap="prodSelectMap"/>
+		<result property="tranNo" 				column="tran_no" 			jdbcType="VARCHAR"/>
+		<result property="paymentOption"		column="payment_option" 	jdbcType="VARCHAR" />
+		<result property="receiverName" 		column="receiver_name" 		jdbcType="VARCHAR" />
+		<result property="receiverPhone" 		column="receiver_phone" 	jdbcType="VARCHAR" />
+		<result property="divyAddr" 			column="dlvy_addr" 			jdbcType="VARCHAR" />
+		<result property="divyRequest" 			column="dlvy_request" 		jdbcType="VARCHAR" />
+		<result property="tranCode" 			column="tran_status_code" 	jdbcType="VARCHAR" />
+		<result property="orderDate" 			column="order_date" 		jdbcType="DATE"  />
+		<result property="divyDate" 			column="dlvy_date" 			jdbcType="DATE" />
+		
+		<association property="buyer" 	column="user_id"	javaType="user"  select="setBuyer"/>			
+		
+		<association property="purchaseProd" column="prod_no"	javaType="product"  select="setPurchase"/>		
 	</resultMap>
 	
+	
+	
+	<select id="setBuyer" resultType="user">
+		SELECT * FROM users WHERE user_id = #{value}
+	</select>
+	
+	<select id="setPurchase" resultType="product">
+		SELECT * FROM product WHERE prod_no = #{value}
+	</select>
 
 
-
+	
 	<select id="getPurchaseTransNo" parameterType="int"  resultMap="purchaseSelectMap">
 		SELECT * FROM TRANSACTION WHERE TRAN_NO = #{value}	
 	</select>
 	
 	<select id="getPurchaseProdNo" parameterType="int"  resultMap="purchaseSelectMap">
 		SELECT * FROM TRANSACTION WHERE PROD_NO = #{value}	
+	</select>
+	
+	
+	
+	<insert id="insertPurchase" parameterType="purchase" >
+		INSERT INTO TRANSACTION(
+			seq_transaction_tran_no.nextval,#{purchaseProd.prod_no},#{buyer.userId},#{paymentOption:VARCHAR},#{receiverName:VARCHAR},#{receiverPhone:VARCHAR},#{divyAddr:VARCHAR},#{divyRequest:VARCHAR},1,SYSDATE,#{divyDate}
+		)
+	
+	</insert>
+	
+	
+	<update id="updatePurchase" parameterType="purchase">
+		UPDATE TRANSACTION SET PAYMENT_OPTION =#{paymentOption}, RECEIVER_NAME=#{receiverName}, RECEIVER_PHONE =#{receiverPhone}, DLVY_ADDR =#{divyAddr}, DLVY_REQUEST =#{divyRequest}, DLVY_DATE =#{divyDate}  WHERE TRAN_NO = #{tranNo}
+	</update>
+
+
+
+	<update id="updateTransCode" parameterType="purchase">
+		UPDATE TRANSACTION SET TRAN_STATUS_CODE = #{tranCode} WHERE PROD_NO = #{purchaseProd.prod_no}
+	</update>
+	
+	
+	<select id="getCountPurchase" parameterType="string" resultType="int">
+		SELECT COUNT(tran_no) FROM  transaction WHERE buyer_id = #{value}	
+	</select>
+	
+	
+	<!-- searchKeyword는 유저 ID  -->
+	<select id="getPurchaseList" parameterType="search"  resultMap="purchaseSelectMap">
+		SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY transaction.tran_no) num, transaction.* FROM transaction WHERE buyer_id = #{searchKeyword} )
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+
+
+
+	<select id="getALLCountPurchase"  resultType="int">
+		SELECT COUNT(tran_no) FROM  transaction 	
+	</select>
+	
+	<select id="getAllPurchaseList" parameterType="search"  resultMap="purchaseSelectMap">
+		SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY transaction.tran_no) num, transaction.* FROM transaction )
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 
 

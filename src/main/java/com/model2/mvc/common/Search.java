@@ -13,8 +13,9 @@ public class Search {
 	private String searchKeywordOptional;
 	private String searchOrder;
 	
-	private int endRowNum;
 	private int startRowNum;
+	private int endRowNum;
+	
 	
 	///Constructor
 	public Search() {
