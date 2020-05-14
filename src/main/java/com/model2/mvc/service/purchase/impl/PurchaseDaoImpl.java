@@ -87,7 +87,7 @@ public class PurchaseDaoImpl implements PurchaseDAO {
 	public Map<String,Object> getSaleList(Search search) throws Exception{
 		Map<String,Object> map = new HashMap<String,Object>();
 			
-		List<Purchase> list = 	sqlSession.selectList("PurchaseMapper.getAllPurchaseList", search);
+		List<Purchase> list = 	sqlSession.selectList("PurchaseMapper.getAllPurchaseList");
 		int totalProductCount = sqlSession.selectOne("PurchaseMapper.getAllCountPurchase");	
 	
 		

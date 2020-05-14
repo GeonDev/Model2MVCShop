@@ -7,6 +7,32 @@
 <mapper namespace="PurchaseMapper">
  	
  	
+ 	<resultMap id="userSelectMap" type="user">
+		<result property="userId" 		column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="userName"		column="user_name" 		jdbcType="VARCHAR" />
+		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
+		<result property="role" 		column="role" 					jdbcType="VARCHAR" />
+		<result property="ssn" 			column="ssn" 					jdbcType="VARCHAR" />
+		<result property="phone" 		column="cell_phone" 		jdbcType="VARCHAR" />
+		<result property="addr" 		column="addr" 					jdbcType="VARCHAR" />
+		<result property="email" 		column="email" 				jdbcType="NUMERIC"  />
+		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+	</resultMap>
+	
+	
+	<resultMap id="prodSelectMap" type="product">
+		<result property="prodNo" 			column="prod_no" 			jdbcType="NUMERIC"/>
+		<result property="prodName"			column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="prodDetail" 		column="prod_detail" 		jdbcType="VARCHAR" />
+		<result property="manuDate" 		column="manufacture_day" 	jdbcType="VARCHAR" />
+		<result property="price" 			column="price" 				jdbcType="NUMERIC" />
+		<result property="fileName" 		column="image_file" 		jdbcType="VARCHAR" />		
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+		<result property="proTranCode" 		column="TRAN_CODE" 			jdbcType="VARCHAR" />
+	</resultMap>
+ 	
+ 	
+ 	
 	<resultMap id="purchaseSelectMap" type="purchase">
 		<result property="tranNo" 				column="tran_no" 			jdbcType="VARCHAR"/>
 		<result property="paymentOption"		column="payment_option" 	jdbcType="VARCHAR" />
@@ -18,18 +44,18 @@
 		<result property="orderDate" 			column="order_date" 		jdbcType="DATE"  />
 		<result property="divyDate" 			column="dlvy_date" 			jdbcType="DATE" />
 		
-		<association property="buyer" 	column="user_id"	javaType="user"  select="setBuyer"/>			
-		
+		<association property="buyer" 		 column="buyer_id"	javaType="user"  	select="setBuyer"/>		
 		<association property="purchaseProd" column="prod_no"	javaType="product"  select="setPurchase"/>		
 	</resultMap>
 	
 	
 	
-	<select id="setBuyer" resultType="user">
+	<select id="setBuyer" parameterType="string" resultMap="userSelectMap">
 		SELECT * FROM users WHERE user_id = #{value}
-	</select>
+	</select>	
 	
-	<select id="setPurchase" resultType="product">
+	
+	<select id="setPurchase"  parameterType="int" resultMap="prodSelectMap">
 		SELECT * FROM product WHERE prod_no = #{value}
 	</select>
 
@@ -75,16 +101,21 @@
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 
-
-
-	<select id="getALLCountPurchase"  resultType="int">
+	<select id="getAllCountPurchase"  resultType="int">
 		SELECT COUNT(tran_no) FROM  transaction 	
 	</select>
 	
-	<select id="getAllPurchaseList" parameterType="search"  resultMap="purchaseSelectMap">
+	
+	<select id="getAllPurchaseList"   resultMap ="purchaseSelectMap">
+		SELECT *  FROM transaction
+	</select>
+	
+	
+	<select id="getAllPurchaseList2" parameterType="search"  resultMap="purchaseSelectMap">
 		SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY transaction.tran_no) num, transaction.* FROM transaction )
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
+
 
 
 
