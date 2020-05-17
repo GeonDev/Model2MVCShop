@@ -5,22 +5,26 @@ DROP TABLE users;
 
 DROP SEQUENCE seq_product_prod_no;
 DROP SEQUENCE seq_transaction_tran_no;
+DROP SEQUENCE seq_cart_no;
+DROP SEQUENCE seq_coupon_no;
 
 
 CREATE SEQUENCE seq_product_prod_no	 	INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 20000;
+CREATE SEQUENCE seq_cart_no				INCREMENT BY 1 START WITH 30000;
+CREATE SEQUENCE seq_coupon_no			INCREMENT BY 1 START WITH 40000;
 
 
 CREATE TABLE users ( 
 	user_id 			VARCHAR2(20)		NOT NULL,
-	user_name 	VARCHAR2(50)		NOT NULL,
-	password 		VARCHAR2(10)		NOT NULL,
+	user_name 			VARCHAR2(50)		NOT NULL,
+	password 			VARCHAR2(10)		NOT NULL,
 	role 				VARCHAR2(5) 		DEFAULT 'user',
-	ssn 					VARCHAR2(13),
-	cell_phone	VARCHAR2(14),
+	ssn 				VARCHAR2(13),
+	cell_phone			VARCHAR2(14),
 	addr 				VARCHAR2(100),
 	email 				VARCHAR2(50),
-	reg_date 		DATE,
+	reg_date 			DATE,
 	PRIMARY KEY(user_id)
 );
 
@@ -37,19 +41,38 @@ CREATE TABLE product (
 );
 
 CREATE TABLE transaction ( 
-	tran_no 						NUMBER 			NOT NULL,
-	prod_no 					NUMBER(16)		NOT NULL REFERENCES product(prod_no),
-	buyer_id 					VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
-	payment_option		VARCHAR2(3),
-	receiver_name 		VARCHAR2(20),
-	receiver_phone		VARCHAR2(14),
+	tran_no 				NUMBER 			NOT NULL,
+	prod_no 				NUMBER(16)		NOT NULL REFERENCES product(prod_no),
+	buyer_id 				VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
+	payment_option			VARCHAR2(3),
+	receiver_name 			VARCHAR2(20),
+	receiver_phone			VARCHAR2(14),
 	dlvy_addr 				VARCHAR2(100),
 	dlvy_request 			VARCHAR2(100),
-	tran_status_code	VARCHAR2(3),
+	tran_status_code		VARCHAR2(3),
 	order_date 				DATE,
 	dlvy_date 				DATE,
 	PRIMARY KEY(tran_no)
 );
+
+
+CREATE TABLE coupon(
+	coupon_no				NUMBER 			NOT NULL,
+	coupon_name				VARCHAR2(100) 	NOT NULL,
+	discount_ratio			NUMBER 			NOT NULL,	
+	maximum_discount_price	NUMBER,
+	minimum_price			NUMBER,
+	PRIMARY KEY(coupon_no)
+);
+
+
+CREATE TABLE cart(
+	cart_no					NUMBER 			NOT NULL,
+	prod_no 				NUMBER(16)		NOT NULL REFERENCES product(prod_no),
+	buyer_id 				VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
+	PRIMARY KEY(cart_no)
+);
+
 
 
 INSERT 
