@@ -2,3 +2,9 @@
 *.class
 *.bak
 
+build/classes/config/context-aspect.xml
+build/classes/config/context-common.xml
+build/classes/config/context-mybatis.xml
+build/classes/config/context-transaction.xml
+build/classes/sql/ProductMapper.xml
+build/classes/sql/PurchaseMapper.xml
