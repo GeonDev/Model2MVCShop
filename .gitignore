@@ -8,3 +8,4 @@ build/classes/config/context-mybatis.xml
 build/classes/config/context-transaction.xml
 build/classes/sql/ProductMapper.xml
 build/classes/sql/PurchaseMapper.xml
+build/
