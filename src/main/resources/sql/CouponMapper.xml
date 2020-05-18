@@ -4,6 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--  등록되어 있는 쿠폰의 관리를 위한 기능(관리자 용) -->
 <mapper namespace="CouponMapper">
  	
  	
@@ -31,11 +32,20 @@
 		WHERE coupon_no = #{value}
 	 </select>
 	
-	
-	 <select 	id="getCouponList"	resultMap="couponSelectMap">
+	<!-- SQL : SELECT List -->
+	 <select 	id="getCouponCount"	parameterType="search"  resultMap="couponSelectMap">
 		SELECT
-		*		
-		FROM coupon	
+		COUNT(coupon_no)		
+		FROM coupon		
+	 </select>
+	 
+	 	<!-- SQL : SELECT List -->
+	 <select  id="getCouponList"	parameterType="search"  resultMap="couponSelectMap">
+		SELECT
+		(SELECT ROW_NUMBER() OVER(ORDER BY product.prod_no) num,
+		coupon.*		
+		FROM coupon
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 		
 	 </select>
 	 
 	 

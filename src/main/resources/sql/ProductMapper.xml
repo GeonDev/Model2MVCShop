@@ -35,9 +35,7 @@
 		FROM product		
 		WHERE product.prod_name = #{value}	
 	</select>
-	
-	
-	
+			
 	
 	<update id="updateProduct" parameterType="product">
 		UPDATE product 
