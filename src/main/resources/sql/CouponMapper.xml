@@ -18,7 +18,7 @@
 	
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addCoupon"		parameterType="coupon" >
+	<insert 	id="addCoupon" parameterType="coupon" >
 	 	INSERT
 		INTO coupon(coupon_no,  coupon_name, discount_ratio, maximum_discount_price, minimum_price) 
 		VALUES	 (seq_coupon_no, #{couponName}, #{discountRatio}, #{maximumDiscount:NUMBERIC}, 	#{minimum_price:NUMBERIC} )
@@ -32,15 +32,15 @@
 		WHERE coupon_no = #{value}
 	 </select>
 	
-	<!-- SQL : SELECT List -->
-	 <select 	id="getCouponCount"	parameterType="search"  resultMap="couponSelectMap">
+	 <!-- SQL : SELECT List Count -->
+	 <select 	id="getCouponCount"	resultType="int">
 		SELECT
 		COUNT(coupon_no)		
 		FROM coupon		
 	 </select>
 	 
 	 	<!-- SQL : SELECT List -->
-	 <select  id="getCouponList"	parameterType="search"  resultMap="couponSelectMap">
+	 <select  id="getCouponList" parameterType="search"  resultMap="couponSelectMap">
 		SELECT
 		(SELECT ROW_NUMBER() OVER(ORDER BY product.prod_no) num,
 		coupon.*		
@@ -50,7 +50,13 @@
 	 
 	 
 	 <update id="updateCoupon" parameterType="coupon">
-	 UPDATE SET (#{couponName}, #{discountRatio}, #{maximumDiscount}, #{minimum_price})
+	 UPDATE coupon
+	 <set>
+	 	<if test="couponName !=null">#{couponName},</if>
+	 	<if test="discountRatio !=null">#{discountRatio},</if>
+	 	<if test="maximumDiscount !=null">#{maximumDiscount},</if>
+	 	<if test="minimum_price !=null">#{minimum_price}</if>	    
+	 </set>
 	 WHERE coupon_no = #{couponNo}
 	 
 	 </update>
@@ -59,7 +65,6 @@
 	 	DELETE coupon FROM
 	 	WHERE coupon_no = #{value} 	 
 	 </delete>
-	 
-	 
+	 	 
 	 
 </mapper>

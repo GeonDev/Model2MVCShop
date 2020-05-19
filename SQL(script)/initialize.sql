@@ -9,11 +9,11 @@ DROP SEQUENCE seq_cart_no;
 DROP SEQUENCE seq_coupon_no;
 
 
-CREATE SEQUENCE seq_product_prod_no	 	INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 20000;
-CREATE SEQUENCE seq_cart_no				INCREMENT BY 1 START WITH 30000;
-CREATE SEQUENCE seq_coupon_no			INCREMENT BY 1 START WITH 40000;
-
+CREATE SEQUENCE seq_product_prod_no	 	INCREMENT BY 1 START WITH 1000;
+CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 2000;
+CREATE SEQUENCE seq_cart_no				INCREMENT BY 1 START WITH 3000;
+CREATE SEQUENCE seq_coupon_no			INCREMENT BY 1 START WITH 4000;
+CREATE SEQUENCE seq_discount_no			INCREMENT BY 1 START WITH 5000;
 
 CREATE TABLE users ( 
 	user_id 			VARCHAR2(20)		NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE users (
 
 CREATE TABLE product ( 
 	prod_no 				NUMBER 			NOT NULL,
-	prod_name 				VARCHAR2(100) 		NOT NULL,
+	prod_name 				VARCHAR2(100) 	NOT NULL,
 	prod_detail 			VARCHAR2(200),
 	manufacture_day			VARCHAR2(8),
 	price 					NUMBER(10),
@@ -42,7 +42,7 @@ CREATE TABLE product (
 
 CREATE TABLE transaction ( 
 	tran_no 				NUMBER 			NOT NULL,
-	prod_no 				NUMBER(16)		NOT NULL REFERENCES product(prod_no),
+	prod_no 				NUMBER			NOT NULL REFERENCES product(prod_no),
 	buyer_id 				VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
 	payment_option			VARCHAR2(3),
 	receiver_name 			VARCHAR2(20),
@@ -59,16 +59,26 @@ CREATE TABLE transaction (
 CREATE TABLE coupon(
 	coupon_no				NUMBER 			NOT NULL,
 	coupon_name				VARCHAR2(100) 	NOT NULL,
-	discount_ratio			NUMBER 			NOT NULL,	
+	discount_ratio			NUMBER		 	NOT NULL,	
 	maximum_discount_price	NUMBER,
 	minimum_price			NUMBER,
 	PRIMARY KEY(coupon_no)
 );
 
 
+CREATE TABLE discount(
+	discount_no				NUMBER 			NOT NULL,
+	owner_id				VARCHAR2(20) 	NOT NULL REFERENCES users(user_id),
+	coupon_no				NUMBER			NOT NULL REFERENCES coupon(coupon_no), 	
+	issued_date				DATE,
+	expiration_date			DATE,
+	PRIMARY KEY(discount_no)
+);
+
+
 CREATE TABLE cart(
 	cart_no					NUMBER 			NOT NULL,
-	prod_no 				NUMBER(16)		NOT NULL REFERENCES product(prod_no),
+	prod_no 				NUMBER			NOT NULL REFERENCES product(prod_no),
 	buyer_id 				VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
 	PRIMARY KEY(cart_no)
 );
