@@ -2,24 +2,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
-
-<%@ page import="java.util.List"  %>
-
-<%@ page import="com.model2.mvc.service.domain.User" %>
-<%@ page import="com.model2.mvc.common.Search" %>
-<%@page import="com.model2.mvc.common.Page"%>
-<%@page import="com.model2.mvc.common.util.CommonUtil"%>
-
-<%
-	List<User> list= (List<User>)request.getAttribute("list");
-	Page resultPage=(Page)request.getAttribute("resultPage");
-	
-	Search search = (Search)request.getAttribute("search");
-	//==> null 을 ""(nullString)으로 변경
-	String searchCondition = CommonUtil.null2str(search.getSearchCondition());
-	String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
-%> 	/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
 
 <html>
 <head>
@@ -116,25 +98,7 @@
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
-	<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
-	<%
-		for(int i=0; i<list.size(); i++) {
-			User vo = list.get(i);
-	%>
-	<tr class="ct_list_pop">
-		<td align="center"><%= i + 1 %></td>
-		<td></td>
-		<td align="left"><a href="/getUser.do?userId=<%=vo.getUserId() %>"><%= vo.getUserId() %></a></td>
-		<td></td>
-		<td align="left"><%= vo.getUserName() %></td>
-		<td></td>
-		<td align="left"><%= vo.getEmail() %>
-		</td>		
-	</tr>
-	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
-	<% } %>/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
+
 	
 	<c:set var="i" value="0" />
 	<c:forEach var="user" items="${list}">
@@ -161,23 +125,6 @@
 	<tr>
 		<td align="center">
 		   <input type="hidden" id="currentPage" name="currentPage" value=""/>
-	<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// 		   
-	<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
-			◀ 이전
-	<% }else{ %>
-			<a href="javascript:fncGetUserList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
-	<% } %>
-
-	<%	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	%>
-			<a href="javascript:fncGetUserList('<%=i %>');"><%=i %></a>
-	<% 	}  %>
-	
-	<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
-			이후 ▶
-	<% }else{ %>
-			<a href="javascript:fncGetUserList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
-	<% } %>
-	 /////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
 	
 		<jsp:include page="../common/pageNavigator.jsp"/>	
 			

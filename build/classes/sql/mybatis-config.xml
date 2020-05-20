@@ -14,7 +14,7 @@
 		<typeAlias alias="user" 	type="com.model2.mvc.service.domain.User" />		
 		<typeAlias alias="product" 	type="com.model2.mvc.service.domain.Product" />
 		<typeAlias alias="purchase" type="com.model2.mvc.service.domain.Purchase" />
-		<typeAlias alias="coupon" type="com.model2.mvc.service.domain.Coupon" />
+		<typeAlias alias="coupon" 	type="com.model2.mvc.service.domain.Coupon" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->

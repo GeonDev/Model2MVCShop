@@ -9,11 +9,11 @@
  	
  	
 	<resultMap id="couponSelectMap" type="coupon">
-		<result property="couponNo" 		column="coupon_no" 					jdbcType="NUMBERIC"/>
+		<result property="couponNo" 		column="coupon_no" 					jdbcType="NUMERIC"/>
 		<result property="couponName"		column="coupon_name" 				jdbcType="VARCHAR" />
-		<result property="discountRatio" 	column="discount_ratio" 			jdbcType="NUMBERIC" />
-		<result property="maximumDiscount" 	column="maximum_discount_price" 	jdbcType="NUMBERIC" />
-		<result property="minimum_price" 	column="minimum_price" 				jdbcType="NUMBERIC" />
+		<result property="discountRatio" 	column="discount_ratio" 			jdbcType="NUMERIC" />
+		<result property="maximumDiscount" 	column="maximum_discount_price" 	jdbcType="NUMERIC" />
+		<result property="minimum_price" 	column="minimum_price" 				jdbcType="NUMERIC" />
 	</resultMap>
 	
 	
@@ -21,7 +21,7 @@
 	<insert 	id="addCoupon" parameterType="coupon" >
 	 	INSERT
 		INTO coupon(coupon_no,  coupon_name, discount_ratio, maximum_discount_price, minimum_price) 
-		VALUES	 (seq_coupon_no, #{couponName}, #{discountRatio}, #{maximumDiscount:NUMBERIC}, 	#{minimum_price:NUMBERIC} )
+		VALUES	 (seq_coupon_no, #{couponName}, #{discountRatio}, #{maximumDiscount:NUMERIC}, 	#{minimum_price:NUMERIC} )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->

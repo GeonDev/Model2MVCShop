@@ -18,7 +18,7 @@ import com.model2.mvc.service.domain.Coupon;
 public class CouponServiceImpl implements CouponService{
 	
 	@Autowired
-	@Qualifier("productDaoImpl")
+	@Qualifier("couponDaoImpl")
 	private CouponDAO couponDAO;
 	
 	public CouponServiceImpl() {

@@ -1,11 +1,5 @@
 package com.model2.mvc.service.purchase.impl;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,15 +10,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.model2.mvc.common.Search;
-import com.model2.mvc.common.util.CommonUtil;
-import com.model2.mvc.common.util.DBUtil;
-import com.model2.mvc.service.domain.Product;
+
+
+
 import com.model2.mvc.service.domain.Purchase;
-import com.model2.mvc.service.domain.User;
-import com.model2.mvc.service.product.impl.ProductDaoImpl;
+
 import com.model2.mvc.service.purchase.PurchaseDAO;
-import com.model2.mvc.service.user.UserDao;
-import com.model2.mvc.service.user.impl.UserDaoImpl;
+
 
 @Repository("purchaseDaoImpl")
 public class PurchaseDaoImpl implements PurchaseDAO {
