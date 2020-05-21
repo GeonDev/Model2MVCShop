@@ -8,7 +8,7 @@
 
 <html>
 <head>
-<title>회원정보수정</title>
+<title>상품정보수정</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
@@ -52,7 +52,7 @@ function fncAddProduct(){
 
 <form name="detailForm" method="post" enctype="multipart/form-data">
 
-<input type="hidden" name="prodNo" value="10000"/>
+<input type="hidden" name="prodNo" value="${product.prodNo}"/>
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>

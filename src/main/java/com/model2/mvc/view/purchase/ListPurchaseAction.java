@@ -6,18 +6,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.model2.mvc.framework.Action;
+
 import com.model2.mvc.common.*;
 import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
 import com.model2.mvc.service.domain.*;
 
-public class ListPurchaseAction extends Action{
+public class ListPurchaseAction{
 
 	public ListPurchaseAction() {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		Search search=new Search();
@@ -37,8 +37,10 @@ public class ListPurchaseAction extends Action{
 		search.setCurrentPage(currentPage);		
 		
 		// web.xml  meta-data 로 부터 상수 추출 
-		int pageSize = Integer.parseInt( getServletContext().getInitParameter("pageSize"));
-		int pageUnit  =  Integer.parseInt(getServletContext().getInitParameter("pageUnit"));
+		//int pageSize = Integer.parseInt( getServletContext().getInitParameter("pageSize"));
+		//int pageUnit  =  Integer.parseInt(getServletContext().getInitParameter("pageUnit"));
+		int pageSize = 3;
+		int pageUnit = 5;
 		search.setPageSize(pageSize);
 		search.setPageSize(pageUnit);
 		

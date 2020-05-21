@@ -40,7 +40,7 @@
 	<update id="updateProduct" parameterType="product">
 		UPDATE product 
 		SET prod_name= #{prodName:VARCHAR}, prod_detail= #{prodDetail:VARCHAR}, manufacture_day= #{manuDate:VARCHAR}, price= #{price:NUMERIC}, image_file = #{fileName:VARCHAR} 
-		WHERE PROD_NO= #{prod_no}	
+		WHERE PROD_NO= #{prodNo}	
 	</update>
 	
 	
@@ -57,7 +57,7 @@
 		<where>
 			<if test="searchCondition != ''">
 				<if test="searchCondition ==0 and searchKeyword !=''">
-					product.prod_no = #{searchKeyword}
+					prod_no = #{searchKeyword}
 				</if>
 				
 				<if test="searchCondition == 1">
@@ -94,7 +94,7 @@
 		<where>
 			<if test="searchCondition != ''">
 				<if test="searchCondition ==0 and searchKeyword !=''">
-					product.prod_no = #{searchKeyword}
+					prod_no = #{searchKeyword}
 				</if>
 				
 				<if test="searchCondition == 1">

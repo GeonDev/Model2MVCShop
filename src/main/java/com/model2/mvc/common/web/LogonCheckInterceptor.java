@@ -30,6 +30,7 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 	}
 	
 	///Method
+	
 	public boolean preHandle(	HttpServletRequest request,
 														HttpServletResponse response, 
 														Object handler) throws Exception {
@@ -67,10 +68,14 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 				return true;
 			}
 			
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			//request.getRequestDispatcher("/index.jsp").forward(request, response);
 			System.out.println("[ 로그인 이전 ... ]");
 			System.out.println("[ LogonCheckInterceptor end........]\n");
-			return false;
+			
+			//false이면 intercepter에서 처리한다.
+			//return false;
+			return true;
 		}
 	}
+	
 }//end of class

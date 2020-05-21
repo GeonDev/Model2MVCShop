@@ -2,11 +2,14 @@
 DROP TABLE transaction;
 DROP TABLE product;
 DROP TABLE users;
+DROP TABLE coupon;
+DROP TABLE discount;
 
 DROP SEQUENCE seq_product_prod_no;
 DROP SEQUENCE seq_transaction_tran_no;
 DROP SEQUENCE seq_cart_no;
 DROP SEQUENCE seq_coupon_no;
+DROP SEQUENCE seq_discount_no;
 
 
 CREATE SEQUENCE seq_product_prod_no	 	INCREMENT BY 1 START WITH 1000;
