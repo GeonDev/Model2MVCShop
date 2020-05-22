@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,6 +62,8 @@ public class ProductController {
 	@RequestMapping("/getProduct.do")
 	public String getProduct( @RequestParam("prodNo") int prodNo, @RequestParam(value ="menu", required=false) String menu, Model model) throws Exception {				
 		
+		System.out.println("★★★★여기로 넘어감");
+		
 		Product prod = service.getProduct(prodNo);
 			
 		
@@ -106,10 +109,11 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/updateProduct.do")
-	public String updateProduct(@ModelAttribute("product") Product prod, HttpServletRequest request) throws Exception {
-			
+	public String updateProduct(@ModelAttribute("product") Product prod ) throws Exception {
+	
 		//전달받은 상품 정보 업데이트
-		service.updateProduct(prod);	
+		service.updateProduct(prod);			
+	
 		
 		return "forward:/getProduct.do?prodNo="+prod.getProdNo();
 	}

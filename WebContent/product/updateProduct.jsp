@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 
-function fncAddProduct(){
+function fncEditProduct(){
 	//Form 유효성 검증
  	var name = document.detailForm.prodName.value;
 	var detail = document.detailForm.prodDetail.value;
@@ -50,7 +50,8 @@ function fncAddProduct(){
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm" method="post" enctype="multipart/form-data">
+
+<form name="detailForm" method="post" >
 
 <input type="hidden" name="prodNo" value="${product.prodNo}"/>
 
@@ -160,7 +161,7 @@ function fncAddProduct(){
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-						<a href="javascript:fncAddProduct();">수정</a>
+						<a href="javascript:fncEditProduct()">수정</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

@@ -60,9 +60,13 @@ public class PurchaseController {
 	
 	
 	@RequestMapping("/addPurchase.do")
-	public ModelAndView addPurchase(@ModelAttribute("purchase") Purchase purchase, HttpSession session ) throws Exception {
+	public ModelAndView addPurchase(@ModelAttribute("purchase") Purchase purchase,@RequestParam("prodNo")int prodNo, HttpSession session ) throws Exception {
 					
-		purchase.setBuyer((User)session.getAttribute("user"));
+		purchase.setBuyer((User)session.getAttribute("user"));		
+		purchase.setPurchaseProd(prodService.getProduct(prodNo));
+		
+		System.out.println("저장상품 명 : "+purchase.getPurchaseProd());
+		
 		
 		service.addPurchase(purchase);		 		
 				
@@ -109,24 +113,39 @@ public class PurchaseController {
 		return modelAndView;
 	}
 	
+	@RequestMapping("/updatePuchase.do")
+	public ModelAndView updatePuchase(@ModelAttribute("purchase") Purchase purchase  ,@RequestParam("tranNo")int tranNo ) throws Exception {
+		
+		service.updatePurcahse(purchase);
+		
+		return new ModelAndView("forward:/purchase/updatePurchase.jsp","purchase", purchase);
+	}
+	
+	
+	@RequestMapping("/updatePuchaseView.do")
+	public ModelAndView updatePuchaseView(@RequestParam("tranNo")int tranNo) throws Exception {
+		
+		Purchase purchase = service.getPurchase(tranNo);
+		
+		return new ModelAndView("forward:/purchase/updatePurchaseView.jsp","purchase",purchase);
+	}
+	
+	
 	@RequestMapping("/updateTranCode.do")
-	public ModelAndView updatePuchase(@RequestParam("tranNo")int tranNo ) {
+	public ModelAndView updateTranCode(@RequestParam("prodNo")int prodNo) throws Exception {
+		
+		Purchase purchase = service.getPurchase2(prodNo);
+		
+		service.updateTranCode(purchase);
 		
 		
-		
-		
-		return new ModelAndView("forward:/purchase/updatePurchase.jsp");
-	}
-	
-	public ModelAndView updatePuchaseView() {
-		return new ModelAndView("forward:/purchase/updatePurchaseView.jsp");
-	}
-	
-	public ModelAndView updateTranCode() {
 		return new ModelAndView("redirect:/listPurchase.do");
 	}
 	
-	public ModelAndView updateTranCodeByProd() {
+	@RequestMapping("/updateTranCodeByProd.do")
+	public ModelAndView updateTranCodeByProd( ) {
+		
+		
 		return new ModelAndView("redirect:/listProduct.do?menu=manage");
 	}
 	
