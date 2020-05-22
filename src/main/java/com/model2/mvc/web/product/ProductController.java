@@ -2,6 +2,8 @@ package com.model2.mvc.web.product;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,12 +68,12 @@ public class ProductController {
 		
 		if(menu!=null) {
 		//판매자, 구매자 모드 전달
-		model.addAttribute("menu", menu);		
-		}
+		model.addAttribute("menu", menu);				
 		
-		if(menu.equals("manage")) {
-			return "forward:/product/updateProduct.jsp";				
-		}
+			if(menu.equals("manage")) {
+				return "forward:/product/updateProduct.jsp";				
+			}
+		}		
 		
 		return "forward:/product/getProduct.jsp";
 	}	
@@ -104,10 +106,8 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/updateProduct.do")
-	public String updateProduct(@ModelAttribute("product") Product prod) throws Exception {
-		
-		System.out.println("★전달받은 상품 정보 :" +prod);		
-		
+	public String updateProduct(@ModelAttribute("product") Product prod, HttpServletRequest request) throws Exception {
+			
 		//전달받은 상품 정보 업데이트
 		service.updateProduct(prod);	
 		

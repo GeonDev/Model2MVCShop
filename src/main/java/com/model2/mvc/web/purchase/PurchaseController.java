@@ -79,7 +79,7 @@ public class PurchaseController {
 	}
 	
 	@RequestMapping("/listPurchase.do")
-	public String listPuchase(@ModelAttribute("search") Search search, HttpSession session,Model model) throws Exception {
+	public ModelAndView listPuchase(@ModelAttribute("search") Search search, HttpSession session) throws Exception {
 		
 		//현재 페이지값이 없으면 첫번째 페이지로 설정
 		if(search.getCurrentPage() == 0 ){
@@ -87,20 +87,26 @@ public class PurchaseController {
 		}
 		search.setPageSize(pageSize);
 		
-		User buyer = (User)session.getAttribute("user");
+		User buyer = (User)session.getAttribute("user");		
+		
 		
 		Map<String , Object> map=service.getPurchaseList(search, buyer.getUserId());
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("count")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		
 		// Model 과 View 연결
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
+		modelAndView.setViewName("forward:/purchase/listPurchase.jsp");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
 		
 		
-		return "forward:/purchase/listPurchase.jsp";
+		return modelAndView;
 	}
 	
 	@RequestMapping("/updateTranCode.do")

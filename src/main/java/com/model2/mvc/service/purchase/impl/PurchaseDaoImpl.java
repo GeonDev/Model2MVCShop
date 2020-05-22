@@ -61,7 +61,8 @@ public class PurchaseDaoImpl implements PurchaseDAO {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		search.setSearchKeyword(buyerId);		
-		List<Purchase> list = 	sqlSession.selectList("PurchaseMapper.getCountPurchase", search);
+		List<Purchase> list = 	sqlSession.selectList("PurchaseMapper.getPurchaseList", search);
+		
 		int totalProductCount = sqlSession.selectOne("PurchaseMapper.getCountPurchase", buyerId);	
 	
 		
