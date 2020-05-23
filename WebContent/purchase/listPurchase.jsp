@@ -27,7 +27,7 @@
 
 <div style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/listPurchase.do" method="post">
+<form name="detailForm" action="/purchase/listPurchase" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -58,7 +58,7 @@
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">배송현황</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b">정보수정</td>
+		<td class="ct_list_b">도착확인</td>
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
@@ -70,11 +70,11 @@
 	
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/getPurchase.do?tranNo=${purchase.tranNo}">${i}</a>
+			<a href="/purchase/getPurchase?tranNo=${purchase.tranNo}">${i}</a>
 		</td>
 		<td></td>
 		<td align="left">
-			<a href="/getProduct.do?prodNo=${(purchase.purchaseProd).prodNo}&menu=search">${(purchase.purchaseProd).prodName}</a>
+			<a href="/product/getProduct?prodNo=${(purchase.purchaseProd).prodNo}&menu=search">${(purchase.purchaseProd).prodName}</a>
 		</td>
 		<td></td>
 		<td align="left">${purchase.receiverName}</td>
@@ -84,13 +84,13 @@
 		<td align="left">현재
 	 	<c:choose>
 
-		<c:when test="${(purchase.purchaseProd).proTranCode == '1'}">		
-			구매완료
+		<c:when test="${purchase.tranCode == '1'}">		
+			구매완료(배송 준비)
 			</c:when>
-		<c:when test="${(purchase.purchaseProd).proTranCode == '2'}">
+		<c:when test="${purchase.tranCode == '2'}">
 			배송중
 		</c:when>
-		<c:when test="${(purchase.purchaseProd).proTranCode == '3'}">
+		<c:when test="${purchase.tranCode == '3'}">
 			배송완료 
 		</c:when>
 
@@ -102,11 +102,11 @@
 		
 			<c:choose>
 				<c:when test="${purchase.tranCode =='3'}">
-					배송 완료
+					상품 수령 완료
 				</c:when>
 			
 				<c:when test="${purchase.tranCode =='2'}">
-					<a href="/updateTranCode.do?tranNo=${purchase.tranNo}&tranCode=3">도착 확인</a>
+					<a href="/purchase/updateTranCode?tranNo=${purchase.tranNo}&tranCode=3">도착 확인</a>
 				</c:when>
 				<c:when test="${purchase.tranCode =='1'}">
 					배송 대기중

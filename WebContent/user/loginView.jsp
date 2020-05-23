@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
@@ -37,8 +36,11 @@
 
 <body bgcolor="#ffffff" text="#000000" >
 
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 <form name="loginForm"  method="post" action="/login.do" target="_parent">
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////--> 
+ <form name="loginForm"  method="post" action="/user/login" target="_parent">
+ 
 <div align="center">
 
 <TABLE WITH="100%" HEIGHT="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
@@ -107,25 +109,20 @@
                          </td>
                          <td width="10">&nbsp;</td>
                          <td width="70">
+                         	<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                          	<a href="addUserView.jsp;">
                          		<img src="/images/btn_add.gif" width="70" height="20" border="0">
                          	</a>
+                         	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                         	<a href="/user/addUser">
+                         		<img src="/images/btn_add.gif" width="70" height="20" border="0">
+                         	</a>
+                         	
                          </td>
                        </tr>
-	
                      </table>
                  </td>
                  <td width="20" height="20">&nbsp;</td>
-                </tr>
-                <tr>
-                	 <td width="30" height="100">&nbsp;</td>
-               		 <td width="100" height="100">&nbsp;</td>
-                	<td align = "center" valign="top">
-                   <c:if test="${loginState == false}">
-           				<b style="color:red; font-size: 11px;">아이디 또는 비밀번호 오류 입니다.</b>
-           			</c:if>
-           			</td>
-           			<td width="20" height="20">&nbsp;</td>
                 </tr>
               </table>
             </td>

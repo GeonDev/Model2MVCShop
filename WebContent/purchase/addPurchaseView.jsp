@@ -16,17 +16,19 @@
 </script>
 
 <script type="text/javascript">
-<!--
+
 function fncAddPurchase() {
-	document.addPurchase.submit();
+	
+	document.addPurchase.action='/purchase/addPurchase';
+	document.addPurchase.submit();	
 }
--->
+
 </script>
 </head>
 
 <body>
 
-<form name="addPurchase" method="post" action="/addPurchase.do">
+<form name="addPurchase" method="post" >
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>

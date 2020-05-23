@@ -1,14 +1,6 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
-<%
-	boolean result=false;
-	if(request.getAttribute("result") != null){
-		result=((Boolean)request.getAttribute("result")).booleanValue();
-	}
-	String userId=(String)request.getAttribute("userId");
-%>/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
@@ -21,15 +13,23 @@
 window.onload = function(){
 	document.getElementById("userId").focus();
 	document.getElementById("userId").onkeydown = function(){
-		if(event.keyCode == '13') fncCheckDuplication();
+		if(event.keyCode == '13') {
+			fncCheckDuplication();
+		}
 	}
 }
 
 function fncCheckDuplication() {
 	// Form 유효성 검증
 	if(document.detailForm.userId.value != null && document.detailForm.userId.value.length >0) {
-	    document.detailForm.action='/checkDuplication.do';
-	    document.detailForm.submit();
+	   	
+		///////////////////////////////////////////////////////////////////////////////////////////////
+		//document.detailForm.action='/checkDuplication.do';
+	    ///////////////////////////////////////////////////////////////////////////////////////////////
+	    document.detailForm.action='/user/checkDuplication';
+	    
+		document.detailForm.submit();
+		
 	}else {
 		alert('아이디는 반드시 입력하셔야 합니다.');
 	}
@@ -151,7 +151,6 @@ function fncUseId() {
 		<td align="center">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
-
 					<c:if test="${ ! empty result && result }">
 						<td width="17" height="23">
 							<img src="/images/ct_btnbg01.gif" width="17" height="23"/> 
@@ -163,7 +162,6 @@ function fncUseId() {
 							<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
 						</td>
 					</c:if>
-			
 					<td width="30"></td>					
 					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>

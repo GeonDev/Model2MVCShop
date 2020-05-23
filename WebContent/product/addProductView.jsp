@@ -24,7 +24,6 @@ function fncAddProduct(){
 		return;
 	}
 	if(detail == null || detail.length<1){
-		alert("상품상세정보는 반드시 입력하여야 합니다.");
 		return;
 	}
 	if(manuDate == null || manuDate.length<1){
@@ -36,7 +35,7 @@ function fncAddProduct(){
 		return;
 	}
 
-	document.detailForm.action='/addProduct.do';
+	document.detailForm.action='/product/addProduct';
 	document.detailForm.submit();
 }
 

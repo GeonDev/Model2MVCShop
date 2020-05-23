@@ -87,7 +87,25 @@
 	<select id="getProductList" parameterType="search"	resultMap="prodSelectMap">
 	
 		SELECT * FROM
-		(SELECT ROW_NUMBER() OVER(ORDER BY product.prod_no) num,
+		(SELECT ROW_NUMBER() OVER(
+			
+			<if test="searchOrder ==0">
+				ORDER BY product.prod_no
+			</if>			
+			<if test="searchOrder ==1">
+				ORDER BY product.price
+			</if>	
+			
+			<if test="searchOrder ==2">
+				ORDER BY product.price DESC
+			</if>
+			
+			<if test="searchOrder ==3">
+				ORDER BY product.prod_no DESC
+			</if>		
+		
+		
+		) num,
 		product.*,
 		NVL((SELECT transaction.tran_status_code FROM transaction WHERE transaction.prod_no = product.prod_no) ,'0') AS TRAN_CODE
 		FROM product
@@ -118,21 +136,10 @@
 					
 				</if>			
 			</if>						
-		</where>			
-		) WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 
-		<if test=" searchOrder !=null ">
-			<if test="searchOrder ==1">
-				ORDER BY price
-			</if>	
-			
-			<if test="searchOrder ==2">
-				ORDER BY price DESC
-			</if>
-			
-			<if test="searchOrder ==3">
-				ORDER BY prod_no DESC
-			</if>		
-		</if>
+		</where>
+		
+					
+		) WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 	
 	
 	</select>	
 

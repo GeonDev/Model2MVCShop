@@ -43,7 +43,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 	@Override
 	public Purchase getPurchase2(int ProdNo) throws Exception {
 		// TODO Auto-generated method stub
-		return  purchaseDAO.findPurchase(ProdNo);
+		return  purchaseDAO.findPurchase2(ProdNo);
 	}
 
 	@Override

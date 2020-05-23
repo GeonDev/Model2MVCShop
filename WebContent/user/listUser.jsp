@@ -2,7 +2,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <html>
 <head>
 <title>회원 목록 조회</title>
@@ -12,7 +11,7 @@
 <script type="text/javascript">
 
 	// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
-	function funcGetList(currentPage) {
+	function fncGetUserList(currentPage) {
 		document.getElementById("currentPage").value = currentPage;
 	   	document.detailForm.submit();		
 	}
@@ -25,7 +24,10 @@
 
 <div style="width:98%; margin-left:10px;">
 
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 <form name="detailForm" action="/listUser.do" method="post">
+////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<form name="detailForm" action="/user/listUser" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -49,14 +51,9 @@
 	<tr>
 		<td align="right">
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
-			<%-- /////////////////////// EL / JSTL 적용으로 주석 처리 ////////////////////////
-				<option value="0" <%= (searchCondition.equals("0") ? "selected" : "")%>>회원ID</option>
-				<option value="1" <%= (searchCondition.equals("1") ? "selected" : "")%>>회원명</option>
-				/////////////////////// EL / JSTL 적용으로 주석 처리 //////////////////////// --%>
 				<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
 				<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
 			</select>
-			<%--<input type="text" name="searchKeyword" value="<%= searchKeyword %>"  class="ct_input_g" style="width:200px; height:14px" >--%>
 			<input type="text" name="searchKeyword" 
 						value="${! empty search.searchKeyword ? search.searchKeyword : ""}"  
 						class="ct_input_g" style="width:200px; height:20px" > 
@@ -77,11 +74,6 @@
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-		<%--
-		<td colspan="11" >
-			전체  <%= resultPage.getTotalCount() %> 건수, 현재 <%= resultPage.getCurrentPage() %> 페이지
-		</td>
-		 --%>
 		<td colspan="11" >
 			전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		</td>
@@ -98,7 +90,6 @@
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
-
 	
 	<c:set var="i" value="0" />
 	<c:forEach var="user" items="${list}">
@@ -106,12 +97,15 @@
 		<tr class="ct_list_pop">
 			<td align="center">${ i }</td>
 			<td></td>
-			<td align="left"><a href="/getUser.do?userId=${user.userId}">${user.userId}</a></td>
+			<td align="left">
+				<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				<a href="/getUser.do?userId=${user.userId}">${user.userId}</a></td>
+               	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+			<a href="/user/getUser?userId=${user.userId}">${user.userId}</a></td>
 			<td></td>
 			<td align="left">${user.userName}</td>
 			<td></td>
-			<td align="left">${user.email}
-			</td>		
+			<td align="left">${user.email}</td>		
 		</tr>
 		<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
@@ -126,7 +120,7 @@
 		<td align="center">
 		   <input type="hidden" id="currentPage" name="currentPage" value=""/>
 	
-		<jsp:include page="../common/pageNavigator.jsp"/>	
+			<jsp:include page="../common/pageNavigator.jsp"/>	
 			
     	</td>
 	</tr>

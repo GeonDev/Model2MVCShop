@@ -15,8 +15,10 @@
 	
 		if(session == 1){
 			alert('입력하신 비밀번호가 다릅니다.');
-		}else {
+		}else if(session == 2) {
 			alert('일치하는 아이디가 없습니다.');				
+		}else{
+			alert('잘못된 요청입니다.');				
 		}		
 		
 		 history.go(-1);

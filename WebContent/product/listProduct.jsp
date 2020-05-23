@@ -46,7 +46,7 @@ function changeSearchCondition(){
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/listProduct.do?menu=${menu}" method="post">
+<form name="detailForm" action="/product/listProduct?menu=${menu}" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -155,7 +155,7 @@ function changeSearchCondition(){
 		<td></td>
 				
 		<td align="left">
-			<a href="/getProduct.do?prodNo=${prod.prodNo}&menu=${menu}">${prod.prodName}</a></td>
+			<a href="/product/getProduct?prodNo=${prod.prodNo}&menu=${menu}">${prod.prodName}</a></td>
 		
 
 		<td></td>
@@ -172,7 +172,7 @@ function changeSearchCondition(){
 		<c:when test="${prod.proTranCode == '1'}">		
 			구매완료					
 			<c:if test="${menu eq 'manage'}">
-				<a href="/updateTranCodeByProd.do?prodNo=${prod.prodNo}&tranCode=2">배송하기</a>
+				<a href="/purchase/updateTranCodeByProd?prodNo=${prod.prodNo}&tranCode=2">배송하기</a>
 			</c:if>
 		</c:when>
 		<c:when test="${prod.proTranCode == '2'}">

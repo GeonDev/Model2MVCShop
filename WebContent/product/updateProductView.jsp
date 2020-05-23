@@ -2,7 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
  
-       
+      <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+      		<!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ 미사용 페이지 ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆--> 
+      <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->  
     
 <!DOCTYPE html>
 <html>
@@ -44,7 +46,7 @@ function fncAddProduct(){
 		return;
 	}
 		
-	document.detailForm.action='/updateProduct.do';
+	document.detailForm.action='/product/updateProduct';
 	document.detailForm.submit();
 
 

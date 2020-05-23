@@ -8,15 +8,15 @@
  	
  	
  	<resultMap id="userSelectMap" type="user">
-		<result property="userId" 		column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="userId" 		column="user_id" 		jdbcType="VARCHAR"/>
 		<result property="userName"		column="user_name" 		jdbcType="VARCHAR" />
 		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
-		<result property="role" 		column="role" 					jdbcType="VARCHAR" />
-		<result property="ssn" 			column="ssn" 					jdbcType="VARCHAR" />
-		<result property="phone" 		column="cell_phone" 		jdbcType="VARCHAR" />
-		<result property="addr" 		column="addr" 					jdbcType="VARCHAR" />
-		<result property="email" 		column="email" 				jdbcType="NUMERIC"  />
-		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		<result property="role" 		column="role" 			jdbcType="VARCHAR" />
+		<result property="ssn" 			column="ssn" 			jdbcType="VARCHAR" />
+		<result property="phone" 		column="cell_phone" 	jdbcType="VARCHAR" />
+		<result property="addr" 		column="addr" 			jdbcType="VARCHAR" />
+		<result property="email" 		column="email" 			jdbcType="NUMERIC"  />
+		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
 	</resultMap>
 	
 	
@@ -62,22 +62,20 @@
 
 	
 	<select id="getPurchaseTransNo" parameterType="int"  resultMap="purchaseSelectMap">
-		SELECT * FROM TRANSACTION WHERE TRAN_NO = #{value}	
+		SELECT * FROM TRANSACTION WHERE tran_no = #{value}	
 	</select>
 	
 	<select id="getPurchaseProdNo" parameterType="int"  resultMap="purchaseSelectMap">
-		SELECT * FROM TRANSACTION WHERE PROD_NO = #{value}	
+		SELECT * FROM TRANSACTION WHERE prod_no = #{value}	
 	</select>
 	
 	
 	
 	<insert id="insertPurchase" parameterType="purchase" >
-		INSERT INTO TRANSACTION(
-			seq_transaction_tran_no.nextval,#{purchaseProd.prod_no},#{buyer.userId},#{paymentOption:VARCHAR},#{receiverName:VARCHAR},#{receiverPhone:VARCHAR},#{divyAddr:VARCHAR},#{divyRequest:VARCHAR},1,SYSDATE,#{divyDate}
-		)
+		INSERT INTO TRANSACTION			
+		VALUES(	seq_transaction_tran_no.nextval, #{purchaseProd.prodNo},#{buyer.userId},#{paymentOption},#{receiverName},#{receiverPhone},#{divyAddr},#{divyRequest},1,SYSDATE,	#{divyDate})
 	
-	</insert>
-	
+	</insert>	
 	
 	<update id="updatePurchase" parameterType="purchase">
 		UPDATE TRANSACTION SET PAYMENT_OPTION =#{paymentOption}, RECEIVER_NAME=#{receiverName}, RECEIVER_PHONE =#{receiverPhone}, DLVY_ADDR =#{divyAddr}, DLVY_REQUEST =#{divyRequest}, DLVY_DATE =#{divyDate}  WHERE TRAN_NO = #{tranNo}
@@ -86,7 +84,7 @@
 
 
 	<update id="updateTransCode" parameterType="purchase">
-		UPDATE TRANSACTION SET TRAN_STATUS_CODE = #{tranCode} WHERE PROD_NO = #{purchaseProd.prod_no}
+		UPDATE TRANSACTION SET TRAN_STATUS_CODE = #{tranCode} WHERE PROD_NO = #{purchaseProd.prodNo}
 	</update>
 	
 	
