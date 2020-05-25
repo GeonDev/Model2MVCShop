@@ -6,6 +6,7 @@ public class Coupon {
 	private int discountRatio;
 	private int maximumDiscount;
 	private int minimum_price;
+	private int couponCount;
 	
 	public Coupon(){
 	}
@@ -50,11 +51,19 @@ public class Coupon {
 		this.minimum_price = minimum_price;
 	}
 
+	public int getCouponCount() {
+		return couponCount;
+	}
+
+	public void setCouponCount(int couponCount) {
+		this.couponCount = couponCount;
+	}
+
 	@Override
 	public String toString() {
 		return "Coupon [couponNo=" + couponNo + ", couponName=" + couponName + ", discountRatio=" + discountRatio
-				+ ", maximumDiscount=" + maximumDiscount + ", minimum_price=" + minimum_price + "]";
-	}
-	
+				+ ", maximumDiscount=" + maximumDiscount + ", minimum_price=" + minimum_price + ", couponCount="
+				+ couponCount + "]";
+	}	
 	
 }

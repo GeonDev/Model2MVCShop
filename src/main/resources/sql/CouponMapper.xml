@@ -14,6 +14,7 @@
 		<result property="discountRatio" 	column="discount_ratio" 			jdbcType="NUMERIC" />
 		<result property="maximumDiscount" 	column="maximum_discount_price" 	jdbcType="NUMERIC" />
 		<result property="minimum_price" 	column="minimum_price" 				jdbcType="NUMERIC" />
+		<result property="couponCount" 		column="count" 						jdbcType="NUMERIC" />
 	</resultMap>
 	
 	
@@ -21,7 +22,7 @@
 	<insert 	id="addCoupon" parameterType="coupon" >
 	 	INSERT
 		INTO coupon(coupon_no,  coupon_name, discount_ratio, maximum_discount_price, minimum_price) 
-		VALUES	 (seq_coupon_no, #{couponName}, #{discountRatio}, #{maximumDiscount:NUMERIC}, 	#{minimum_price:NUMERIC} )
+		VALUES	 (seq_coupon_no, #{couponName}, #{discountRatio}, #{maximumDiscount}, 	#{minimum_price} )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -39,11 +40,14 @@
 		FROM coupon		
 	 </select>
 	 
-	 	<!-- SQL : SELECT List -->
+	 
+	 
+	 <!-- SQL : SELECT List (현재 발급된 쿠폰의 정보, 쿠폰 개수를 불러온다.) -->
 	 <select  id="getCouponList" parameterType="search"  resultMap="couponSelectMap">
 		SELECT
-		(SELECT ROW_NUMBER() OVER(ORDER BY product.prod_no) num,
-		coupon.*		
+		(SELECT ROW_NUMBER() OVER(ORDER BY coupon_no) num,
+		coupon.*,
+		NVL((SELECT COUNT(discount_no) FROM discount WHERE discount.coupon_no = coupon.coupon_no ) ,'0') AS count		
 		FROM coupon
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 		
 	 </select>
