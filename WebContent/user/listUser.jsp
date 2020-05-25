@@ -1,5 +1,12 @@
-<%@ page contentType="text/html; charset=euc-kr" %>
-
+<%@ page import="com.model2.mvc.service.domain.*"%>
+<%@ page import="com.model2.mvc.common.*"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    
+    
+<%@ page import="java.util.*"  %>
+<%@ page import="com.model2.mvc.common.*" %>
+<%@ page import="com.model2.mvc.common.util.CommonUtil"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -11,7 +18,7 @@
 <script type="text/javascript">
 
 	// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
-	function fncGetUserList(currentPage) {
+	function funcGetUserList(currentPage) {
 		document.getElementById("currentPage").value = currentPage;
 	   	document.detailForm.submit();		
 	}
@@ -63,7 +70,7 @@
 				<tr>
 					<td width="17" height="23"><img src="/images/ct_btnbg01.gif" width="17" height="23"></td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetUserList('1');">검색</a>
+						<a href="javascript:funcGetUserList('1')">검색</a>
 					</td>
 					<td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
 				</tr>
@@ -115,13 +122,12 @@
 
 
 <!-- PageNavigation Start... -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
+	
 	<tr>
 		<td align="center">
 		   <input type="hidden" id="currentPage" name="currentPage" value=""/>
-	
-			<jsp:include page="../common/pageNavigator.jsp"/>	
-			
+				<jsp:include page="../common/pageNavigator.jsp"/>			
     	</td>
 	</tr>
 </table>

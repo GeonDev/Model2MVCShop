@@ -10,6 +10,7 @@
 			ㅇ 빈설정(Meta-Data) 파일은 DispatcherServlet 의 init-param 의 
 				 contextConfigLocation 으로 등록하는 방법과...
 			ㅇ ContextLoaderListener	 로 등록하는 방법이 있다.	  -->		
+	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener	</listener-class>
 	</listener>		
@@ -50,8 +51,18 @@
 		      <param-value>/config/springMVC/common-servlet.xml</param-value>
 		      <!-- Servlet Meta-data / Spring Meta-data 위치 분리함 -->
 		    </init-param>
-		    
 		    <load-on-startup>1</load-on-startup>
+		    
+		    <!--
+		    <multipart-config>
+		    	<max-file-size>5242880</max-file-size>
+		    	<max-request-size>27262976</max-request-size>
+		    	<file-size-threshold>1048576</file-size-threshold>
+		    </multipart-config>
+		    
+		     파일하나의 최대 바이트수/ 멀티파트 요청전체의 최대 바이트 수/ 전송된파일이 크가가 넘었을때 임시 
+		    -->
+		    
   </servlet>
   
     <!-- 확장자가 ~.do 경우 Servlet Mapping ::  -->

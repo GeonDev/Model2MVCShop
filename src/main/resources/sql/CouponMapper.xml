@@ -44,11 +44,11 @@
 	 
 	 <!-- SQL : SELECT List (현재 발급된 쿠폰의 정보, 쿠폰 개수를 불러온다.) -->
 	 <select  id="getCouponList" parameterType="search"  resultMap="couponSelectMap">
-		SELECT
-		(SELECT ROW_NUMBER() OVER(ORDER BY coupon_no) num,
+		SELECT * FROM(
+		SELECT ROW_NUMBER() OVER(ORDER BY coupon_no) num,
 		coupon.*,
 		NVL((SELECT COUNT(discount_no) FROM discount WHERE discount.coupon_no = coupon.coupon_no ) ,'0') AS count		
-		FROM coupon
+		FROM coupon)
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 		
 	 </select>
 	 
