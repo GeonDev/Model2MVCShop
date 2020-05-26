@@ -55,14 +55,11 @@
 	 
 	 <update id="updateCoupon" parameterType="coupon">
 	 UPDATE coupon
-	 <set>
-	 	<if test="couponName !=null">#{couponName},</if>
-	 	<if test="discountRatio !=null">#{discountRatio},</if>
-	 	<if test="maximumDiscount !=null">#{maximumDiscount},</if>
-	 	<if test="minimum_price !=null">#{minimum_price}</if>	    
-	 </set>
-	 WHERE coupon_no = #{couponNo}
-	 
+	 SET	 	
+	 discount_ratio = #{discountRatio},
+	 maximum_discount_price  = #{maximumDiscount},
+	 minimum_price = #{minimum_price}	 
+	 WHERE coupon_no = #{couponNo}	 
 	 </update>
 	 
 	 <delete id="deleteCoupon" parameterType="int">
