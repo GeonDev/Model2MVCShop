@@ -53,6 +53,13 @@
 	 </select>
 	 
 	 
+	 
+	  <!-- SQL : SELECT List (현재 발급된 쿠폰의 이름, 쿠폰번호를 불러온다.) -->
+	 <select  id="getCouponSimpleList"  resultMap="couponSelectMap">
+		SELECT coupon_no, coupon_name FROM coupon ORDER BY coupon_no				
+	 </select>	 
+	 
+	 
 	 <update id="updateCoupon" parameterType="coupon">
 	 UPDATE coupon
 	 SET	 	

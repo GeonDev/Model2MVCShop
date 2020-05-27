@@ -1,5 +1,6 @@
 package com.model2.mvc.web.user;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.coupon.CouponService;
+import com.model2.mvc.service.domain.Coupon;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.user.UserService;
 
@@ -31,6 +34,13 @@ public class UserController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	//setter Method 구현 않음
+	
+	
+	@Autowired
+	@Qualifier("couponServiceImpl")
+	private CouponService couponService;
+	
+	
 		
 	public UserController(){
 		System.out.println(this.getClass());
@@ -73,6 +83,16 @@ public class UserController {
 		User user = userService.getUser(userId);
 		// Model 과 View 연결
 		model.addAttribute("user", user);
+		
+		
+		
+		///////////////////////////////쿠폰 정보를 넘겨주는 부분 //////////////////////////////////
+		
+		List<Coupon> list = couponService.getSimpleCouponList();
+		model.addAttribute("list", list);		
+		
+		///////////////////////////////쿠폰 정보를 넘겨주는 부분 //////////////////////////////////
+		
 		
 		return "forward:/user/getUser.jsp";
 	}
