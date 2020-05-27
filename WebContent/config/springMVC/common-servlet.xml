@@ -97,4 +97,13 @@
 		
 	</bean>
 	
+		<!-- MultipartResolver 파일 업로드 설정 코드 -->
+		<!-- maxUploadSize : 파일 업로드 시 최대 올릴 수 있는 파일 사이즈 -->
+		<!-- maxInMemorySize : 적용된 경로에 최대로 저장할 수 있는 파일 사이즈 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <property name="maxUploadSize" value="100000000"/>  
+	    <property name="maxInMemorySize" value="100000000"/> 
+	</bean>
+	
+	
 </beans>

@@ -92,8 +92,9 @@
 			<!-- 테이블 시작 -->
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td height="26">			
-						<img src="${product.fileName}"/>
+					<td height="26">	
+						<c:set var = "tempSrc" value = "/images/uploadFiles/" />		
+						<img src="${tempSrc}${product.fileName}"/>
 					</td>
 				</tr>
 			</table>
