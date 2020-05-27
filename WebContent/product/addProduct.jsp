@@ -93,8 +93,8 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td height="26">	
-						<c:set var = "tempSrc" value = "/images/uploadFiles/" />		
-						<img src="${tempSrc}${product.fileName}"/>
+						<c:set var = "tempSrc" value = "/images/uploadFiles/" />
+						<img src = "${tempSrc}${product.fileName}"  width="200"/>
 					</td>
 				</tr>
 			</table>
