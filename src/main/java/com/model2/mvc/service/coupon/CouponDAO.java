@@ -1,5 +1,6 @@
 package com.model2.mvc.service.coupon;
 
+import java.util.List;
 import java.util.Map;
 
 import com.model2.mvc.common.Search;
@@ -17,5 +18,7 @@ public interface CouponDAO {
 	public void DeleteCoupon(int couponNo) throws  Exception;
 	
 	public Map<String,Object> getCouponList(Search search)  throws Exception;
+	
+	public List<Coupon> getSimpleCouponList()  throws Exception;
 	
 }

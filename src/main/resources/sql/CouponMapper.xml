@@ -22,7 +22,7 @@
 	<insert 	id="addCoupon" parameterType="coupon" >
 	 	INSERT
 		INTO coupon(coupon_no,  coupon_name, discount_ratio, maximum_discount_price, minimum_price) 
-		VALUES	 (seq_coupon_no, #{couponName}, #{discountRatio}, #{maximumDiscount}, 	#{minimum_price} )
+		VALUES	 (seq_coupon_no.nextval, #{couponName}, #{discountRatio}, #{maximumDiscount}, #{minimum_price} )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -44,29 +44,33 @@
 	 
 	 <!-- SQL : SELECT List (현재 발급된 쿠폰의 정보, 쿠폰 개수를 불러온다.) -->
 	 <select  id="getCouponList" parameterType="search"  resultMap="couponSelectMap">
-		SELECT
-		(SELECT ROW_NUMBER() OVER(ORDER BY coupon_no) num,
+		SELECT * FROM(
+		SELECT ROW_NUMBER() OVER(ORDER BY coupon_no) num,
 		coupon.*,
 		NVL((SELECT COUNT(discount_no) FROM discount WHERE discount.coupon_no = coupon.coupon_no ) ,'0') AS count		
-		FROM coupon
+		FROM coupon)
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 		
 	 </select>
 	 
 	 
+	 
+	  <!-- SQL : SELECT List (현재 발급된 쿠폰의 이름, 쿠폰번호를 불러온다.) -->
+	 <select  id="getCouponSimpleList"  resultMap="couponSelectMap">
+		SELECT coupon_no, coupon_name FROM coupon ORDER BY coupon_no				
+	 </select>	 
+	 
+	 
 	 <update id="updateCoupon" parameterType="coupon">
 	 UPDATE coupon
-	 <set>
-	 	<if test="couponName !=null">#{couponName},</if>
-	 	<if test="discountRatio !=null">#{discountRatio},</if>
-	 	<if test="maximumDiscount !=null">#{maximumDiscount},</if>
-	 	<if test="minimum_price !=null">#{minimum_price}</if>	    
-	 </set>
-	 WHERE coupon_no = #{couponNo}
-	 
+	 SET	 	
+	 discount_ratio = #{discountRatio},
+	 maximum_discount_price  = #{maximumDiscount},
+	 minimum_price = #{minimum_price}	 
+	 WHERE coupon_no = #{couponNo}	 
 	 </update>
 	 
 	 <delete id="deleteCoupon" parameterType="int">
-	 	DELETE coupon FROM
+	 	DELETE FROM coupon 
 	 	WHERE coupon_no = #{value} 	 
 	 </delete>
 	 	 

@@ -1,12 +1,12 @@
-<%@page import="com.model2.mvc.service.domain.*"%>
-<%@page import="com.model2.mvc.common.*"%>
+<%@ page import="com.model2.mvc.service.domain.*"%>
+<%@ page import="com.model2.mvc.common.*"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     
     
 <%@ page import="java.util.*"  %>
 <%@ page import="com.model2.mvc.common.*" %>
-<%@page import="com.model2.mvc.common.util.CommonUtil"%>
+<%@ page import="com.model2.mvc.common.util.CommonUtil"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
    
@@ -194,7 +194,7 @@ function changeSearchCondition(){
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	
-		<tr>
+	<tr>
 		<td align="center">
 		   <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				<jsp:include page="../common/pageNavigator.jsp"/>			

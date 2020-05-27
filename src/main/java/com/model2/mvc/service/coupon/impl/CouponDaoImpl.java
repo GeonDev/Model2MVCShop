@@ -1,5 +1,6 @@
 package com.model2.mvc.service.coupon.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,15 @@ public class CouponDaoImpl implements CouponDAO {
 		sqlSession.delete("CouponMapper.deleteCoupon", couponNo);
 		
 	}
+
+	@Override
+	public List<Coupon> getSimpleCouponList() throws Exception {
+		List<Coupon> list = sqlSession.selectList("CouponMapper.getCouponSimpleList");		
+		
+		return list;
+	}
+
+	
 	
 
 }

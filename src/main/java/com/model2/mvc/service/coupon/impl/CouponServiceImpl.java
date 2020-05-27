@@ -1,5 +1,6 @@
 package com.model2.mvc.service.coupon.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,11 @@ public class CouponServiceImpl implements CouponService{
 	public Map<String, Object> getCouponList(Search search) throws Exception {
 		
 		return couponDAO.getCouponList(search);
+	}
+
+	@Override
+	public List<Coupon> getSimpleCouponList() throws Exception {
+		// TODO Auto-generated method stub
+		return couponDAO.getSimpleCouponList();
 	}
 }

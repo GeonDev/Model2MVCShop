@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  사용자가 쿠폰을 보유하고 있는 쿠폰 정보를 저장하는 테이블 -->
+<mapper namespace="CouponInventoryMapper">
+ 	
+ 	
+ 	<resultMap id="userMap" type="user">
+		<result property="userId" 		column="user_id" 		jdbcType="VARCHAR"/>
+		<result property="userName"		column="user_name" 		jdbcType="VARCHAR" />
+		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
+		<result property="role" 		column="role" 			jdbcType="VARCHAR" />
+		<result property="ssn" 			column="ssn" 			jdbcType="VARCHAR" />
+		<result property="phone" 		column="cell_phone" 	jdbcType="VARCHAR" />
+		<result property="addr" 		column="addr" 			jdbcType="VARCHAR" />
+		<result property="email" 		column="email" 			jdbcType="NUMERIC"  />
+		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
+	</resultMap>
+	
+ 	
+ 	<resultMap id="couponMap" type="coupon">
+		<result property="couponNo" 		column="coupon_no" 					jdbcType="NUMERIC"/>
+		<result property="couponName"		column="coupon_name" 				jdbcType="VARCHAR" />
+		<result property="discountRatio" 	column="discount_ratio" 			jdbcType="NUMERIC" />
+		<result property="maximumDiscount" 	column="maximum_discount_price" 	jdbcType="NUMERIC" />
+		<result property="minimum_price" 	column="minimum_price" 				jdbcType="NUMERIC" />
+		<result property="couponCount" 		column="count" 						jdbcType="NUMERIC" />
+	</resultMap>
+ 	
+ 	
+	<resultMap id="couponInventoryMap" type="discount">
+		<result property="discountNo" 		column="discount_no" 		jdbcType="NUMERIC"/>	
+		<result property="issuedDate" 		column="issued_date" 		jdbcType="DATE" />
+		<result property="expirationDate" 	column="expiration_date" 	jdbcType="DATE" />		
+		
+		<association property="owner" 			 column="owner_id"	javaType="user"  	select="setOwner"/>	
+		<association property="discountCoupon" 	 column="coupon_no"	javaType="coupon"  	select="setCoupon"/>			
+	
+	</resultMap>
+	
+	
+	
+	<select id="setOwner" parameterType="string" resultMap="userMap">
+		SELECT * FROM users WHERE user_id = #{value}
+	</select>	
+	
+	<select id="setCoupon" parameterType="int" resultMap="couponMap">
+		SELECT * FROM coupon WHERE coupon_no = #{value}
+	</select>
+	
+	
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addCoupon" parameterType="discount" >
+	 	INSERT
+		INTO discount
+		VALUES	 (seq_discount_no.nextval, #{owner.userId}, #{discountCoupon.couponNo}, #{issuedDate}, #{expirationDate} )
+	 </insert>
+	 
+	 
+	 
+	 <delete id="deleteCoupon" parameterType="int">
+	 	DELETE FROM coupon 
+	 	WHERE coupon_no = #{value} 	 
+	 </delete>
+	 	 
+	 
+</mapper>
