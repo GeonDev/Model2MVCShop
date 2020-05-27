@@ -22,7 +22,7 @@
 	<insert 	id="addCoupon" parameterType="coupon" >
 	 	INSERT
 		INTO coupon(coupon_no,  coupon_name, discount_ratio, maximum_discount_price, minimum_price) 
-		VALUES	 (seq_coupon_no, #{couponName}, #{discountRatio}, #{maximumDiscount}, 	#{minimum_price} )
+		VALUES	 (seq_coupon_no.nextval, #{couponName}, #{discountRatio}, #{maximumDiscount}, #{minimum_price} )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -63,7 +63,7 @@
 	 </update>
 	 
 	 <delete id="deleteCoupon" parameterType="int">
-	 	DELETE coupon FROM
+	 	DELETE FROM coupon 
 	 	WHERE coupon_no = #{value} 	 
 	 </delete>
 	 	 

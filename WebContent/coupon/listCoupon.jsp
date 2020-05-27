@@ -86,6 +86,8 @@
 		<td align="left">
 			<c:if test="${coupon.couponCount == 0}">
 				<a href="/coupon/updateCoupon?couponNo=${coupon.couponNo}">수정</a>
+				&nbsp;&nbsp;&nbsp;
+				<a href="/coupon/deleteCoupon?couponNo=${coupon.couponNo}">삭제</a>
 			</c:if>
 
 		</td>

@@ -10,11 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.model2.mvc.common.Search;
-
-
-
 import com.model2.mvc.service.domain.Purchase;
-
 import com.model2.mvc.service.purchase.PurchaseDAO;
 
 

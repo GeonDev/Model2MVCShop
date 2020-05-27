@@ -52,12 +52,26 @@ public class CouponController {
 	
 
 	@RequestMapping("getCoupon")
-	public ModelAndView getPuchase(@RequestParam("couponNo")int couponNo) throws Exception {
+	public ModelAndView getCoupon(@RequestParam("couponNo")int couponNo) throws Exception {
 		
 		Coupon coupon = service.findCoupon(couponNo);
 		
 		return new ModelAndView("forward:/coupon/getCoupon.jsp","coupon",coupon);
 	}
+	
+	
+	
+	@RequestMapping(value = "addCoupon", method = RequestMethod.POST)
+	public ModelAndView addCoupon(@ModelAttribute("coupon") Coupon coupon) throws Exception {
+		
+		service.insertCoupon(coupon);
+		
+		
+		return new ModelAndView("forward:/coupon/getCoupon.jsp");
+	}
+	
+	
+	
 	
 	@RequestMapping("listCoupon")
 	public ModelAndView listCoupon(@ModelAttribute("search") Search search) throws Exception {
@@ -94,7 +108,9 @@ public class CouponController {
 		
 		service.updateCoupon(coupon);
 		
-		return new ModelAndView("forward:/coupon/listCoupon.jsp");
+		coupon = service.findCoupon(coupon.getCouponNo());
+		
+		return new ModelAndView("forward:/coupon/getCoupon.jsp","coupon",coupon);
 	}
 	
 	
@@ -107,6 +123,15 @@ public class CouponController {
 		return new ModelAndView("forward:/coupon/updateCoupon.jsp","coupon",coupon);
 	}
 	
+	// 리스트에서 삭제를 누름
+ 	@RequestMapping(value = "deleteCoupon")
+	public String deleteCouponView(@RequestParam("couponNo")int couponNo) throws Exception {
+		
+ 		//쿠폰 삭제 실행
+		service.removeCoupon(couponNo);
+		
+		return "forward:/coupon/deleteCouponView.jsp";
+	}
 	
 
 	

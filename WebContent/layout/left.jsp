@@ -70,6 +70,13 @@ function history(){
 					</td>
 				</tr>
 				
+				
+				<tr>
+					<td class="Depth03">					
+						<a href="../coupon/addCouponView.jsp;"  target="rightFrame"> 신규쿠폰등록</a>
+					</td>
+				</tr>
+				
 				<tr>
 					<td class="Depth03">					
 						<a href="/coupon/listCoupon"  target="rightFrame"> 쿠폰발급관리</a>
@@ -89,12 +96,17 @@ function history(){
 <tr>
 	<td valign="top"> 
 		<table  border="0" cellspacing="0" cellpadding="0" width="159">
+		
+		
+			<!--  어드민이 아니면 -->
+			<c:if test="${user.role != 'admin'}">
+		
 			<tr>
-				<td class="Depth03">
-					<!-- <a href="/listProduct.do?menu=search" target="rightFrame">상 품 검 색</a> -->
+				<td class="Depth03">			
 					<a href="/product/listProduct?menu=search" target="rightFrame">상 품 검 색</a>
 				</td>
 			</tr>
+			</c:if>
 			
 			<c:if test="${ !empty user && user.role == 'user'}">
 			<tr>
