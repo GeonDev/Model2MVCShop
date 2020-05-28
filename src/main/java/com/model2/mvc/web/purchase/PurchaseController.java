@@ -1,5 +1,6 @@
 package com.model2.mvc.web.purchase;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.discount.DiscountService;
+import com.model2.mvc.service.domain.Discount;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.domain.User;
@@ -47,7 +51,11 @@ public class PurchaseController {
 	private ProductService prodService;
 	
 	
-	//디폴트 생성자
+	@Autowired
+	@Qualifier("discountServiceImpl")
+	private DiscountService discountService;
+	
+		//디폴트 생성자
 	public PurchaseController() {
 		// TODO Auto-generated constructor stub
 	}
@@ -55,12 +63,24 @@ public class PurchaseController {
 	
 	// getProduct.jsp에서 넘어감
 	@RequestMapping(value =  "addPurchase", method = RequestMethod.GET)
-	public ModelAndView addPurchaseView(@RequestParam("prodNo")int prodNo) throws Exception {
+	public ModelAndView addPurchaseView(@RequestParam("prodNo")int prodNo, Model model, HttpSession session ) throws Exception {
 		
 		Product product = prodService.getProduct(prodNo);		
+		Purchase purchase = new Purchase();
+				
+		///////////////////////////////////// 사용 가능한 쿠폰 정보 ////////////////////////////////////
+		purchase.setPurchaseProd(product);
+		purchase.setBuyer((User)session.getAttribute("user"));
 		
+		List<Discount> list = discountService.getDiscountList(purchase);		
 		
-		return new ModelAndView("forward:/purchase/addPurchaseView.jsp","product",product);
+		model.addAttribute("list",list);
+		///////////////////////////////////// 사용 가능한 쿠폰 정보 ////////////////////////////////////
+		model.addAttribute("product",product);
+		
+		System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ 선택된 쿠폰 " +list);
+		
+		return new ModelAndView("forward:/purchase/addPurchaseView.jsp");
 	}
 	
 		

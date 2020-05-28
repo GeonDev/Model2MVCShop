@@ -97,8 +97,7 @@ public class UserController {
 		return "forward:/user/getUser.jsp";
 	}
 	
-	//@RequestMapping("/updateUserView.do")
-	//public String updateUserView( @RequestParam("userId") String userId , Model model ) throws Exception{
+	
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
 	public String updateUser( @RequestParam("userId") String userId , Model model ) throws Exception{
 

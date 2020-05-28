@@ -107,6 +107,26 @@ function fncAddPurchase() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
+	<tr>
+		<td width="104" class="ct_write">적용가능 쿠폰</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<select 	name="ableCoupon"		class="ct_input_g" 	style="width: 120px; height: 19px" maxLength="20">
+						<option value="none" >===== 선택 =====</option>	
+						<c:forEach var="discount" items="${list}">				
+						<option value="${discount.discountCoupon.couponNo}" >${discount.discountCoupon.couponName}</option>
+						</c:forEach>				
+			</select>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">등록일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>

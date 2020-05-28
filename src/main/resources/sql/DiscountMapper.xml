@@ -5,7 +5,7 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!--  사용자가 쿠폰을 보유하고 있는 쿠폰 정보를 저장하는 테이블 -->
-<mapper namespace="CouponInventoryMapper">
+<mapper namespace="DiscountMapper">
  	
  	
  	<resultMap id="userMap" type="user">
@@ -31,7 +31,9 @@
 	</resultMap>
  	
  	
-	<resultMap id="couponInventoryMap" type="discount">
+ 	
+ 	<!--  여기가 Discount 의 매핑 부분 -->
+	<resultMap id="discountSelectMap" type="discount">
 		<result property="discountNo" 		column="discount_no" 		jdbcType="NUMERIC"/>	
 		<result property="issuedDate" 		column="issued_date" 		jdbcType="DATE" />
 		<result property="expirationDate" 	column="expiration_date" 	jdbcType="DATE" />		
@@ -54,15 +56,27 @@
 	
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addCoupon" parameterType="discount" >
+	<insert 	id="addDiscount" parameterType="discount" >
 	 	INSERT
 		INTO discount
-		VALUES	 (seq_discount_no.nextval, #{owner.userId}, #{discountCoupon.couponNo}, #{issuedDate}, #{expirationDate} )
+		VALUES	 (seq_discount_no.nextval, #{owner.userId}, #{discountCoupon.couponNo}, SYSDATE, SYSDATE+30 )
 	 </insert>
 	 
 	 
+	 <select id="getDiscount" parameterType="int" resultMap="discountSelectMap">
+	 	SELECT * FROM discount WHERE discount_no = #{discountNo}	 
+	 </select>
 	 
-	 <delete id="deleteCoupon" parameterType="int">
+	 
+	 <select id="getDiscountList" parameterType="purchase" resultMap="discountSelectMap">
+	 	SELECT * FROM discount, coupon 
+	 	WHERE discount.coupon_no = coupon.coupon_no 
+	 	AND  discount.owner_id = #{buyer.userId} AND coupon.minimum_price >= #{purchaseProd.price}
+	 	
+	 </select>
+	 
+	 	 
+	 <delete id="deleteDiscount" parameterType="int">
 	 	DELETE FROM coupon 
 	 	WHERE coupon_no = #{value} 	 
 	 </delete>

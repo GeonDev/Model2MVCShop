@@ -116,7 +116,7 @@ function funcAddCouponInventory(){
 
 <!-- 어드민 계정인 경우 유저에게 쿠폰을 줄수 있다.  -->
 <c:if test="${sessionScope.user.role == 'admin'}">
-	<form name="detailForm" action="/inventory/addCoupon" method="post">
+	<form name="detailForm" action="/discount/addDiscount" method="post">
 	
 		<input type="hidden" name="ownerId" value="${user.userId}" />
 	
