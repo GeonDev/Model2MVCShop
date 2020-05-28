@@ -2,6 +2,8 @@ package com.model2.mvc.web.product;
 
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -45,6 +47,8 @@ public class ProductController {
 	
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
+	
+
 	
 	
 	//디폴트 생성자
@@ -140,12 +144,22 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="updateProduct")
-	public String updateProduct(@ModelAttribute("product") Product prod ,Model model) throws Exception {
-			
-		//전달받은 상품 정보 업데이트
-		service.updateProduct(prod);			
-		//String prodNo = Integer.toString(prod.getProdNo());	
+	public String updateProduct(@ModelAttribute("product") Product prod ,Model model, @RequestParam("uploadFile") MultipartFile file) throws Exception {
+	
+		if(file !=null) {		
+			//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......			
+			File f =new File(uploadPath+file.getOriginalFilename());
+					
+			//원하는 위치에 파일 저장
+			file.transferTo(f);	
+					
+			//혹시 바인딩중 이상이 있을수 있어 FileName 재설정
+			prod.setFileName(file.getOriginalFilename());
+		}
 		
+		//전달받은 상품 정보 업데이트
+		service.updateProduct(prod);					
+			
 		model.addAttribute("prodNo", prod.getProdNo());
 		
 		return "forward:/product/getProduct";
