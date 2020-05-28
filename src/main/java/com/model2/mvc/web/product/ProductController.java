@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.DiskFileUpload;
@@ -48,12 +49,17 @@ public class ProductController {
 	@Value("#{commonProperties['uploadPath']}")
 	String uploadPath;
 	
+	@Autowired
+	private ServletContext context;
+ 	
 
 	
 	
 	//디폴트 생성자
 	public ProductController() {
 		System.out.println(this.getClass());
+		
+		
 	}
 	
 	//추가 상품 정보 입력 화면
@@ -67,12 +73,15 @@ public class ProductController {
 	//상품 추가후 결과 화면
 	@RequestMapping(value="addProduct")
 	public String addProduct(@ModelAttribute("product") Product prod, @RequestParam("uploadFile") MultipartFile file ,HttpServletRequest request) throws Exception {		
-				
-	
-        System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆현재 절대 경로는 :" +request.getSession().getServletContext().getRealPath("/"));
-        
+
+        String path = context.getRealPath("/");        
+        path = path.substring(0,path.indexOf("\\.metadata"));         
+        path = path +  uploadPath;
+   
+
+		
 		//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......
-		File f =new File(uploadPath+file.getOriginalFilename());
+		File f =new File(path+file.getOriginalFilename());
 		
 		//원하는 위치에 파일 저장
 		file.transferTo(f);	
@@ -114,7 +123,7 @@ public class ProductController {
 	
 	@RequestMapping(value="listProduct")
 	public String listProduct(@ModelAttribute("search") Search search, @RequestParam("menu") String menu , Model model ) throws Exception {
-		
+			
 		//현재 페이지값이 없으면 첫번째 페이지로 설정
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
@@ -145,10 +154,15 @@ public class ProductController {
 	
 	@RequestMapping(value="updateProduct")
 	public String updateProduct(@ModelAttribute("product") Product prod ,Model model, @RequestParam("uploadFile") MultipartFile file) throws Exception {
-	
+			
+        String path = context.getRealPath("/");        
+        path = path.substring(0,path.indexOf("\\.metadata"));         
+        path = path +  uploadPath;
+		
+		
 		if(file !=null) {		
-			//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......			
-			File f =new File(uploadPath+file.getOriginalFilename());
+					
+			File f =new File(path+file.getOriginalFilename());
 					
 			//원하는 위치에 파일 저장
 			file.transferTo(f);	
