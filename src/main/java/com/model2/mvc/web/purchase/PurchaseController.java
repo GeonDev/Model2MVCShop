@@ -1,5 +1,7 @@
 package com.model2.mvc.web.purchase;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 import java.util.Map;
 
@@ -66,16 +68,18 @@ public class PurchaseController {
 	public ModelAndView addPurchaseView(@RequestParam("prodNo")int prodNo, Model model, HttpSession session ) throws Exception {
 		
 		Product product = prodService.getProduct(prodNo);		
-		Purchase purchase = new Purchase();
-				
-		///////////////////////////////////// 사용 가능한 쿠폰 정보 ////////////////////////////////////
-		purchase.setPurchaseProd(product);
-		purchase.setBuyer((User)session.getAttribute("user"));
 		
-		List<Discount> list = discountService.getDiscountList(purchase);		
+		///////////////////////////////////// 해당 유저가 보유한 쿠폰정보 ////////////////////////////////////		
+		List<Discount> list = discountService.getDiscountList(((User)session.getAttribute("user")).getUserId());		
 		
+		for(Discount temp : list) {
+			if(temp.getDiscountCoupon().getMinimum_price() > product.getPrice()) {
+				list.remove(temp);
+			} 			
+		}
 		model.addAttribute("list",list);
-		///////////////////////////////////// 사용 가능한 쿠폰 정보 ////////////////////////////////////
+		
+		///////////////////////////////////// 해당 유저가 보유한 쿠폰정보 ////////////////////////////////////
 		model.addAttribute("product",product);
 		
 		System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ 선택된 쿠폰 " +list);
@@ -84,14 +88,37 @@ public class PurchaseController {
 	}
 	
 		
+	
 	@RequestMapping(value =  "addPurchase", method = RequestMethod.POST)
-	public ModelAndView addPurchase(HttpServletRequest request, @RequestParam("prodNo")int prodNo, HttpSession session ) throws Exception {
+	public ModelAndView addPurchase(HttpServletRequest request, @RequestParam("prodNo")int prodNo, @RequestParam("discountCoupon")int discountNo, HttpSession session ) throws Exception {
 		//왠지 모르지만 @ModelAttribute값을 받아오지 못하여 HttpServletRequest로 처리		
 		
 		Purchase purchase = new Purchase();
+		Discount discount = discountService.findDiscount(discountNo);	
+		Product product = prodService.getProduct(prodNo);
+		
+		/////////////////////////// 상품 할인가 적용 /////////////////////////////////
+		if(discount != null) {
+			int totalPrice = product.getPrice();
+			int discountPrice = (int)Math.floor(totalPrice*(discount.getDiscountCoupon().getDiscountRatio()/100.0));
+			
+			if(discountPrice > discount.getDiscountCoupon().getMaximumDiscount()) {
+				totalPrice = totalPrice - discount.getDiscountCoupon().getMaximumDiscount();
+			}else {
+				totalPrice = totalPrice - discountPrice;
+			}	
+			System.out.println("★★★★★★★★★★★★★★★★★★★★★선택된 쿠폰 : "+ discount.getDiscountCoupon().getCouponName());
+			System.out.println("★★★★★★★★★★★★★★★★★★★★★★할인 금액 : "+ discountPrice);
+			
+			//discountService.deleteDiscount(discountNo);
+			product.setPrice(totalPrice);
+		}		
+		
+		/////////////////////////// 상품 할인가 적용 /////////////////////////////////
+		
 		
 		purchase.setBuyer((User)session.getAttribute("user"));		
-		purchase.setPurchaseProd(prodService.getProduct(prodNo));
+		purchase.setPurchaseProd(product);
 						
 		purchase.setDivyAddr(request.getParameter("receiverAddr"));
 		purchase.setDivyDate(request.getParameter("receiverDate"));

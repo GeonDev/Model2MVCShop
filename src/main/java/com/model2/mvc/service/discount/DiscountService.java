@@ -14,6 +14,6 @@ public interface DiscountService {
 	
 	public void deleteDiscount(int discountNo) throws Exception;
 	
-	public List<Discount> getDiscountList(Purchase purchase) throws Exception;
+	public List<Discount> getDiscountList(String userId) throws Exception;
 	
 }

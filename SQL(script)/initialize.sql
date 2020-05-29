@@ -187,8 +187,9 @@ insert into product values (seq_product_prod_no.nextval,'삼성센스','노트북','201
 insert into product values (seq_product_prod_no.nextval,'삼성 갤럭시 A','스마트폰','20120212',600000, 'galaxyA.jpg',to_date('2012/11/12', 'YYYY/MM/DD'));
 insert into product values (seq_product_prod_no.nextval,'소니 A7R3','미러리스','20190312',32000000, 'A7R3.jpg',to_date('2018/12/24', 'YYYY/MM/DD'));
 
-insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 1000,10000);
-insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 10, 5000,50000);
-insert into coupon values (seq_coupon_no.nextval,'이달의 이벤트 쿠폰', 5, 1500, 30000);
+insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 1000,1000);
+insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 10, 5000,5000);
+insert into coupon values (seq_coupon_no.nextval,'이달의 이벤트 쿠폰', 5, 1500, 1000);
+insert into coupon values (seq_coupon_no.nextval,'누구나 이벤트 쿠폰', 10, 3000, 0);
 
 commit;

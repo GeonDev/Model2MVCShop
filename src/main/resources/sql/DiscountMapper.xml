@@ -68,17 +68,16 @@
 	 </select>
 	 
 	 
-	 <select id="getDiscountList" parameterType="purchase" resultMap="discountSelectMap">
-	 	SELECT * FROM discount, coupon 
-	 	WHERE discount.coupon_no = coupon.coupon_no 
-	 	AND  discount.owner_id = #{buyer.userId} AND coupon.minimum_price >= #{purchaseProd.price}
-	 	
+	 <!-- 저장된 쿠폰 정보를 받아오도록 처리 -->
+	 <select id="getDiscountSimpleList" parameterType="string" resultMap="discountSelectMap">
+	 	SELECT *  FROM discount
+	 	WHERE discount.owner_id = #{value} 	 	
 	 </select>
 	 
 	 	 
 	 <delete id="deleteDiscount" parameterType="int">
-	 	DELETE FROM coupon 
-	 	WHERE coupon_no = #{value} 	 
+	 	DELETE FROM discount 
+	 	WHERE discount_no = #{value} 	 
 	 </delete>
 	 	 
 	 

@@ -14,7 +14,7 @@
 
 <form name="updatePurchase" action="/purchase/updatePurchaseView?tranNo=${purchase.tranNo}" method="post">
 
-다음과 같이 구매가 되었습니다.
+<h2>다음과 같이 구매가 되었습니다.</h2>
 
 <table border=1>
 	<tr>
@@ -22,6 +22,13 @@
 		<td>${(purchase.purchaseProd).prodNo}</td>
 		<td></td>
 	</tr>
+	
+	<tr>
+		<td>상품이름</td>
+		<td>${(purchase.purchaseProd).prodName}</td>
+		<td></td>
+	</tr>	
+	
 	<tr>
 		<td>구매자아이디</td>
 		<td>${(purchase.buyer).userId} </td>
@@ -41,6 +48,14 @@
 		</td>
 		<td></td>
 	</tr>
+	
+	<tr>
+		<td>상품가격</td>
+		<td>${(purchase.purchaseProd).price}</td>
+		<td></td>
+	</tr>
+	
+	
 	<tr>
 		<td>구매자이름</td>
 		<td>${purchase.receiverName}</td>
