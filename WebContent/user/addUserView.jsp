@@ -38,7 +38,7 @@ function fncAddUser() {
 		return;
 	}
 		
-	if(document.detailForm.phone2.value != "" && document.detailForm.phone2.value != "") {
+	if(document.detailForm.phone2.value != "" && document.detailForm.phone3.value != "") {
 		document.detailForm.phone.value = document.detailForm.phone1.value + "-" + document.detailForm.phone2.value + "-" + document.detailForm.phone3.value;
 	} else {
 		document.detailForm.phone.value = "";

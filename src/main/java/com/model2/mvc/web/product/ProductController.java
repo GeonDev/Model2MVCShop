@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.DiskFileUpload;
 import org.apache.commons.fileupload.FileItem;
@@ -19,7 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -100,10 +102,9 @@ public class ProductController {
 
 	
 	@RequestMapping(value="getProduct")
-	public String getProduct( @RequestParam("prodNo") int prodNo, @RequestParam(value ="menu", required=false) String menu, Model model) throws Exception {				
+	public String getProduct( @RequestParam("prodNo") int prodNo, @RequestParam(value ="menu") String menu, Model model, @CookieValue(value = "history", defaultValue = "") String history, HttpServletResponse response) throws Exception {				
 						
-		Product prod = service.getProduct(prodNo);
-			
+		Product prod = service.getProduct(prodNo);			
 		
 		model.addAttribute("product", prod);
 		
@@ -115,6 +116,19 @@ public class ProductController {
 				return "forward:/product/updateProduct.jsp";				
 			}
 		}		
+		
+		
+		/***************************쿠키에 상품번호 추가*****************************/		
+		history += prodNo+",";
+		history = history.replace("null", "");	
+		history = history.trim();
+		
+		Cookie cookie = new Cookie("history", history);
+		cookie.setPath("/");
+		response.addCookie(cookie);		
+		
+		System.out.println("쿠키 정보 : "+ history);
+		/***************************쿠키에 상품번호 추가*****************************/
 		
 		return "forward:/product/getProduct.jsp";
 	}	
