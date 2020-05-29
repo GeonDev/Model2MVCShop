@@ -10,3 +10,4 @@ Model2 MVC 패턴(?)을 학습하기 위한 간단한 쇼핑몰 프로젝트
 #### 5. JSTL/EL 적용 
 
 기타 : apache tomcat 7.0(servlet 3.0) 사용
+      (backEnd 집중 프로젝트 입니다)
