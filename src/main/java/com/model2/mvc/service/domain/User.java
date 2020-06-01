@@ -21,7 +21,6 @@ public class User {
 	private String phone2;
 	private String phone3;
 	
-	private int loginState;
 	
 	
 	///Constructor
@@ -88,15 +87,8 @@ public class User {
 	}
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
-	}
-		
-	public int getLoginState() {
-		return loginState;
-	}
+	}		
 
-	public void setLoginState(int loginState) {
-		this.loginState = loginState;
-	}
 
 	/////////////// EL 적용 위해 추가된 getter Method ///////////
 	public String getPhone1() {

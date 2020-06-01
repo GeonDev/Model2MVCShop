@@ -11,7 +11,9 @@
 <body>
 	<script>
 	
-		alert('쿠폰이 삭제되었습니다.');				
+		var message ="<c:out value="${message}"/>"; 		
+	
+		alert(message);				
 				
 		
 		 history.go(-1);

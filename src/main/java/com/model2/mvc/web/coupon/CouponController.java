@@ -125,12 +125,13 @@ public class CouponController {
 	
 	// 리스트에서 삭제를 누름
  	@RequestMapping(value = "deleteCoupon")
-	public String deleteCouponView(@RequestParam("couponNo")int couponNo) throws Exception {
+	public String deleteCouponView(@RequestParam("couponNo")int couponNo, Model model) throws Exception {
 		
  		//쿠폰 삭제 실행
 		service.removeCoupon(couponNo);
 		
-		return "forward:/coupon/deleteCouponView.jsp";
+		model.addAttribute("message", "쿠폰이 삭제되었습니다.");
+		return "forward:/common/alertView";
 	}
 	
 

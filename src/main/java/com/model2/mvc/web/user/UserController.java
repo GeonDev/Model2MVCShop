@@ -139,17 +139,22 @@ public class UserController {
 	
 	//@RequestMapping("/login.do")
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
+	public String login(@ModelAttribute("user") User user, HttpSession session, Model model ) throws Exception{
 		
 		System.out.println("/user/login : POST");
 		//Business Logic
 		User dbUser=userService.getUser(user.getUserId());
 		
-		if( user.getPassword().equals(dbUser.getPassword())){
+		if(dbUser == null) {
+			model.addAttribute("message", "일치하는 아이디가 없습니다.");
+			return "forward:/common/alertView.jsp";
+		}else if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
-		}
-		
-		return "redirect:/index.jsp";
+			return "redirect:/index.jsp";
+		}else {
+			model.addAttribute("message", "비밀번호가 틀렸습니다.");
+			return "forward:/common/alertView.jsp";
+		}		
 	}
 	
 	//@RequestMapping("/logout.do")
