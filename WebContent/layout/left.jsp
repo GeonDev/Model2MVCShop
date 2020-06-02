@@ -7,11 +7,59 @@
 <title>Model2 MVC Shop</title>
 
 <link href="/css/left.css" rel="stylesheet" type="text/css">
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 
 <script type="text/javascript">
 function history(){
 	popWin = window.open("/history.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
 }
+
+$(function() {
+	 
+
+ 	$( ".Depth03:contains('개인정보조회')" ).on("click" , function() {
+		$(window.parent.frames["rightFrame"].document.location).attr("href","/user/getUser?userId=${user.userId}");
+	});	
+	
+
+ 	$( ".Depth03:contains('회원정보조회')" ).on("click" , function() {		
+ 		$(window.parent.frames["rightFrame"].document.location).attr("href","/user/listUser");
+	}); 
+ 	
+ 	$( ".Depth03:contains('판매상품등록')" ).on("click" , function() {		
+ 		$(window.parent.frames["rightFrame"].document.location).attr("href","../product/addProductView.jsp;");
+	});
+ 	
+ 	$( ".Depth03:contains('판매상품관리')" ).on("click" , function() {		
+ 		$(window.parent.frames["rightFrame"].document.location).attr("href","/product/listProduct?menu=manage");
+	});
+ 	
+ 	$( ".Depth03:contains('신규쿠폰등록')" ).on("click" , function() {		
+ 		$(window.parent.frames["rightFrame"].document.location).attr("href","../coupon/addCouponView.jsp;");
+	});
+ 	
+	$( ".Depth03:contains('쿠폰발급관리')" ).on("click" , function() {		
+ 		$(window.parent.frames["rightFrame"].document.location).attr("href","/coupon/listCoupon");
+	});
+	
+	
+	$( ".Depth03:contains('상 품 검 색')" ).on("click" , function() {		
+ 		$(window.parent.frames["rightFrame"].document.location).attr("href","/product/listProduct?menu=search");
+	});
+ 	
+	$( ".Depth03:contains('구매이력조회')" ).on("click" , function() {		
+ 		$(window.parent.frames["rightFrame"].document.location).attr("href","/purchase/listPurchase");
+	});
+	
+	
+	$( ".Depth03:contains('최근 본 상품')" ).on("click" , function() {		
+		history();
+	});
+	
+});	
+
+
+
 </script>
 </head>
 
@@ -26,11 +74,8 @@ function history(){
 			<tr>
 				<c:if test="${ !empty user }">
 					<tr>
-						<td class="Depth03">
-							<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-							<a href="/getUser.do?userId=${user.userId}" target="rightFrame">개인정보조회</a>
-							////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-							<a href="/user/getUser?userId=${user.userId}" target="rightFrame">개인정보조회</a>
+						<td class="Depth03">			
+							개인정보조회
 						</td>
 					</tr>
 				</c:if>
@@ -38,10 +83,7 @@ function history(){
 				<c:if test="${user.role == 'admin'}">
 					<tr>
 						<td class="Depth03" >
-							<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-							<a href="/listUser.do" target="rightFrame">회원정보조회</a>
-							////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-							<a href="/user/listUser" target="rightFrame">회원정보조회</a>
+						회원정보조회
 						</td>
 					</tr>
 				</c:if>
@@ -60,26 +102,25 @@ function history(){
 			<table  border="0" cellspacing="0" cellpadding="0" width="159">
 				<tr>
 					<td class="Depth03">					
-						<a href="../product/addProductView.jsp;" target="rightFrame">판매상품등록</a>
+					판매상품등록
 					</td>
 				</tr>
 				<tr>
-					<td class="Depth03">
-					<!-- <a href="/listProduct.do?menu=manage"  target="rightFrame">판매상품관리</a>  -->
-						<a href="/product/listProduct?menu=manage"  target="rightFrame">판매상품관리</a>
+					<td class="Depth03">				
+					판매상품관리
 					</td>
 				</tr>
 				
-				
-				<tr>
-					<td class="Depth03">					
-						<a href="../coupon/addCouponView.jsp;"  target="rightFrame"> 신규쿠폰등록</a>
-					</td>
-				</tr>
 				
 				<tr>
 					<td class="Depth03">					
-						<a href="/coupon/listCoupon"  target="rightFrame"> 쿠폰발급관리</a>
+					 신규쿠폰등록
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="Depth03">					
+						 쿠폰발급관리
 					</td>
 				</tr>
 				
@@ -100,7 +141,7 @@ function history(){
 		
 			<tr>
 				<td class="Depth03">			
-					<a href="/product/listProduct?menu=search" target="rightFrame">상 품 검 색</a>
+					상 품 검 색
 				</td>
 			</tr>
 			
@@ -108,14 +149,15 @@ function history(){
 			<c:if test="${ !empty user && user.role == 'user'}">
 			<tr>
 				<td class="Depth03">
-					<!-- <a href="/listPurchase.do"  target="rightFrame">구매이력조회</a> -->
-					<a href="/purchase/listPurchase"  target="rightFrame">구매이력조회</a>
+					구매이력조회
 				</td>
 			</tr>
 			</c:if>
 
 			<tr>
-				<td class="Depth03"><a href="javascript:history()">최근 본 상품</a></td>
+				<td class="Depth03">
+					최근 본 상품
+				</td>
 			</tr>
 		</table>
 	</td>
