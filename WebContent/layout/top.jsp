@@ -30,6 +30,13 @@
 	
 				$(window.parent.document.location).attr("href","/user/logout");
 			}); 
+		 	
+		 	
+		 	$( "h2:contains('Model2 MVC Shop')" ).on("click" , function() {
+		 		window.location.replace("http://localhost:8080/");		 				 		
+			});
+		 	
+		 	
 		});	
 		 
 	</script>		

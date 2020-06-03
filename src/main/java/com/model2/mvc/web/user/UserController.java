@@ -159,9 +159,7 @@ public class UserController {
 	
 	//@RequestMapping("/logout.do")
 	@RequestMapping( value="logout", method=RequestMethod.GET )
-	public String logout(HttpSession session ) throws Exception{
-		
-		System.out.println("/user/logout : POST");
+	public String logout(HttpSession session ) throws Exception{	
 		
 		session.invalidate();
 		
@@ -206,5 +204,6 @@ public class UserController {
 		model.addAttribute("search", search);
 		
 		return "forward:/user/listUser.jsp";
-	}
+	}	
+	
 }

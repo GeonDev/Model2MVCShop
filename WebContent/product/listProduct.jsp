@@ -18,35 +18,55 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
 
-
-function funcGetList(currentPage){
-	document.getElementById("currentPage").value = currentPage;
-	document.detailForm.submit();
+function funcGetList(currentPage) {		
+	
+	var url = "/product/listProduct?menu=";
+	url.concat('${menu}')
+	
+	$("#currentPage").val(currentPage)
+	$("form").attr("method" , "POST").attr("action", url).submit();
 }
 
 function changeSearchCondition(){
-	var condition =  document.getElementById("Condition").value;
 	
-	if(condition == 2){
-		document.getElementById("Keyword").style.width = "80px";
-		document.getElementById("optional").type = "text";
+	if($("#Condition").val() == 2){
+		//document.getElementById("Keyword").style.width = "80px";
+		//document.getElementById("optional").type = "text";
+		$("#Keyword").css("width","100px");
+		$("#optional").attr("type","text");
+	
 	}else{
-		document.getElementById("Keyword").style.width = "200px";
-		document.getElementById("optional").type = "hidden";
+		//document.getElementById("Keyword").style.width = "200px";
+		//document.getElementById("optional").type = "hidden";
+		$("#Keyword").css("width","200px");
+		$("#optional").attr("type","hidden");
 	}
 }
+
+
+$(function() {
+	changeSearchCondition();
+	
+	
+	$( "td.ct_btn01:contains('검색')" ).on("click" , function() {		
+			funcGetList(1);
+	});
+	
+});
+
 
 </script>
 </head>
 
-<body bgcolor="#ffffff" text="#000000" onload = "changeSearchCondition()">
+<body bgcolor="#ffffff" text="#000000" >
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/product/listProduct?menu=${menu}" method="post">
+<form>
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -97,7 +117,7 @@ function changeSearchCondition(){
 			</select>
 
 			<input id="Keyword" type="text" name="searchKeyword" value="${search.searchKeyword}" class="ct_input_g" style="width:200px; height:15px"/>									
-			<input id="optional" type="hidden" name="searchKeywordOptional" value="${search.searchKeywordOptional}" class="ct_input_g" style="width:80px; height:15px" />			
+			<input id="optional" type="hidden" name="searchKeywordOptional" value="${search.searchKeywordOptional}" class="ct_input_g" style="width:100px; height:15px" />			
 			
 		</td>
 	
@@ -108,9 +128,7 @@ function changeSearchCondition(){
 					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:funcGetList(1);">검색</a>
-					</td>
+					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">검색</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
 					</td>
