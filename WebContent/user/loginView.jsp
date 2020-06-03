@@ -36,11 +36,8 @@
 					alert('패스워드를 입력하지 않으셨습니다.');
 					$("input:password").focus();
 					return;
-				}
+				}				
 				
-				////////////////////////////////////////////////// 추가 , 변경된 부분 ////////////////////////////////////////////////////////////
-				//$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
-				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				$.ajax( 
 						{
 							url : "/user/json/login",
@@ -54,13 +51,7 @@
 								userId : id,
 								password : pw
 							}),
-							success : function(JSONData , status) {
-
-								//Debug...
-								//alert(status);
-								//alert("JSONData : \n"+JSONData);
-								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-								//alert( JSONData != null );
+							success : function(JSONData , status) {						
 								
 								if( JSONData != null ){
 									//[방법1]
