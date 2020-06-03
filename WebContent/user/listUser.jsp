@@ -17,7 +17,7 @@
 	<script type="text/javascript">
 	
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
-		function funcGetList(currentPage) {
+		function fncGetUserList(currentPage) {
 			$("#currentPage").val(currentPage)
 			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
 		}
@@ -25,14 +25,26 @@
 		//==>"검색" ,  userId link  Event 연결 및 처리
 		 $(function() {
 			 
-	
-			 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {		
-				funcGetList(1);
+			//==> 검색 Event 연결처리부분
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함. 
+			 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
+				//Debug..
+				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
+				fncGetUserList(1);
 			});
 			
-
+			
+			//==> userId LINK Event 연결처리
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> 3 과 1 방법 조합 : $(".className tagName:filter함수") 사용함.
 			$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
+					//Debug..
+					//alert(  $( this ).text().trim() );
 					
+					//////////////////////////// 추가 , 변경된 부분 ///////////////////////////////////
+					//self.location ="/user/getUser?userId="+$(this).text().trim();
+					////////////////////////////////////////////////////////////////////////////////////////////
 					var userId = $(this).text().trim();
 					$.ajax( 
 							{
@@ -45,24 +57,33 @@
 								},
 								success : function(JSONData , status) {
 
+									//Debug...
+									//alert(status);
+									//Debug...
+									//alert("JSONData : \n"+JSONData);
 									
 									var displayValue = "<h3>"
 																+"아이디 : "+JSONData.userId+"<br/>"
 																+"이  름 : "+JSONData.userName+"<br/>"
-																+"권  한 : "+JSONData.role+"<br/>"	
-																+"이메일 : "+JSONData.email+"<br/>"													
+																+"이메일 : "+JSONData.email+"<br/>"
+																+"ROLE : "+JSONData.role+"<br/>"
 																+"등록일 : "+JSONData.regDate+"<br/>"
 																+"</h3>";
-							
+									//Debug...									
+									//alert(displayValue);
 									$("h3").remove();
 									$( "#"+userId+"" ).html(displayValue);
 								}
 						});
-				
+						////////////////////////////////////////////////////////////////////////////////////////////
 					
-			});			
-	
-			// 번갈아가며 색상 변경
+			});
+			
+			//==> userId LINK Event End User 에게 보일수 있도록 
+			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
+			$("h7").css("color" , "red");
+			
+			//==> 아래와 같이 정의한 이유는 ??
 			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
 		});	
 		
@@ -155,7 +176,9 @@
 			</td>
 		</tr>
 		<tr>
-	
+			<!-- //////////////////////////// 추가 , 변경된 부분 /////////////////////////////
+			<td colspan="11" bgcolor="D6D7D6" height="1"></td>
+			////////////////////////////////////////////////////////////////////////////////////////////  -->
 			<td id="${user.userId}" colspan="11" bgcolor="D6D7D6" height="1"></td>
 		</tr>
 

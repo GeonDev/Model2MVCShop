@@ -15,12 +15,12 @@
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 	   
-
 		$( function() {
-		
+			
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#userId").focus();
 			
-			//==> 추가된부분 : "Login"  Event 연결
+			//==>"Login"  Event 연결
 			$("img[src='/images/btn_login.gif']").on("click" , function() {
 
 				var id=$("input:text").val();
@@ -37,14 +37,56 @@
 					$("input:password").focus();
 					return;
 				}
-				    
-				$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
 				
+				////////////////////////////////////////////////// 추가 , 변경된 부분 ////////////////////////////////////////////////////////////
+				//$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				$.ajax( 
+						{
+							url : "/user/json/login",
+							method : "POST" ,
+							dataType : "json" ,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							data : JSON.stringify({
+								userId : id,
+								password : pw
+							}),
+							success : function(JSONData , status) {
+
+								//Debug...
+								//alert(status);
+								//alert("JSONData : \n"+JSONData);
+								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+								//alert( JSONData != null );
+								
+								if( JSONData != null ){
+									//[방법1]
+									//$(window.parent.document.location).attr("href","/index.jsp");
+									
+									//[방법2]
+									//window.parent.document.location.reload();
+									
+									//[방법3]
+									$(window.parent.frames["topFrame"].document.location).attr("href","/layout/top.jsp");
+									$(window.parent.frames["leftFrame"].document.location).attr("href","/layout/left.jsp");
+									$(window.parent.frames["rightFrame"].document.location).attr("href","/user/getUser?userId="+JSONData.userId);
+									
+									//==> 방법 1 , 2 , 3 결과 학인
+								}else{
+									alert("아이디 , 패스워드를 확인하시고 다시 로그인...");
+								}
+							}
+					}); 
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								
 			});
 		});
 		
 		
-		
+		//============= 회원원가입화면이동 =============
 		$( function() {
 			//==> 추가된부분 : "addUser"  Event 연결
 			$("img[src='/images/btn_add.gif']").on("click" , function() {
@@ -57,7 +99,6 @@
 </head>
 
 <body bgcolor="#ffffff" text="#000000" >
-
 
 <form>
 
@@ -123,12 +164,10 @@
    				    <table width="136" height="20" border="0" cellpadding="0" cellspacing="0">
                        <tr> 
                          <td width="56">
-                  
                          		<img src="/images/btn_login.gif" width="56" height="20" border="0"/>
                          </td>
                          <td width="10">&nbsp;</td>
                          <td width="70">
-                         
                        			<img src="/images/btn_add.gif" width="70" height="20" border="0">
                          </td>
                        </tr>
