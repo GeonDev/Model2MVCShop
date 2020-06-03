@@ -21,11 +21,8 @@ window.onload = function(){
 
 function fncCheckDuplication() {
 	// Form 유효성 검증
-	if(document.detailForm.userId.value != null && document.detailForm.userId.value.length >0) {
-	   	
-		///////////////////////////////////////////////////////////////////////////////////////////////
-		//document.detailForm.action='/checkDuplication.do';
-	    ///////////////////////////////////////////////////////////////////////////////////////////////
+	if(document.detailForm.userId.value != null && document.detailForm.userId.value.length >0) {	   	
+	
 	    document.detailForm.action='/user/checkDuplication';
 	    
 		document.detailForm.submit();

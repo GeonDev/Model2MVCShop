@@ -91,13 +91,7 @@
 							$("#" + prodNo + "").html(displayValue);
 						}
 					});
-				});
-		
-		
-		
-		
-		
-		
+				});	
 		
 	});
 </script>

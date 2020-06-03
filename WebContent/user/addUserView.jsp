@@ -47,7 +47,8 @@
 			document.detailForm.password2.focus();
 			return;
 		}
-
+		
+		
 		if (document.detailForm.phone2.value != ""
 				&& document.detailForm.phone3.value != "") {
 			document.detailForm.phone.value = document.detailForm.phone1.value
@@ -113,13 +114,19 @@
 	}
 
 	function resetData() {
-		document.detailForm.reset();
+		//document.detailForm.reset();
+		$("form")[0].reset();
 	}
 	
 	$(function() {
 		
 		$(".ct_btn01:contains('가입')").on("click", function() {
-			fncAddUser();
+			fncAddUser();			
+		});
+		
+		
+		$(".ct_btn01:contains('취소')").on("click", function() {
+			resetData();
 			
 		});
 		
@@ -337,7 +344,7 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:resetData();">취소</a>
+						취소
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
