@@ -6,108 +6,136 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
-function fncAddUser() {
-	// Form 유효성 검증
-	var id=document.detailForm.userId.value;
-	var pw=document.detailForm.password.value;
-	var pw_confirm=document.detailForm.password2.value;
-	var name=document.detailForm.userName.value;
-	
-	if(id == null || id.length <1){
-		alert("아이디는 반드시 입력하셔야 합니다.");
-		return;
-	}
-	if(pw == null || pw.length <1){
-		alert("패스워드는  반드시 입력하셔야 합니다.");
-		return;
-	}
-	if(pw_confirm == null || pw_confirm.length <1){
-		alert("패스워드 확인은  반드시 입력하셔야 합니다.");
-		return;
-	}
-	if(name == null || name.length <1){
-		alert("이름은  반드시 입력하셔야 합니다.");
-		return;
-	}
-	
-	if(document.detailForm.password.value != document.detailForm.password2.value) {
-		alert("비밀번호 확인이 일치하지 않습니다.");
-		document.detailForm.password2.focus();
-		return;
-	}
+
+	function fncAddUser() {
+		// Form 유효성 검증
+		//var id = document.detailForm.userId.value;		
+		//var pw = document.detailForm.password.value;
+		//var pw_confirm = document.detailForm.password2.value;
+		//var name = document.detailForm.userName.value;
+
+				
+		var id = $("input[name = userId]").val();
+		var pw = $("input[name = password]").val();
+		var pw_confirm = $("input[name = password2]").val();
+		var name = $("input[name = userName]").val();
 		
-	if(document.detailForm.phone2.value != "" && document.detailForm.phone3.value != "") {
-		document.detailForm.phone.value = document.detailForm.phone1.value + "-" + document.detailForm.phone2.value + "-" + document.detailForm.phone3.value;
-	} else {
-		document.detailForm.phone.value = "";
+		
+		
+		if (id == null || id.length < 1) {
+			alert("아이디는 반드시 입력하셔야 합니다.");
+			return;
+		}
+		if (pw == null || pw.length < 1) {
+			alert("패스워드는  반드시 입력하셔야 합니다.");
+			return;
+		}
+		if (pw_confirm == null || pw_confirm.length < 1) {
+			alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+			return;
+		}
+		if (name == null || name.length < 1) {
+			alert("이름은  반드시 입력하셔야 합니다.");
+			return;
+		}
+
+		if (pw != pw_confirm) {
+			alert("비밀번호 확인이 일치하지 않습니다.");
+			document.detailForm.password2.focus();
+			return;
+		}
+
+		if (document.detailForm.phone2.value != ""
+				&& document.detailForm.phone3.value != "") {
+			document.detailForm.phone.value = document.detailForm.phone1.value
+					+ "-" + document.detailForm.phone2.value + "-"
+					+ document.detailForm.phone3.value;
+		} else {
+			document.detailForm.phone.value = "";
+		}
+		
+		$("form").attr("method","POST").attr("action","/user/addUser").attr("target","_parent").submit();
+				
+
+	}
+
+	function check_email(frm) {
+		alert
+		var email = document.detailForm.email.value;
+		if (email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1)) {
+			alert("이메일 형식이 아닙니다.");
+			return false;
+		}
+		return true;
+	}
+
+	function checkSsn() {
+		var ssn1, ssn2;
+		var nByear, nTyear;
+		var today;
+
+		ssn = document.detailForm.ssn.value;
+		// 유효한 주민번호 형식인 경우만 나이 계산 진행, PortalJuminCheck 함수는 CommonScript.js 의 공통 주민번호 체크 함수임 
+		if (!PortalJuminCheck(ssn)) {
+			alert("잘못된 주민번호입니다.");
+			return false;
+		}
+	}
+
+	function PortalJuminCheck(fieldValue) {
+		var pattern = /^([0-9]{6})-?([0-9]{7})$/;
+		var num = fieldValue;
+		if (!pattern.test(num))
+			return false;
+		num = RegExp.$1 + RegExp.$2;
+
+		var sum = 0;
+		var last = num.charCodeAt(12) - 0x30;
+		var bases = "234567892345";
+		for (var i = 0; i < 12; i++) {
+			if (isNaN(num.substring(i, i + 1)))
+				return false;
+			sum += (num.charCodeAt(i) - 0x30) * (bases.charCodeAt(i) - 0x30);
+		}
+		var mod = sum % 11;
+		return ((11 - mod) % 10 == last) ? true : false;
+	}
+
+	function fncCheckDuplication() {
+		popWin = window
+				.open(
+						"/user/checkDuplication.jsp",
+						"popWin",
+						"left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,scrollbars=no,scrolling=no,menubar=no,resizable=no");
+	}
+
+	function resetData() {
+		document.detailForm.reset();
 	}
 	
-	/////////////////////////////////////////////////////////////////////////////////
-	//document.detailForm.action='/addUser.do';
-	/////////////////////////////////////////////////////////////////////////////////
-	document.detailForm.action='/user/addUser';
+	$(function() {
+		
+		$(".ct_btn01:contains('가입')").on("click", function() {
+			fncAddUser();
+			
+		});
+		
+		
+		
+		
+	});
 	
-	document.detailForm.submit();
 	
-}
-
-function check_email(frm) {
-	alert
-	var email=document.detailForm.email.value;
-    if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1)){
-    	alert("이메일 형식이 아닙니다.");
-		return false;
-    }
-    return true;
-}
-
-function checkSsn() {
-	var ssn1, ssn2; 
-	var nByear, nTyear; 
-	var today; 
-
-	ssn = document.detailForm.ssn.value;
-	// 유효한 주민번호 형식인 경우만 나이 계산 진행, PortalJuminCheck 함수는 CommonScript.js 의 공통 주민번호 체크 함수임 
-	if(!PortalJuminCheck(ssn)) {
-		alert("잘못된 주민번호입니다.");
-		return false;
-	}
-}
-
-function PortalJuminCheck(fieldValue){
-    var pattern = /^([0-9]{6})-?([0-9]{7})$/; 
-	var num = fieldValue;
-    if (!pattern.test(num)) return false; 
-    num = RegExp.$1 + RegExp.$2;
-
-	var sum = 0;
-	var last = num.charCodeAt(12) - 0x30;
-	var bases = "234567892345";
-	for (var i=0; i<12; i++) {
-		if (isNaN(num.substring(i,i+1))) return false;
-		sum += (num.charCodeAt(i) - 0x30) * (bases.charCodeAt(i) - 0x30);
-	}
-	var mod = sum % 11;
-	return ((11 - mod) % 10 == last) ? true : false;
-}
-
-function fncCheckDuplication() {
-	popWin 
-		= window.open("/user/checkDuplication.jsp","popWin", "left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,scrollbars=no,scrolling=no,menubar=no,resizable=no");
-}
-
-function resetData() {
-	document.detailForm.reset();
-}
-
+	
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm"  method="post" >
+<form name="detailForm" >
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -298,8 +326,8 @@ function resetData() {
 					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncAddUser();">가입</a>
+					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">가입
+						<!--   <a href="javascript:fncAddUser();"/> -->
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

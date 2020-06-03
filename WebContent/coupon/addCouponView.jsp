@@ -7,55 +7,54 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<script type="text/javascript" src="../javascript/calendar.js">
-</script>
+<script type="text/javascript" src="../javascript/calendar.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 
 <script type="text/javascript">
 
-function funcAddCoupon(){
-	//Form 유효성 검증
- 	var name = document.detailForm.couponName.value;
-	var discount = document.detailForm.discountRatio.value;
-	var maximum = document.detailForm.maximumDiscount.value;
-	var price = document.detailForm.minimum_price.value;
+	function funcAddCoupon(){
+		//Form 유효성 검증
+	 	var name = document.detailForm.couponName.value;
+		var discount = document.detailForm.discountRatio.value;
+		var maximum = document.detailForm.maximumDiscount.value;
+		var price = document.detailForm.minimum_price.value;
+		
+		if(name == null || name.length<1){
+			alert("쿠폰이름은 반드시 입력하여야 합니다.");
+			return;
+		}
+		
+		if(discount == null || discount.length<1){
+			alert("할인율은 반드시 입력하여야 합니다.");
+			return;
+		}
+		
+		if(maximum == null || maximum.length<1){
+			alert("최대할인가는 반드시 입력하여야 합니다.");
+			return;
+		}
+		
+		if(price == null || price.length<1){
+			alert("최소적용가는 반드시 입력하여야 합니다.");
+			return;
+		}
+		
+		
+		
 	
-	if(name == null || name.length<1){
-		alert("쿠폰이름은 반드시 입력하여야 합니다.");
-		return;
+		document.detailForm.action='/coupon/addCoupon';
+		document.detailForm.submit();
 	}
 	
-	if(discount == null || discount.length<1){
-		alert("할인율은 반드시 입력하여야 합니다.");
-		return;
+	function resetData(){
+		document.detailForm.reset();
 	}
-	
-	if(maximum == null || maximum.length<1){
-		alert("최대할인가는 반드시 입력하여야 합니다.");
-		return;
-	}
-	
-	if(price == null || price.length<1){
-		alert("최소적용가는 반드시 입력하여야 합니다.");
-		return;
-	}
-	
-	
-	
-
-	document.detailForm.action='/coupon/addCoupon';
-	document.detailForm.submit();
-}
-
-function resetData(){
-	document.detailForm.reset();
-}
 
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<!--  <form name="detailForm" method="post" enctype="multipart/form-data"> -->
 
 <form name="detailForm" method="post">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">

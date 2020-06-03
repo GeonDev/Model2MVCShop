@@ -6,12 +6,15 @@
 <head>
 <title>회원정보조회</title>
 
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
-function funcAddCouponInventory(){
-	//document.getElementById("value").value = selectCoupon;
-	document.detailForm.submit();
-}
+	function funcAddCouponInventory(){
+		//document.getElementById("value").value = selectCoupon;
+		//document.detailForm.submit();
+		
+		$("form").attr("method","POST").attr("action","/discount/addDiscount").attr("target","_parent").submit();	
+	}
 
 
 </script>
@@ -116,7 +119,7 @@ function funcAddCouponInventory(){
 
 <!-- 어드민 계정인 경우 유저에게 쿠폰을 줄수 있다.  -->
 <c:if test="${sessionScope.user.role == 'admin'}">
-	<form name="detailForm" action="/discount/addDiscount" method="post">
+	<form name="detailForm" >
 	
 		<input type="hidden" name="ownerId" value="${user.userId}" />
 	

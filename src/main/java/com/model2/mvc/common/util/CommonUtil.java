@@ -136,4 +136,20 @@ public class CommonUtil {
 	}
 	
 	
+	public static String checkOvperlap(String csv ,String src, String str) {
+		
+		String [] list =  src.split(csv);
+		String result = new String();
+		
+		for(String s : list) {
+			if (!(s.equals(str))) {
+				result += (s+csv);
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	
 }

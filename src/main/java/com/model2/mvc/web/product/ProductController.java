@@ -2,19 +2,12 @@ package com.model2.mvc.web.product;
 
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.DiskFileUpload;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -123,6 +116,7 @@ public class ProductController {
 		history = history.replace("null", "");	
 		history = history.trim();
 		
+		//CommonUtil.checkOvperlap(",", history, Integer.toString(prodNo))
 		Cookie cookie = new Cookie("history", history);
 		cookie.setPath("/");
 		response.addCookie(cookie);		

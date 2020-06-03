@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 
 	
-
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
 function fncEditProduct(){ 	

@@ -15,6 +15,7 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 	function funcGetList(currentPage) {
 		document.getElementById("currentPage").value = currentPage;

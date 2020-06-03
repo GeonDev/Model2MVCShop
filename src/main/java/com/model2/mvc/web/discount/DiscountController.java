@@ -63,9 +63,9 @@ public class DiscountController {
 		discount.setDiscountCoupon(coupon);
 		discount.setOwner(user);
 		
-		discountService.addDiscount(discount);
+		discountService.addDiscount(discount);	
 		
-		return new ModelAndView("forward:/discount/addDiscountView.jsp");		
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "비밀번호가 틀렸습니다.");		
 	}
 	
 
