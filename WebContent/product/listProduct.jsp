@@ -21,11 +21,12 @@
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 	function funcGetList(currentPage) {
-
+		
+		
 		var url = "/product/listProduct?menu=";
-		url.concat('${menu}')
+		url = url.concat('${menu}');
 
-		$("#currentPage").val(currentPage)
+		$("#currentPage").val(currentPage);
 		$("form").attr("method", "POST").attr("action", url).submit();
 	}
 
@@ -83,7 +84,7 @@
 							var displayValue =
 								"<h3 id='pre"+JSONData.prodNo +"'>"
 								+ JSONData.prodName								
-								+'<input type="button" value="´Ý±â" blur="javascript:removePreView()"/> <br/>'
+								+'<input type="button" value="´Ý±â" onclick="javascript:removePreView()"/> <br/>'
 								+"<img src = \"/images/uploadFiles/"+ JSONData.fileName + "\" width= \"200\"/>" +"<br/>"
 								+ "</h3>";
 

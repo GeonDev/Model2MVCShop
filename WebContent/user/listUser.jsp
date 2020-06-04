@@ -40,11 +40,8 @@
 			//==> 3 과 1 방법 조합 : $(".className tagName:filter함수") 사용함.
 			$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
 					//Debug..
-					//alert(  $( this ).text().trim() );
-					
-					//////////////////////////// 추가 , 변경된 부분 ///////////////////////////////////
-					//self.location ="/user/getUser?userId="+$(this).text().trim();
-					////////////////////////////////////////////////////////////////////////////////////////////
+					//alert(  $( this ).text().trim() );					
+				
 					var userId = $(this).text().trim();
 					$.ajax( 
 							{
@@ -78,10 +75,7 @@
 						////////////////////////////////////////////////////////////////////////////////////////////
 					
 			});
-			
-			//==> userId LINK Event End User 에게 보일수 있도록 
-			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
-			$("h7").css("color" , "red");
+		
 			
 			//==> 아래와 같이 정의한 이유는 ??
 			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
@@ -176,9 +170,6 @@
 			</td>
 		</tr>
 		<tr>
-			<!-- //////////////////////////// 추가 , 변경된 부분 /////////////////////////////
-			<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-			////////////////////////////////////////////////////////////////////////////////////////////  -->
 			<td id="${user.userId}" colspan="11" bgcolor="D6D7D6" height="1"></td>
 		</tr>
 

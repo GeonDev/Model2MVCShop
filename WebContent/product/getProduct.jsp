@@ -157,7 +157,7 @@
 						<tr>
 							<c:if test="${param.menu eq 'search'}">
 								<c:if test="${!(empty user) && product.proTranCode == '0'}">
-									<c:if test="${user.role != 'admin'}">
+									<c:if test="${user.role == 'user'}">
 										<td width="17" height="23"><img
 											src="/images/ct_btnbg01.gif" width="17" height="23" /></td>
 

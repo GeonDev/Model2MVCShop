@@ -17,10 +17,39 @@
 
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
+
+
+	var tranNo = '${purchase.tranNo}';
+
 	function funcGetList(currentPage) {
-		document.getElementById("currentPage").value = currentPage;
-		document.detailForm.submit();
+		//document.getElementById("currentPage").value = currentPage;
+		$("#currentPage").val(currentPage);
+		$("form").attr("action", "/purchase/listPurchase");
+		$("form").submit();
 	}
+	
+	
+	$(function(){
+		$(".ct_list_pop td:nth-child(1)").on("click",function(){
+		
+			
+			var url = "/purchase/getPurchase?tranNo=";
+			url = url.concat(tranNo);
+			
+			alert(tranNo);
+			
+			//self.location.href = url;
+			
+		});
+		
+		
+		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+		
+	});
+	
+	
+	
+	
 </script>
 </head>
 
@@ -28,7 +57,7 @@
 
 <div style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/purchase/listPurchase" method="post">
+<form name="detailForm" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -71,7 +100,7 @@
 	
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/purchase/getPurchase?tranNo=${purchase.tranNo}">${i}</a>
+			<a href="/purchase/getPurchase?tranNo=${purchase.tranNo}">${i}</a>			
 		</td>
 		<td></td>
 		<td align="left">
@@ -99,7 +128,7 @@
 			상태 입니다.</td>
 		<td></td>
 		
-		<td align="left">
+		<td align="left" >
 		
 			<c:choose>
 				<c:when test="${purchase.tranCode =='3'}">
