@@ -90,10 +90,9 @@ public class PurchaseController {
 		
 	
 	@RequestMapping(value =  "addPurchase", method = RequestMethod.POST)
-	public ModelAndView addPurchase(HttpServletRequest request, @RequestParam("prodNo")int prodNo, @RequestParam("discountCoupon")int discountNo, HttpSession session ) throws Exception {
+	public ModelAndView addPurchase(@ModelAttribute("purchase") Purchase purchase , @RequestParam("prodNo")int prodNo, @RequestParam("discountCoupon")int discountNo, HttpSession session ) throws Exception {
 		//왠지 모르지만 @ModelAttribute값을 받아오지 못하여 HttpServletRequest로 처리		
-		
-		Purchase purchase = new Purchase();
+				
 		Discount discount = discountService.findDiscount(discountNo);	
 		Product product = prodService.getProduct(prodNo);
 		
@@ -118,14 +117,7 @@ public class PurchaseController {
 		
 		
 		purchase.setBuyer((User)session.getAttribute("user"));		
-		purchase.setPurchaseProd(product);
-						
-		purchase.setDivyAddr(request.getParameter("receiverAddr"));
-		purchase.setDivyDate(request.getParameter("receiverDate"));
-		purchase.setDivyRequest(request.getParameter("receiverRequest"));		
-		purchase.setPaymentOption(request.getParameter("paymentOption"));
-		purchase.setReceiverName(request.getParameter("receiverName"));
-		purchase.setReceiverPhone(request.getParameter("receiverPhone"));
+		purchase.setPurchaseProd(product);	
 		
 		service.addPurchase(purchase);		 		
 				
@@ -173,11 +165,11 @@ public class PurchaseController {
 	}
 	
 	@RequestMapping(value = "updatePuchase", method = RequestMethod.POST)
-	public ModelAndView updatePuchase(@ModelAttribute("purchase") Purchase purchase  ,@RequestParam("tranNo")int tranNo ) throws Exception {
+	public ModelAndView updatePuchase(@ModelAttribute("purchase") Purchase purchase) throws Exception {
 		
 		service.updatePurcahse(purchase);
 		
-		return new ModelAndView("forward:/purchase/updatePurchase.jsp","purchase", purchase);
+		return new ModelAndView("forward:/purchase/getPurchase.jsp","purchase",purchase);
 	}
 	
 	

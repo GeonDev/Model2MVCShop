@@ -1,13 +1,6 @@
 <%@page import="com.model2.mvc.service.domain.*"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-    
-<%
-  	Purchase purchase = new Purchase();
-   	purchase = (Purchase)request.getAttribute("purchase");
-   	String payment = (purchase.getPaymentOption()).trim();
-   	String tranNo = (purchase.getTranCode()).trim();
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
     
     
 <!DOCTYPE html>
@@ -15,16 +8,36 @@
 <head>
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+
 <title>구매정보 수정</title>
 
-<script type="text/javascript" src="../javascript/calendar.js">
+<script type="text/javascript" src="../javascript/calendar.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+	
+	$(function() {	
+		
+		$("td.ct_btn01:contains('취소')").on("click", function() {
+			history.go(-1);
+		});			
+	
+		
+		$("td.ct_btn01:contains('수정')").on("click", function() {									
+			$("form").attr("action", "/purchase/updatePurchase");
+			$("form").submit();
+			
+		});
+			
+	});
+	
+	
 </script>
 
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="updatePurchase" method="post"	action="/purchase/updatePurchase?tranNo=<%=purchase.getTranNo() %>">
+<form name ="updatePurchase"  method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -46,14 +59,19 @@
 </table>
 
 <table width="600" border="0" cellspacing="0" cellpadding="0"	align="center" style="margin-top: 13px;">
+
+	<input type="hidden" name="tranNo" value="${purchase.tranNo}">
+
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">구매자아이디</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=(purchase.getBuyer()).getUserId() %></td>
-		<input type="hidden" name="buyerId" value="user20">
+		<td class="ct_write01">${purchase.buyer.userId}</td>
+		
+		<!-- 구매자 정보는 로그인한 정보로 체크 하도록 한다. -->
+		
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -77,7 +95,7 @@
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input 	type="text" name="receiverName" 	class="ct_input_g" style="width: 100px; height: 19px" 
-							maxLength="20" value="<%=purchase.getReceiverName() %>" />
+							maxLength="20" value="${purchase.receiverName}" />
 		</td>
 	</tr>
 	<tr>
@@ -88,7 +106,7 @@
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input 	type="text" name="receiverPhone" class="ct_input_g" style="width: 100px; height: 19px" 
-							maxLength="20" value="<%=purchase.getReceiverPhone() %>" />
+							maxLength="20" value="${purchase.receiverPhone}" />
 		</td>
 	</tr>
 
@@ -99,8 +117,8 @@
 		<td width="104" class="ct_write">구매자주소</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input 	type="text" name="receiverAddr" class="ct_input_g" style="width: 100px; height: 19px" 
-							maxLength="20" value="<%=purchase.getDivyAddr()%>" />
+			<input 	type="text" name="divyAddr" class="ct_input_g" style="width: 100px; height: 19px" 
+							maxLength="20" value="${purchase.divyAddr}" />
 		</td>
 	</tr>
 	<tr>
@@ -110,8 +128,8 @@
 		<td width="104" class="ct_write">구매요청사항</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input 	type="text" name="receiverRequest" 	class="ct_input_g" style="width: 100px; height: 19px" 
-							maxLength="20" value="<%=purchase.getDivyRequest() %>" />
+			<input 	type="text" name="divyRequest" 	class="ct_input_g" style="width: 100px; height: 19px" 
+							maxLength="20" value="${purchase.divyRequest}" />
 		</td>
 	</tr>
 	<tr>
@@ -142,7 +160,7 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-					<input type="submit" value="수정"/>
+					수정
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -152,7 +170,7 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="javascript:history.go(-1)">취소</a>
+					취소
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

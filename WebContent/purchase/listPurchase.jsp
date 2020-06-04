@@ -19,7 +19,7 @@
 <script type="text/javascript">
 
 
-	var tranNo = '${purchase.tranNo}';
+
 
 	function funcGetList(currentPage) {
 		//document.getElementById("currentPage").value = currentPage;
@@ -30,20 +30,37 @@
 	
 	
 	$(function(){
-		$(".ct_list_pop td:nth-child(1)").on("click",function(){
-		
+		$(".ct_list_pop td:nth-child(1)").on("click",function(){		
 			
 			var url = "/purchase/getPurchase?tranNo=";
-			url = url.concat(tranNo);
+			url = url.concat($(this).children('span').text()); 		
+			self.location.href = url;
 			
-			alert(tranNo);
+		});
+		
+		$(".ct_list_pop td:nth-child(3)").on("click",function(){		
 			
-			//self.location.href = url;
+			var url = "/product/getProduct?prodNo=";
+			url = url.concat($(this).children('span').text(),"&menu=search"); 
+			//alert(url);
+			self.location.href = url;
+			
+		});
+		
+		$(".ct_list_pop td:nth-child(11)").on("click",function(){		
+			
+			if($(this).children('span').length){
+				var url = "/purchase/updateTranCode?tranNo=";
+				url = url.concat($(this).children('span').text(),"&tranCode=3"); 
+				alert(url);				
+				self.location.href = url;
+			}
 			
 		});
 		
 		
-		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+		
+		$(".ct_list_pop:nth-child(2n)" ).css("background-color" , "whitesmoke");
 		
 	});
 	
@@ -99,12 +116,16 @@
 		<c:set var="i" value="${ i+1 }" />		
 	
 	<tr class="ct_list_pop">
-		<td align="center">
-			<a href="/purchase/getPurchase?tranNo=${purchase.tranNo}">${i}</a>			
+		<td align="center" >
+			<%-- <a href="/purchase/getPurchase?tranNo=${purchase.tranNo}">${i}</a>  --%>		
+			${i}
+			<span style="display:none" >${purchase.tranNo} </span>				
 		</td>
 		<td></td>
 		<td align="left">
-			<a href="/product/getProduct?prodNo=${(purchase.purchaseProd).prodNo}&menu=search">${(purchase.purchaseProd).prodName}</a>
+			<%-- <a href="/product/getProduct?prodNo=${(purchase.purchaseProd).prodNo}&menu=search">${(purchase.purchaseProd).prodName}</a> --%>
+			${(purchase.purchaseProd).prodName}
+			<span style="display:none" >${(purchase.purchaseProd).prodNo} </span>	
 		</td>
 		<td></td>
 		<td align="left">${purchase.receiverName}</td>
@@ -128,19 +149,13 @@
 			상태 입니다.</td>
 		<td></td>
 		
-		<td align="left" >
+		<td align="left" ">
 		
-			<c:choose>
-				<c:when test="${purchase.tranCode =='3'}">
-					상품 수령 완료
-				</c:when>
-			
-				<c:when test="${purchase.tranCode =='2'}">
-					<a href="/purchase/updateTranCode?tranNo=${purchase.tranNo}&tranCode=3">도착 확인</a>
-				</c:when>
-				<c:when test="${purchase.tranCode =='1'}">
-					배송 대기중
-				</c:when>		
+			<c:choose>			
+				<c:when test="${purchase.tranCode =='2'}">				
+					도착 확인
+					<span style="display:none" >${purchase.tranNo} </span>
+				</c:when>					
 			</c:choose>	
 
 		</td>
