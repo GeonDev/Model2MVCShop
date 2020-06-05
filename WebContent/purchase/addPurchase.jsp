@@ -12,7 +12,7 @@
 
 <body>
 
-<form name="updatePurchase" action="/purchase/updatePurchaseView?tranNo=${purchase.tranNo}" method="post">
+
 
 <h2>다음과 같이 구매가 되었습니다.</h2>
 
@@ -82,7 +82,7 @@
 		<td></td>
 	</tr>
 </table>
-</form>
+
 
 </body>
 </html>

@@ -96,7 +96,7 @@ public class PurchaseController {
 		Discount discount = discountService.findDiscount(discountNo);	
 		Product product = prodService.getProduct(prodNo);
 		
-		/////////////////////////// 상품 할인가 적용 /////////////////////////////////
+		// 상품 할인가 적용
 		if(discount != null) {
 			int totalPrice = product.getPrice();
 			int discountPrice = (int)Math.floor(totalPrice*(discount.getDiscountCoupon().getDiscountRatio()/100.0));
@@ -109,12 +109,10 @@ public class PurchaseController {
 			System.out.println("★★★★★★★★★★★★★★★★★★★★★선택된 쿠폰 : "+ discount.getDiscountCoupon().getCouponName());
 			System.out.println("★★★★★★★★★★★★★★★★★★★★★★할인 금액 : "+ discountPrice);
 			
-			//discountService.deleteDiscount(discountNo);
+			//사용한 쿠폰 삭제
+			discountService.deleteDiscount(discountNo);
 			product.setPrice(totalPrice);
-		}		
-		
-		/////////////////////////// 상품 할인가 적용 /////////////////////////////////
-		
+		}				
 		
 		purchase.setBuyer((User)session.getAttribute("user"));		
 		purchase.setPurchaseProd(product);	
@@ -164,16 +162,17 @@ public class PurchaseController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "updatePuchase", method = RequestMethod.POST)
+	@RequestMapping(value = "updatePurchase", method = RequestMethod.POST)
 	public ModelAndView updatePuchase(@ModelAttribute("purchase") Purchase purchase) throws Exception {
 		
 		service.updatePurcahse(purchase);
 		
-		return new ModelAndView("forward:/purchase/getPurchase.jsp","purchase",purchase);
+		String url ="forward:/purchase/getPurchase?tranNo="+purchase.getTranNo();
+		return new ModelAndView(url,"purchase",purchase);
 	}
 	
 	
-	@RequestMapping(value = "updatePuchase", method = RequestMethod.GET)
+	@RequestMapping(value = "updatePurchase", method = RequestMethod.GET)
 	public ModelAndView updatePuchaseView(@RequestParam("tranNo")int tranNo) throws Exception {
 		
 		Purchase purchase = service.getPurchase(tranNo);

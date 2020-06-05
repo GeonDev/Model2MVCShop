@@ -14,11 +14,11 @@
 	 $(function() {
 		 
 			$("td.ct_btn01:contains('확인')").on("click", function() {
-				history.go(-1);
+				$(window.parent.frames["rightFrame"].document.location).attr("href","/purchase/listPurchase");
 			});
 			
 			$("td.ct_btn01:contains('수정')").on("click", function() {
-				var url = "/purchase/updatePuchase?tranNo=";
+				var url = "/purchase/updatePurchase?tranNo=";
 				url = url.concat('${purchase.tranNo}');			
 				self.location = url;
 			});
