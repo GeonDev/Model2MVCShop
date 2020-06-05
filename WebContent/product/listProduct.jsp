@@ -33,14 +33,11 @@
 	function changeSearchCondition() {
 
 		if ($("#Condition").val() == 2) {
-			//document.getElementById("Keyword").style.width = "80px";
-			//document.getElementById("optional").type = "text";
+
 			$("#Keyword").css("width", "100px");
 			$("#optional").attr("type", "text");
 
 		} else {
-			//document.getElementById("Keyword").style.width = "200px";
-			//document.getElementById("optional").type = "hidden";
 			$("#Keyword").css("width", "200px");
 			$("#optional").attr("type", "hidden");
 		}
@@ -69,29 +66,61 @@
 					var prodNo = $(this).text().trim();
 
 					//alert(prodNo);
+					
+					
+					if('${menu}' =='manage'){						
+						
+						$.ajax("/purchase/json/getPurchase/" + prodNo, {
+							method : "GET",
+							dataType : "Json",
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							success : function(JSONData, status) {					
 
-					$.ajax("/product/json/getProduct/" + prodNo, {
-						method : "GET",
-						dataType : "Json",
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						success : function(JSONData, status) {
+								var displayValue =
+									"<h3>"
+									+ "구매자 이름   : "+	JSONData.receiverName +"<br/>"						
+									+ "구매자 연락처 : "+	JSONData.receiverPhone +"<br/>"
+									+ "구매자 주소   : "+	JSONData.divyAddr +"<br/>"
+									+ "배송 희망일   : "+	JSONData.divyDate +"<br/>"
+									+ "배송 요구사항 : "+	JSONData.divyRequest +"<br/>"
+									+ "</h3>";
 
-							//<img src = "/images/uploadFiles/"+ JSONData.fileName  width="200"/>;
+								$("h3").remove();
+								$("#" + prodNo + "").html(displayValue);
+							}
+						});						
+						
+						
+					}else{
+						
+						$.ajax("/product/json/getProduct/" + prodNo, {
+							method : "GET",
+							dataType : "Json",
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							success : function(JSONData, status) {
 
-							var displayValue =
-								"<h3 id='pre"+JSONData.prodNo +"'>"
-								+ JSONData.prodName								
-								+'<input type="button" value="닫기" onclick="javascript:removePreView()"/> <br/>'
-								+"<img src = \"/images/uploadFiles/"+ JSONData.fileName + "\" width= \"200\"/>" +"<br/>"
-								+ "</h3>";
+								//<img src = "/images/uploadFiles/"+ JSONData.fileName  width="200"/>;
 
-							$("h3").remove();
-							$("#" + prodNo + "").html(displayValue);
-						}
-					});
+								var displayValue =
+									"<h3 id='pre"+JSONData.prodNo +"'>"
+									+ JSONData.prodName								
+									+'<input type="button" value="닫기" onclick="javascript:removePreView()"/> <br/>'
+									+"<img src = \"/images/uploadFiles/"+ JSONData.fileName + "\" width= \"200\"/>" +"<br/>"
+									+ "</h3>";
+
+								$("h3").remove();
+								$("#" + prodNo + "").html(displayValue);
+							}
+						});
+						
+					}
+
 				});	
 		
 	});

@@ -62,9 +62,9 @@ public class PurchaseRestController {
 	}
 	
 	@RequestMapping(value = "json/getPurchase/{prodNo}")
-	public Purchase getPurcahse(@PathVariable int pridNo) throws Exception {
+	public Purchase getPurcahse(@PathVariable int prodNo) throws Exception {
 				
-		return service.getPurchase2(pridNo);
+		return service.getPurchase2(prodNo);
 	}
 	
 	
