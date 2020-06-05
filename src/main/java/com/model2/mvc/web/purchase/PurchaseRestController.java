@@ -2,6 +2,7 @@ package com.model2.mvc.web.purchase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model2.mvc.service.discount.DiscountService;
 import com.model2.mvc.service.domain.Discount;
 import com.model2.mvc.service.domain.DiscountPrice;
+import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.purchase.PurchaseService;
 
@@ -58,6 +60,13 @@ public class PurchaseRestController {
 		System.out.println("할인 가격 Return : "+result);
 		return result;
 	}
+	
+	@RequestMapping(value = "json/getPurchase/{prodNo}")
+	public Purchase getPurcahse(@PathVariable int pridNo) throws Exception {
+				
+		return service.getPurchase2(pridNo);
+	}
+	
 	
 	
 	
