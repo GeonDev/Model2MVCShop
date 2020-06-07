@@ -2,6 +2,11 @@ package com.model2.mvc.common.util;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 
 
@@ -149,6 +154,15 @@ public class CommonUtil {
 		
 		return result;
 	}
+	
+	private static void writeFile(MultipartFile multipartFile, String saveFileName, String SAVE_PATH) throws IOException{
+		
+		byte[] data = multipartFile.getBytes();
+		FileOutputStream fos = new FileOutputStream(SAVE_PATH + "/" + saveFileName);
+		fos.write(data);
+		fos.close();
+		
+		}
 	
 	
 	
