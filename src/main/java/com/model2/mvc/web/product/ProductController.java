@@ -2,6 +2,7 @@ package com.model2.mvc.web.product;
 
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -67,13 +68,15 @@ public class ProductController {
 	
 	//상품 추가후 결과 화면
 	@RequestMapping(value="addProduct")
-	public String addProduct(@ModelAttribute("product") Product prod, @RequestParam("uploadFile") MultipartFile file ,HttpServletRequest request) throws Exception {		
+	public String addProduct(@ModelAttribute("product") Product prod, @RequestParam("uploadFile") List<MultipartFile> files, HttpServletRequest request) throws Exception {		
 
         String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;
    
-
+        //임시 처리(DB 처리 전까지는 한개만 등록되도록 한다.)
+        MultipartFile file = files.get(0);
+        
 		
 		//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......
 		File f =new File(path+file.getOriginalFilename());
@@ -161,12 +164,15 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="updateProduct")
-	public String updateProduct(@ModelAttribute("product") Product prod ,Model model, @RequestParam("uploadFile") MultipartFile file) throws Exception {
+	public String updateProduct(@ModelAttribute("product") Product prod ,Model model, @RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
 			
         String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;
 		
+        //임시 처리(DB 처리 전까지는 한개만 등록되도록 한다.)
+        MultipartFile file = files.get(0);
+        
 		
 		if(file !=null) {		
 					
