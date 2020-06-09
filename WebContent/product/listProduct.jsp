@@ -48,6 +48,35 @@
 
 	<script type="text/javascript">
 		function funcGetList(currentPage) {
+						
+			var keyword = $("input[name = 'searchKeyword']").val(); 
+			var keywordOptional = $("input[name = 'searchKeywordOptional']").val(); 
+			var condition = $("#Condition").val();
+			
+			
+			if(condition == 0){
+				if(isNaN(keyword))
+				alert("상품 번호를 입력해 주세요.");
+				return;
+			}
+			
+			if(condition == 2){
+				if(isNaN(keyword)){
+					alert("가격(숫자)을 입력해 주세요.");
+					return;	
+				}
+				
+				if(isNaN(keywordOptional)){
+					alert("가격(숫자)을 입력해 주세요.");
+					return;	
+				}
+				
+				if(keyword >= keywordOptional){
+					alert("최소값이 최대 값보다 큽니다.");
+					return;	
+				}
+				
+			}			
 			
 			
 			var url = "/product/listProduct?menu=";

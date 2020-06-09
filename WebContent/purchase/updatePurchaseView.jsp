@@ -37,7 +37,7 @@
 		
 		$(function() {	
 			
-			$("button:contains('취소')").on("click", function() {
+			$("button:contains('취소')").on("click", function() {				
 				history.go(-1);
 			});			
 		
@@ -48,8 +48,7 @@
 				
 			});
 			
-			$(".glyphicon glyphicon-calendar").on("click", function() {	
-				alert("ss");
+			$(".glyphicon glyphicon-calendar").on("click", function() {			
 				show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value);
 			});
 			
