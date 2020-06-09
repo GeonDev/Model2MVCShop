@@ -37,11 +37,10 @@
     
     <script type="text/javascript">		
 
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 $(function() {		
 			
-			$( "button:contains('확인')" ).on("click" , function() {
-				history.go(-1);
+			$("button.btn btn-primary").on("click", function() {
+				self.location = "/coupon/listCoupon";
 			});			
 			
 		});
@@ -58,33 +57,35 @@
 	
 		<div class="page-header">
 	       <h3 class=" text-info">쿠폰정보확인</h3>	
-	    </div>
-	    
-	   	<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>쿠폰고유번호</strong></div>
-			<div class="col-xs-8 col-md-4">${coupon.couponNo}</div>
-		</div>
+	    </div>	   	
 	    
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>쿠폰 이름</strong></div>
 			<div class="col-xs-8 col-md-4">${coupon.couponName}</div>
 		</div>
 		
+		<hr/>
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>할인율</strong></div>
 			<div class="col-xs-8 col-md-4">${coupon.discountRatio} %</div>
 		</div>
 		
+		<hr/>
+		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>최대할인가</strong></div>
 			<div class="col-xs-8 col-md-4">${coupon.maximumDiscount}</div>
 		</div>
 		
+		<hr/>
+		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>최소적용가격</strong></div>
 			<div class="col-xs-8 col-md-4">${coupon.minimum_price}</div>
 		</div>
+		
+		<hr/>
 		
 		
 		<div class="row">

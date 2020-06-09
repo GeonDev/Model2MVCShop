@@ -30,6 +30,8 @@
             padding-top : 50px;
         }
     </style>
+    
+    <script type="text/javascript" src="../javascript/calendar.js"></script>
 
 	<script type="text/javascript">
 	
@@ -41,6 +43,11 @@
 			 $("button:contains('추가등록')").on("click",function(){
 					self.location =  "../product/addProductView.jsp";
 			 });
+			 
+			$("i").on("click", function() {				
+				/* show_calendar(document.detailForm.manuDate, document.detailForm.manuDate.value); */
+				show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)
+			});
 			 
 		});
 	

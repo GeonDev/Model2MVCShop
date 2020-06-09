@@ -50,7 +50,12 @@
 			return;
 		}
 		
-		if(discount > 0 || discount < 100){
+		if(isNaN(discount)){
+			alert("할인율에는 숫자를 입력해 주세요");
+			return;
+		}
+		
+		if(discount < 0 || discount > 100){
 			alert("할인율은 1~100까지만 입력 가능합니다.");
 			return;
 		}
@@ -61,8 +66,19 @@
 			return;
 		}
 		
+		if(isNaN(maximum)){
+			alert("최대 할인가는 숫자를 입력해 주세요");
+			return;
+		}
+		
+		
 		if(minimum == null || minimum.length<1){
 			alert("최소적용가는 반드시 입력하여야 합니다.");
+			return;
+		}
+		
+		if(isNaN(minimum)){
+			alert("최소적용가에는 숫자를 입력해 주세요");
 			return;
 		}
 		
@@ -81,11 +97,11 @@
 	$(function(){
 		
 		$("button:contains('등록')").on("click", function() {
-			fncAddProduct();
+			funcAddCoupon();
 		});
 		
 		$("button:contains('취소')").on("click", function() {
-			$("form")[0].reset;
+			window.history.back();
 		});	
 		
 	});

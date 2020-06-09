@@ -1,7 +1,6 @@
 <%@ page import="com.model2.mvc.service.domain.*"%>
 <%@ page import="com.model2.mvc.common.*"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -47,39 +46,34 @@
 
 
 	<script type="text/javascript">
-		function funcGetList(currentPage) {
+		function funcGetList(currentPage){
 						
 			var keyword = $("input[name = 'searchKeyword']").val(); 
 			var keywordOptional = $("input[name = 'searchKeywordOptional']").val(); 
 			var condition = $("#Condition").val();
+			var url = "/product/listProduct?menu=";
 			
 			
-			if(condition == 0){
-				if(isNaN(keyword))
-				alert("상품 번호를 입력해 주세요.");
-				return;
+	 		if(condition == 0){
+				if(isNaN(keyword)){
+					alert("상품 번호는 숫자로 입력해 주세요.");
+					return;
+				}				
 			}
 			
 			if(condition == 2){
-				if(isNaN(keyword)){
+				if(isNaN(keyword) || isNaN(keywordOptional)){
 					alert("가격(숫자)을 입력해 주세요.");
 					return;	
-				}
-				
-				if(isNaN(keywordOptional)){
-					alert("가격(숫자)을 입력해 주세요.");
-					return;	
-				}
+				}			
 				
 				if(keyword >= keywordOptional){
 					alert("최소값이 최대 값보다 큽니다.");
 					return;	
-				}
-				
-			}			
+				}				
+			}	  								
+		
 			
-			
-			var url = "/product/listProduct?menu=";
 			url = url.concat('${menu}');
 	
 			$("#currentPage").val(currentPage);
@@ -105,7 +99,7 @@
 		$(function() {
 			changeSearchCondition();
 	
-			$("button:contains('검색')").on("click", function() {
+			$("button:contains('검색')").on("click", function() {			
 				funcGetList(1);
 			});
 	
@@ -114,8 +108,7 @@
 			$("#Condition").on("change",function(){
 				changeSearchCondition();
 				
-			});
-		
+			});		
 		
 			
 			$("td:nth-child(2)").on( "click", function() {				
@@ -175,7 +168,7 @@
 							
 						}
 	
-			});	
+				});	
 			
 		});
 	</script>
@@ -201,7 +194,7 @@
 	    <div class="row">	    
 		    <form class="form-inline" name="detailForm">
 		    	<div class="col-md-3 text-left">
-		    		<select name="searchOrder" class="form-control" >
+		    		<select id ="searchOrder" name="searchOrder" class="form-control" >
 						<option value="0"
 							${ ! empty search.searchOrder && search.searchOrder==0 ? "selected" : "" }>기본순</option>
 						<option value="1"
@@ -235,6 +228,7 @@
 		    </form>	    
 		</div>
 		
+		<br/>
 		
 		
 		<div class="row">
@@ -298,8 +292,8 @@
 		
 		</div>
 		
-		<jsp:include page="../common/pageNavigator_new.jsp"/>
-		
+		<jsp:include page="../common/pageNavigator_new.jsp"/>		
 	
 	</body>
+	
 </html>

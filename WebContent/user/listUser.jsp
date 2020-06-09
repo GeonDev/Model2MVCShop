@@ -51,18 +51,16 @@
 		
 		
 		//============= "검색"  Event  처리 =============	
-		 $(function() {
-			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 //$( "button.btn.btn-default" ).on("click" , function() {
-			//	fncGetUserList(1);
-			//});
+		 $(function() {		
+			 $( "button.btn.btn-default" ).on("click" , function() {
+				 funcGetList(1);
+			});
 		 });
 		
 		
 		//============= userId 에 회원정보보기  Event  처리(Click) =============	
-		 $(function() {
-		
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 $(function() {		
+	
 			$( "td:nth-child(2)" ).on("click" , function() {
 				 self.location ="/user/getUser?userId="+$(this).text().trim();
 			});
@@ -75,8 +73,7 @@
 		
 		//============= userId 에 회원정보보기  Event  처리 (double Click)=============
 		 $(function() {
-			 
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+
 			$(  "td:nth-child(5) > i" ).on("click" , function() {
 
 					var userId = $(this).next().val();

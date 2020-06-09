@@ -41,7 +41,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			
 			$( "button:contains('확인')" ).on("click" , function() {
-				history.go(-1);
+				window.history.back();
 			});	
 			
 			
@@ -121,13 +121,17 @@
 		<hr/>
 		
 		<c:if test="${sessionScope.user.role == 'admin'}">
+		 <c:if test ="${user.role != 'admin'}">
 			<form mathod = post>
+			
+				<input type="hidden" name="ownerId" value="${user.userId}" />
+			
 				<div class="row">
 			  		<div class="col-xs-4 col-md-2 "><strong>지급 가능 쿠폰</strong></div>
 			  		
 					<div class="col-xs-8 col-md-4">				
 									 
-						<select name="selectCoupon" class="ct_input_g" style="width:150px">
+						<select name="selectCoupon" class="form-control" style="width:150px">
 							<option value="none" >선택</option>	
 							<c:forEach var="coupon" items="${list}">				
 							<option value="${coupon.couponNo}" >${coupon.couponName}</option>
@@ -142,6 +146,7 @@
 				</div>
 			</form>
 			<hr/>
+			</c:if>
 		</c:if>
 		
 				

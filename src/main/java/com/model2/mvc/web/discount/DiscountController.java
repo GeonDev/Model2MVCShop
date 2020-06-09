@@ -65,7 +65,7 @@ public class DiscountController {
 		
 		discountService.addDiscount(discount);	
 		
-		return new ModelAndView("forward:/common/alertView.jsp", "message", "비밀번호가 틀렸습니다.");		
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "쿠폰이 지급되었습니다.");		
 	}
 	
 

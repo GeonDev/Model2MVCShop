@@ -35,7 +35,7 @@
 	
 		$(function() {
 			 $("button:contains('확인')").on("click",function(){
-					self.location =  "/product/listProduct?menu=manage";
+					self.location =  "/product/listProduct?menu=search";
 			 });
 			 
 		});
@@ -63,20 +63,28 @@
 			<div class="col-xs-8 col-md-4">${(purchase.purchaseProd).prodNo}</div>
 		</div>
 		
+		<hr/>
+		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>상품이름</strong></div>
 			<div class="col-xs-8 col-md-4">${(purchase.purchaseProd).prodName}</div>
 		</div>
+		
+		<hr/>
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
 			<div class="col-xs-8 col-md-4">${product.manuDate}</div>
 		</div>
 		
+		<hr/>
+		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>구매자아이디</strong></div>
 			<div class="col-xs-8 col-md-4">${(purchase.buyer).userId}</div>
 		</div>
+		
+		<hr/>
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>구매방법</strong></div>
@@ -92,43 +100,56 @@
 			</div>
 		</div>
 		
+		<hr/>
+		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>상품가격</strong></div>
 			<div class="col-xs-8 col-md-4">${(purchase.purchaseProd).price}</div>
 		</div>
+		
+		<hr/>
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>구매자이름</strong></div>
 			<div class="col-xs-8 col-md-4">${purchase.receiverName}</div>
 		</div>
 		
+		<hr/>
+		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>구매자연락처</strong></div>
 			<div class="col-xs-8 col-md-4">${purchase.receiverPhone}</div>
 		</div>
 		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>구매자주소</strong></div>
-			<div class="col-xs-8 col-md-4">${purchase.divyAddr}</div>
-		</div>
+		<hr/>
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>구매자주소</strong></div>
 			<div class="col-xs-8 col-md-4">${purchase.divyAddr}</div>
 		</div>
-			
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2"><strong>구매자주소</strong></div>
+			<div class="col-xs-8 col-md-4">${purchase.divyAddr}</div>
+		</div>
+		
+		<hr/>			
 			
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>구매요청사항</strong></div>
 			<div class="col-xs-8 col-md-4">${purchase.divyRequest}</div>
 		</div>
 	
+		<hr/>
+	
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>배송희망일자</strong></div>
 			<div class="col-xs-8 col-md-4">${purchase.divyDate}</div>
 		</div>
 	
-		
+		<hr/>
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">	  		
