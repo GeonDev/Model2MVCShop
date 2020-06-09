@@ -1,11 +1,13 @@
 package com.model2.mvc.service.discount.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.model2.mvc.common.Search;
 import com.model2.mvc.service.discount.DiscountDAO;
 import com.model2.mvc.service.discount.DiscountService;
 import com.model2.mvc.service.domain.Discount;
@@ -47,6 +49,13 @@ public class DiscountServiceImpl implements DiscountService{
 	public List<Discount> getDiscountList(String userId) throws Exception {
 		// TODO Auto-generated method stub
 		return discountDAO.getDiscountList(userId);
+	}
+
+	@Override
+	public Map<String, Object> getDiscountCouponList(Search search, String ownerId) throws Exception {
+		// TODO Auto-generated method stub	
+		
+		return discountDAO.getDiscountCouponList(search, ownerId);
 	}
 
 }

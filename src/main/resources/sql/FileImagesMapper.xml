@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+ 	
+ 	
+	<resultMap id="fileImageSelectMap" type="fileImages">
+		<result property="imagesNo" 	column="image_no" 	jdbcType="NUMERIC"/>
+		<result property="prodNo"		column="prod_no" 	jdbcType="NUMERIC" />
+		<result property="fileName" 	column="image_file" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addImages"	parameterType="fileImages" >
+	 	INSERT
+		INTO images(image_no, prod_no ,image_file) 
+		VALUES	 (seq_image_no.nextval, #{prodNo}, #{fileName})							
+	 </insert>
+	 
+	 <!-- SQL : SELECT List -->
+	 <select 	id="getImages"	parameterType="int"	resultType="string">
+		SELECT
+		image_file  		
+		FROM images 
+		WHERE prod_no = #{value}
+	 </select>
+	 
+	 <delete id ="deleteImages" parameterType="fileImages">
+	 	DELETE FROM images 
+	 	WHERE prod_no = #{prodNo} AND  image_file =#{fileName}	 
+	 </delete>
+
+		 
+	 
+</mapper>

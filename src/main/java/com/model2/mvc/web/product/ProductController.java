@@ -31,9 +31,7 @@ import com.model2.mvc.service.product.ProductService;
 @Controller
 @RequestMapping("/product/*")
 public class ProductController {
-	
-	private static final String SAVE_PATH = "/images/uploadFiles/";
-	
+
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService service;
@@ -44,13 +42,20 @@ public class ProductController {
 	@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
+	@Value("#{commonProperties['uploadPath']}")
+	String uploadPath;
+	
 	@Autowired
 	private ServletContext context;
+ 	
+
 	
 	
 	//디폴트 생성자
 	public ProductController() {
-		System.out.println(this.getClass());		
+		System.out.println(this.getClass());
+		
+		
 	}
 	
 	//추가 상품 정보 입력 화면
@@ -63,12 +68,18 @@ public class ProductController {
 	
 	//상품 추가후 결과 화면
 	@RequestMapping(value="addProduct")
-	public String addProduct(@ModelAttribute("product") Product prod, @RequestParam("uploadFile") List<MultipartFile> files ,HttpServletRequest request) throws Exception {		
+	public String addProduct(@ModelAttribute("product") Product prod, @RequestParam("uploadFile") List<MultipartFile> files, HttpServletRequest request) throws Exception {		
+
+        String path = context.getRealPath("/");        
+        path = path.substring(0,path.indexOf("\\.metadata"));         
+        path = path +  uploadPath;
+   
+        //임시 처리(DB 처리 전까지는 한개만 등록되도록 한다.)
+        MultipartFile file = files.get(0);
+        
 		
-		MultipartFile file = files.get(0);
-		
-		//파일 업로드 구분 - 멀티 파일을 밭을수 있도록 세팅
-		File f =new File(SAVE_PATH+file.getOriginalFilename());
+		//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......
+		File f =new File(path+file.getOriginalFilename());
 		
 		//원하는 위치에 파일 저장
 		file.transferTo(f);	
@@ -154,12 +165,18 @@ public class ProductController {
 	
 	@RequestMapping(value="updateProduct")
 	public String updateProduct(@ModelAttribute("product") Product prod ,Model model, @RequestParam("uploadFile") List<MultipartFile> files) throws Exception {
-   
-		MultipartFile file = files.get(0);
+			
+        String path = context.getRealPath("/");        
+        path = path.substring(0,path.indexOf("\\.metadata"));         
+        path = path +  uploadPath;
+		
+        //임시 처리(DB 처리 전까지는 한개만 등록되도록 한다.)
+        MultipartFile file = files.get(0);
+        
 		
 		if(file !=null) {		
 					
-			File f =new File(SAVE_PATH+file.getOriginalFilename());
+			File f =new File(path+file.getOriginalFilename());
 					
 			//원하는 위치에 파일 저장
 			file.transferTo(f);	
@@ -174,6 +191,10 @@ public class ProductController {
 		model.addAttribute("prodNo", prod.getProdNo());
 		
 		return "forward:/product/getProduct";
-	}	
+	}
+	
+	
+	
+	
 	
 }

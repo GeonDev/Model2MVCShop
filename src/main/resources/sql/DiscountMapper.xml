@@ -68,11 +68,24 @@
 	 </select>
 	 
 	 
-	 <!-- 저장된 쿠폰 정보를 받아오도록 처리 -->
+	 <!-- 저장된 쿠폰 정보를 받아오도록 처리 (결제시 사용)-->
 	 <select id="getDiscountSimpleList" parameterType="string" resultMap="discountSelectMap">
 	 	SELECT *  FROM discount
 	 	WHERE discount.owner_id = #{value} 	 	
 	 </select>
+	 
+	 
+	 
+	 	 <!-- 저장된 쿠폰 정보를 받아오도록 처리(보유한 쿠폰 확인용) -->
+	 <select id="getDiscountList" parameterType="search" resultMap="discountSelectMap">
+		SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY discount.discount_no) num, discount.* FROM discount WHERE owner_id = #{searchKeyword} )
+		WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 	
+	 </select>	 
+	 
+	 <select id="getCountDiscount"  parameterType="string" resultType="int">
+		SELECT COUNT(discount_no) FROM  discount WHERE owner_id = #{value}	
+	</select>
+	 
 	 
 	 	 
 	 <delete id="deleteDiscount" parameterType="int">

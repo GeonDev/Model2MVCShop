@@ -2,150 +2,140 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<html>
+<html lang="ko">
 <head>
-<title>쿠폰 정보 수정</title>
 
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
-<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<meta charset="EUC-KR">
+	
+	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/css/animate.min.css" rel="stylesheet">
+   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   
+   
+   <!-- jQuery UI toolTip 사용 CSS-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<style>
+	  body {
+            padding-top : 50px;
+        }
+    </style>
+
 <script type="text/javascript">
 
-function funcUpdateCoupon() {
-	// Form 유효성 검증
-	var discount=document.detailForm.discountRatio.value;
+	function funcUpdateCoupon() {
+		// Form 유효성 검증
+		var discount=document.detailForm.discountRatio.value;
+		
+		if(discount == null || discount < 0){
+			alert("할인율을 입력해 주세요.");
+			return;
+		}	
+		
+		$("form").attr("action", "/coupon/updateCoupon");
+		$("form").submit();
+	}
 	
-	if(discount == null || discount < 0){
-		alert("할인율을 입력해 주세요.");
-		return;
-	}	
-	document.detailForm.submit();
-}
+	function resetData() {
+		//$("form")[0].reset();
+		self.location = "/coupon/listCoupon";
+	}
 
-function resetData() {
-	document.detailForm.reset();
-}
+
+
+	
+	$(function() {
+		 $("button:contains('수정')").on("click",function(){
+			 fncEditProduct();
+		 });		
+		
+		 $("button:contains('취소')").on("click",function(){
+			 resetData();
+		 });
+		 
+
+		 
+	});	
 
 </script>
 </head>
 
-<body bgcolor="#ffffff" text="#000000">
+<body >
 
-<form name="detailForm"  method="post" action="/coupon/updateCoupon" >
-
-<input type="hidden" name="couponNo" value="${coupon.couponNo}">
-
-<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
-	<tr>
-		<td width="15" height="37">
-			<img src="/images/ct_ttl_img01.gif" width="15" height="37"/>
-		</td>
-		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="93%" class="ct_ttl01">쿠폰 정보수정</td>
-					<td width="20%" align="right">&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-		<td width="12" height="37">
-			<img src="/images/ct_ttl_img03.gif" width="12" height="37" />
-		</td>
-	</tr>
-</table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:13px;">
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+	<jsp:include page="/layout/toolbar.jsp" />	
 	
-	<tr>
-		<td width="104" class="ct_write">
-			쿠폰 이름 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle" />
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>	
-		<td class="ct_write01">${coupon.couponName}	</td>
-	</tr>
+	<div class="container">
 	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
 	
-	<tr>
-		<td width="104" class="ct_write">
-			할인율 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle" />
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="text" name="discountRatio" value="${coupon.discountRatio}" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="50" >
-		</td>
-	</tr>
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-	<tr>
-		<td width="104" class="ct_write">최대 할인 가격</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="text" name="maximumDiscount" value="${coupon.maximumDiscount}" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="50">
-		</td>
-	</tr>
+		<div class="page-header">
+			<h3 class=" text-info">상품 수정</h3>	
+		</div>
 		
+		
+		<form method="post">
+		
+		<input type="hidden" name="couponNo" value="${coupon.couponNo}">
+		
+		
+		<div class="row">
+			<div class="col-xs-4 col-md-2"><strong>쿠폰 이름</strong></div>
+			<div class="col-xs-8 col-md-4">${coupon.couponName}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+			<div class="col-xs-4 col-md-2"><strong>할인율</strong></div>
+			<div class="col-xs-8 col-md-4">
+			<input type="text" name="discountRatio" class="form-control"  value="${coupon.discountRatio}"/>
+			</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+			<div class="col-xs-4 col-md-2"><strong>최대 할인 가격</strong></div>
+			<div class="col-xs-8 col-md-4">
+			<input type="text" name="maximumDiscount" class="form-control"  value="${coupon.maximumDiscount}"/>
+			</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+			<div class="col-xs-4 col-md-2"><strong>최소 적용 가격</strong></div>
+			<div class="col-xs-8 col-md-4">
+			<input type="text" name="minimum_price" class="form-control"  value="${coupon.minimum_price}"/>
+			</div>
+		</div>		
+		
+		<hr/>
+		
+		</form>
+		
+			<div class="row">
+				<div class="col-md-12 text-right ">			  	
+			  		<button type="button" class="btn btn-primary">수정</button>	 
+			  		<button type="button" class="btn btn-primary">취소</button>	  			
+				</div>
+			</div>
 	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
 	
-	<tr>
-		<td width="104" class="ct_write">최소 적용 가격</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="text" name="minimum_price" value="${coupon.minimum_price}" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="50">
-		</td>
-	</tr>
-
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-</table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-	<tr>
-		<td width="53%">	</td>
-		<td align="right">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23" />
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:funcUpdateCoupon();">수정</a>
-					</td>
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23" />
-					</td>
-					<td width="30"></td>					
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23" />
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:resetData();">취소</a>
-					</td>
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23" />
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-
-</form>
+	</div>
 
 </body>
 </html>

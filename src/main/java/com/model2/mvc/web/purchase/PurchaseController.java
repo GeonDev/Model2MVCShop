@@ -207,7 +207,8 @@ public class PurchaseController {
 		//TransCode 업데이트
 		service.updateTranCode(purchase);
 		
-		return new ModelAndView("redirect:/product/listProduct?menu=manage");
+		//return new ModelAndView("redirect:/product/listProduct?menu=manage");
+		return new ModelAndView("forward:/common/alertView.jsp","message", "상품이 배송 처리되었습니다.");
 	}
 	
 
