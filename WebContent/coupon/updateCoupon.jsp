@@ -51,7 +51,8 @@
 	}
 	
 	function resetData() {
-		$("form")[0].reset();
+		//$("form")[0].reset();
+		self.location = "/coupon/listCoupon";
 	}
 
 

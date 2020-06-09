@@ -101,7 +101,8 @@
 		});
 		
 		$("button:contains('√Îº“')").on("click", function() {
-			window.history.back();
+			//window.history.back();
+			self.location = document.referrer;
 		});	
 		
 	});

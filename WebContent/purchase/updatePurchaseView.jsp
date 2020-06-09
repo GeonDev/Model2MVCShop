@@ -38,7 +38,8 @@
 		$(function() {	
 			
 			$("button:contains('√Îº“')").on("click", function() {				
-				history.go(-1);
+				//history.go(-1);
+				self.location = document.referrer;
 			});			
 		
 			

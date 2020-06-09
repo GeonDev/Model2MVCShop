@@ -34,7 +34,7 @@
 	<script type="text/javascript">
 	
 		$(function() {
-			 $("button:contains('확인')").on("click",function(){
+			 $("button:contains('결제 확인')").on("click",function(){
 					self.location =  "/product/listProduct?menu=search";
 			 });
 			 
@@ -153,7 +153,7 @@
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">	  		
-	  			<button type="button" class="btn btn-primary">확인</button>	 	  					
+	  			<button type="button" class="btn btn-primary">결제 확인</button>	 	  					
 
 	  		</div>
 		</div>

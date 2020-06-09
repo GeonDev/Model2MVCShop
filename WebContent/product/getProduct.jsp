@@ -42,7 +42,8 @@
 			});
 			
 			$("button:contains('이전')").on("click", function() {		
-				$(self.location).attr("href","/product/listProduct?menu=search");
+				//$(self.location).attr("href","/product/listProduct?menu=search");
+				self.location = document.referrer;
 			});	
 			
 			$("button:contains('수정')").on("click", function() {

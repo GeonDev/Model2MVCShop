@@ -41,7 +41,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			
 			$( "button:contains('확인')" ).on("click" , function() {
-				window.history.back();
+				self.location = document.referrer;
 			});	
 			
 			
@@ -153,9 +153,8 @@
 		
 		<div class="row">
 	  		<div class="col-md-12 text-right ">
-	  		
-	  			<button type="button" class="btn btn-primary">확인</button>	 
-	  			<button type="button" class="btn btn-primary">수정</button>	  			
+	  			<button type="button" class="btn btn-primary">수정</button>	
+	  			<button type="button" class="btn btn-primary">확인</button>	
 
 	  		</div>
 		</div>

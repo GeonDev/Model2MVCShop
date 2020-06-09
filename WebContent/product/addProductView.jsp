@@ -80,7 +80,8 @@
 		});
 		
 		$("button:contains('√Îº“')").on("click", function() {
-			$("form")[0].reset;
+			//$("form")[0].reset;
+			self.location = document.referrer;
 		});
 		
 		$("i").on("click", function() {				
