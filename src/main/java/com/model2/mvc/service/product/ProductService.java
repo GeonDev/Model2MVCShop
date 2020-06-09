@@ -18,6 +18,6 @@ public interface ProductService {
 
 	public void updateProduct(Product product) throws Exception;
 	
-	
+	public int getLastProdno() throws Exception;
 	
 }

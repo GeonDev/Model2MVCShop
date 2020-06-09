@@ -24,7 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.FileImages;
 import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.service.fileImages.FileImagesService;
 import com.model2.mvc.service.product.ProductService;
 
 
@@ -35,6 +37,11 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService service;
+	
+	@Autowired
+	@Qualifier("fileImagesServiceImpl")
+	private FileImagesService fileService;
+	
 	
 	@Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
@@ -68,29 +75,35 @@ public class ProductController {
 	
 	//상품 추가후 결과 화면
 	@RequestMapping(value="addProduct")
-	public String addProduct(@ModelAttribute("product") Product prod, @RequestParam("uploadFile") List<MultipartFile> files, HttpServletRequest request) throws Exception {		
+	public String addProduct(@ModelAttribute("product") Product prod, @RequestParam("uploadFile") List<MultipartFile> files) throws Exception {		
 
         String path = context.getRealPath("/");        
         path = path.substring(0,path.indexOf("\\.metadata"));         
-        path = path +  uploadPath;
-   
-        //임시 처리(DB 처리 전까지는 한개만 등록되도록 한다.)
-        MultipartFile file = files.get(0);
-        
+        path = path +  uploadPath;              
+      
 		
-		//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......
-		File f =new File(path+file.getOriginalFilename());
+		int prodNo = service.getLastProdno()+1;
 		
-		//원하는 위치에 파일 저장
-		file.transferTo(f);	
-		
-		//혹시 바인딩중 이상이 있을수 있어 FileName 재설정
-		prod.setFileName(file.getOriginalFilename());
-		
+		prod.setProdNo(prodNo);
 		//상품추가시 날짜에 (-) 제거		
 		prod.setManuDate(prod.getManuDate().replaceAll("-", ""));		
 		
 		service.addProduct(prod);
+		
+		
+		
+        for (MultipartFile multipartFile : files) {
+        	//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......
+    		File f =new File(path+multipartFile.getOriginalFilename());
+    		
+    		//원하는 위치에 파일 저장
+    		multipartFile.transferTo(f);	    		
+    		
+    		FileImages file = new FileImages(prodNo,multipartFile.getOriginalFilename());
+    		
+    		fileService.addFileImage(file);
+		} 
+		
 		
 		return "forward:/product/addProduct.jsp";
 	}
@@ -100,7 +113,10 @@ public class ProductController {
 	@RequestMapping(value="getProduct")
 	public String getProduct( @RequestParam("prodNo") int prodNo, @RequestParam(value ="menu") String menu, Model model, @CookieValue(value = "history", defaultValue = "") String history, HttpServletResponse response) throws Exception {				
 						
-		Product prod = service.getProduct(prodNo);			
+		Product prod = service.getProduct(prodNo);	
+		
+		// 파일 리스트를 받아서 세팅
+		prod.setFileName(fileService.getFileList(prodNo));
 		
 		model.addAttribute("product", prod);
 		
@@ -174,16 +190,17 @@ public class ProductController {
         MultipartFile file = files.get(0);
         
 		
-		if(file !=null) {		
-					
-			File f =new File(path+file.getOriginalFilename());
-					
-			//원하는 위치에 파일 저장
-			file.transferTo(f);	
-					
-			//혹시 바인딩중 이상이 있을수 있어 FileName 재설정
-			prod.setFileName(file.getOriginalFilename());
-		}
+		/*
+		 * if(file !=null) {
+		 * 
+		 * File f =new File(path+file.getOriginalFilename());
+		 * 
+		 * //원하는 위치에 파일 저장 file.transferTo(f);
+		 * 
+		 * //혹시 바인딩중 이상이 있을수 있어 FileName 재설정
+		 * 
+		 * }
+		 */
 		
 		//전달받은 상품 정보 업데이트
 		service.updateProduct(prod);					

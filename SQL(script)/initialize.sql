@@ -1,7 +1,7 @@
 
 DROP TABLE discount;
 DROP TABLE transaction;
-DROP TABLE cart;
+DROP TABLE images;
 DROP TABLE product;
 DROP TABLE users;
 DROP TABLE coupon;
@@ -9,14 +9,14 @@ DROP TABLE coupon;
 
 DROP SEQUENCE seq_product_prod_no;
 DROP SEQUENCE seq_transaction_tran_no;
-DROP SEQUENCE seq_cart_no;
+DROP SEQUENCE seq_image_no;
 DROP SEQUENCE seq_coupon_no;
 DROP SEQUENCE seq_discount_no;
 
 
 CREATE SEQUENCE seq_product_prod_no	 	INCREMENT BY 1 START WITH 1000;
 CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 2000;
-CREATE SEQUENCE seq_cart_no				INCREMENT BY 1 START WITH 3000;
+CREATE SEQUENCE seq_image_no			INCREMENT BY 1 START WITH 3000;
 CREATE SEQUENCE seq_coupon_no			INCREMENT BY 1 START WITH 4000;
 CREATE SEQUENCE seq_discount_no			INCREMENT BY 1 START WITH 5000;
 
@@ -41,10 +41,20 @@ CREATE TABLE product (
 	prod_detail 			VARCHAR2(200),
 	manufacture_day			VARCHAR2(8),
 	price 					NUMBER(10),
-	image_file 				VARCHAR2(100),
 	reg_date 				DATE,
 	PRIMARY KEY(prod_no)
 );
+
+
+CREATE TABLE images ( 
+	image_no				NUMBER 			NOT NULL,
+	prod_no 				NUMBER			NOT NULL REFERENCES product(prod_no),
+	image_file 				VARCHAR2(100) 	NOT NULL,
+	PRIMARY KEY(image_no)
+);
+
+
+
 
 CREATE TABLE transaction ( 
 	tran_no 				NUMBER 			NOT NULL,
@@ -79,14 +89,6 @@ CREATE TABLE discount(
 	issued_date				DATE,
 	expiration_date			DATE,
 	PRIMARY KEY(discount_no)
-);
-
-
-CREATE TABLE cart(
-	cart_no					NUMBER 			NOT NULL,
-	prod_no 				NUMBER			NOT NULL REFERENCES product(prod_no),
-	buyer_id 				VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
-	PRIMARY KEY(cart_no)
 );
 
 
@@ -129,63 +131,33 @@ VALUES ( 'user09', 'SCOTT', '9999', 'user', NULL, NULL, NULL, NULL, sysdate);
 INSERT INTO users 
 VALUES ( 'user10', 'SCOTT', '1010', 'user', NULL, NULL, NULL, NULL, sysdate); 
 
-INSERT INTO users 
-VALUES ( 'user11', 'SCOTT', '1111', 'user', NULL, NULL, NULL, NULL, sysdate);
+       
 
-INSERT INTO users 
-VALUES ( 'user12', 'SCOTT', '1212', 'user', NULL, NULL, NULL, NULL, sysdate);
+insert into product values (seq_product_prod_no.nextval,'소니 A7R3','고화질 미러리스','20190312',3200000, sysdate);
+insert into images values(seq_image_no.nextval,1000,'c964463492c2825a843ef.png');
+insert into images values(seq_image_no.nextval,1000,'Q4GH4H580A7R3.jpg');
+insert into images values(seq_image_no.nextval,1000,'asdfga235sg.jpg');
+insert into images values(seq_image_no.nextval,1000,'dyfd6egt55g4.jpg');
 
-INSERT INTO users 
-VALUES ( 'user13', 'SCOTT', '1313', 'user', NULL, NULL, NULL, NULL, sysdate);
+insert into product values (seq_product_prod_no.nextval,'소니 RM100','컴팩트 미러리스','20150425',430000, sysdate);
+insert into images values(seq_image_no.nextval,1001,'17369039962142.jpg');
+insert into images values(seq_image_no.nextval,1001,'wdqwfgqg234.jpg');
 
-INSERT INTO users 
-VALUES ( 'user14', 'SCOTT', '1414', 'user', NULL, NULL, NULL, NULL, sysdate);
+insert into product values (seq_product_prod_no.nextval,'후지 X-pro3','클래식 미러리스','20190317',1350000, sysdate);
+insert into images values(seq_image_no.nextval,1002,'2016243376werth321106.jpg');
 
-INSERT INTO users 
-VALUES ( 'user15', 'SCOTT', '1515', 'user', NULL, NULL, NULL, NULL, sysdate);
+insert into product values (seq_product_prod_no.nextval,'후지 100f','클래식 컴팩트 카메라','20180228',1350000, sysdate);
+insert into images values(seq_image_no.nextval,1003,'20181384765947qqw52.jpg');
 
-INSERT INTO users 
-VALUES ( 'user16', 'SCOTT', '1616', 'user', NULL, NULL, NULL, NULL, sysdate);
+insert into product values (seq_product_prod_no.nextval,'후지 X-T3','클래식 미러리스 카메라','20180520',829000, sysdate);
+insert into images values(seq_image_no.nextval,1004,'201825733wrth453312.jpg');
 
-INSERT INTO users 
-VALUES ( 'user17', 'SCOTT', '1717', 'user', NULL, NULL, NULL, NULL, sysdate);
+insert into product values (seq_product_prod_no.nextval,'소니 RM102','컴팩트 미러리스','20160425',550000, sysdate);
+insert into images values(seq_image_no.nextval,1005,'23467fhyg4hh.jpg');
 
-INSERT INTO users 
-VALUES ( 'user18', 'SCOTT', '1818', 'user', NULL, NULL, NULL, NULL, sysdate);
+insert into product values (seq_product_prod_no.nextval,'후지 X-T2','클래식 미러리스 카메라','20140425',350000, sysdate);
+insert into images values(seq_image_no.nextval,1005,'2346902GQ3G34.jpg');
 
-INSERT INTO users 
-VALUES ( 'user19', 'SCOTT', '1919', 'user', NULL, NULL, NULL, NULL, sysdate);
-
-INSERT INTO users 
-VALUES ( 'user20', 'SCOTT', '2020', 'user', NULL, NULL, NULL, NULL, sysdate);
-
-INSERT INTO users 
-VALUES ( 'user21', 'SCOTT', '2121', 'user', NULL, NULL, NULL, NULL, sysdate);
-
-INSERT INTO users 
-VALUES ( 'user22', 'SCOTT', '2222', 'user', NULL, NULL, NULL, NULL, sysdate);
-
-INSERT INTO users 
-VALUES ( 'user23', 'SCOTT', '2323', 'user', NULL, NULL, NULL, NULL, sysdate);
-
-INSERT INTO users 
-VALUES ( 'user24', 'SCOTT', '2424', 'user', NULL, NULL, NULL, NULL, sysdate);
-
-INSERT INTO users 
-VALUES ( 'user25', 'SCOTT', '2525', 'user', NULL, NULL, NULL, NULL, sysdate);
-           
-           
-insert into product values (seq_product_prod_no.nextval,'vaio vgn FS70B','소니 바이오 노트북 신동품','20120514',2000000, 'AHlbAAAAtBqyWAAA.jpg',to_date('2012/12/14', 'YYYY/MM/DD '));
-insert into product values (seq_product_prod_no.nextval,'자전거','자전거 좋아요~','20120514',10000, 'AHlbAAAAvetFNwAA.jpg',to_date('2012/11/14', 'YYYY/MM/DD '));
-insert into product values (seq_product_prod_no.nextval,'보르도','최고 디자인 신품','20120201',1170000, 'AHlbAAAAvewfegAB.jpg',to_date('2012/10/14', 'YYYY/MM/DD '));
-insert into product values (seq_product_prod_no.nextval,'보드세트','한시즌 밖에 안썼습니다. 눈물을 머금고 내놓음 ㅠ.ㅠ','20120217', 200000, 'AHlbAAAAve1WwgAC.jpg',to_date('2012/11/14 ', 'YYYY/MM/DD'));
-insert into product values (seq_product_prod_no.nextval,'인라인','좋아욥','20120819', 20000, 'AHlbAAAAve37LwAD.jpg',to_date('2012/11/14', 'YYYY/MM/DD'));
-insert into product values (seq_product_prod_no.nextval,'삼성센스 2G','sens 메모리 2Giga','20121121',800000, 'AHlbAAAAtBqyWAAA.jpg',to_date('2012/11/14', 'YYYY/MM/DD'));
-insert into product values (seq_product_prod_no.nextval,'연꽃','정원을 가꿔보세요','20121022',232300, 'AHlbAAAAtDPSiQAA.jpg',to_date('2012/11/15', 'YYYY/MM/DD'));
-insert into product values (seq_product_prod_no.nextval,'삼성센스','노트북','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12', 'YYYY/MM/DD'));
-
-insert into product values (seq_product_prod_no.nextval,'삼성 갤럭시 A','스마트폰','20120212',600000, 'galaxyA.jpg',to_date('2012/11/12', 'YYYY/MM/DD'));
-insert into product values (seq_product_prod_no.nextval,'소니 A7R3','미러리스','20190312',32000000, 'A7R3.jpg',to_date('2018/12/24', 'YYYY/MM/DD'));
 
 insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 1000,1000);
 insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 10, 5000,5000);

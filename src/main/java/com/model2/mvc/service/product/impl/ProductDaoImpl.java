@@ -83,6 +83,12 @@ public class ProductDaoImpl implements ProductDao {
 		
 		return sqlSession.selectOne("ProductMapper.getProductName", prodName);
 	}
+
+	@Override
+	public int getLastProdno() throws Exception {
+		
+		return sqlSession.selectOne("ProductMapper.getLastProdNo");
+	}
 	
 
 }

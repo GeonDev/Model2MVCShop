@@ -45,7 +45,7 @@ public class ProdServiceTest {
 		prod.setProdDetail("test Script");
 		prod.setPrice(1000);	
 		prod.setManuDate("20200505");
-		prod.setFileName("a7.jpg");
+		
 		
 		prodService.addProduct(prod);
 		
@@ -76,7 +76,7 @@ public class ProdServiceTest {
 		prod.setProdDetail("test");
 		prod.setManuDate("20200505");
 		prod.setPrice(1000);
-		prod.setFileName("A.jpg");
+	
 		
 	}
 	

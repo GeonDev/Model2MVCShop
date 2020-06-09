@@ -90,7 +90,11 @@
 	  			<div class="col-xs-4 col-md-2"><strong>상품이미지</strong></div>
 				<div class="col-xs-8 col-md-4">
 					<c:set var="tempSrc" value="/images/uploadFiles/" />
-					<img src="${tempSrc}${product.fileName}" width="200" />
+					<c:forEach var="image" items="${product.fileName}">
+						<img src="${tempSrc}${image}" width="200" />
+					</c:forEach>
+					
+					
 				</div>
 			</div>
 		

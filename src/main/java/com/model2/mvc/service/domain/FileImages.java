@@ -7,6 +7,16 @@ public class FileImages {
 	private String fileName;
 	
 	
+	public FileImages() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public FileImages(int prodNo, String fileName ) {
+		this.fileName = fileName;
+		this.prodNo = prodNo;
+	}
+	
+	
 	public int getImagesNo() {
 		return imagesNo;
 	}

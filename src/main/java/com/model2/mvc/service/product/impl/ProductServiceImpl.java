@@ -1,6 +1,5 @@
 package com.model2.mvc.service.product.impl;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +47,11 @@ public class ProductServiceImpl implements ProductService{
 	//----------------------------------------------------------------------------//
 	public Product getProductName(String prodName) throws Exception {
 		return productDAO.findProductName(prodName);
+	}
+
+	@Override
+	public int getLastProdno() throws Exception {
+		
+		return productDAO.getLastProdno();
 	}
 }
