@@ -54,7 +54,7 @@
 	
 	
 		<div class="page-header">
-	       <h3 class=" text-info">결제 정보 확인</h3>
+	       <h3 class=" text-info">결제정보확인</h3>
 	       <h5 class="text-muted">다음과 같이 <strong class="text-danger">구매 완료</strong> 되었습니다.</h5>
 	    </div>
 	    

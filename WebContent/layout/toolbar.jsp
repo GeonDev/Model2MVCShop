@@ -59,22 +59,23 @@
 		                         <li><a href="#">판매상품등록</a></li>
 		                         <li><a href="#">판매상품조회</a></li>		       
 		                     </ul>
-		                </li>
-		                
-		                
-		                <li class="dropdown">
+		                </li>		                
+	                 </c:if>
+	                 
+	                 
+                       <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 		                         <span >쿠폰발급관리</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
-		                         <li><a href="#">신규쿠폰등록</a></li>
-		                         <li><a href="#">발급쿠폰조회</a></li>		       
+		                     	<c:if test="${sessionScope.user.role == 'admin'}">
+		                        	<li><a href="#">신규쿠폰등록</a></li>
+		                         	<li><a href="#">발급쿠폰조회</a></li>
+		                        </c:if>
+		                         <li><a href="#">보유쿠폰조회</a></li>		       
 		                     </ul>
 		                </li>
-		                
-		                
-	                 </c:if>
 	                 
 	              <!-- 구매관리 DrowDown -->
 	              <li class="dropdown">
@@ -91,9 +92,8 @@
 	                         
 	                         <li><a href="#">최근조회상품</a></li>	      
 	                     </ul>
-	                 </li>
+	                 </li>	                 
 	                 
-	                 <li><a href="#">etc...</a></li>
 	             </ul>
 	             
 	             <ul class="nav navbar-nav navbar-right">
@@ -156,7 +156,10 @@
 		$( "a:contains('발급쿠폰조회')" ).on("click" , function() {		
 			$(self.location).attr("href","/coupon/listCoupon");
 		});
-		
+				
+		$( "a:contains('보유쿠폰조회')" ).on("click" , function() {		
+			$(self.location).attr("href","/discount/DiscountList");
+		});		
 		
 		$( "a:contains('판매상품검색')" ).on("click" , function() {		
 			$(self.location).attr("href","/product/listProduct?menu=search");

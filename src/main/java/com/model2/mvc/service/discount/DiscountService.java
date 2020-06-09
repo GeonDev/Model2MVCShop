@@ -1,10 +1,10 @@
 package com.model2.mvc.service.discount;
 
 import java.util.List;
+import java.util.Map;
 
+import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Discount;
-import com.model2.mvc.service.domain.Product;
-import com.model2.mvc.service.domain.Purchase;
 
 public interface DiscountService {
 
@@ -14,6 +14,7 @@ public interface DiscountService {
 	
 	public void deleteDiscount(int discountNo) throws Exception;
 	
-	public List<Discount> getDiscountList(String userId) throws Exception;
+	public List<Discount> getDiscountList(String userId) throws Exception;	
 	
+	public Map<String, Object> getDiscountCouponList(Search search,String ownerId) throws Exception;
 }

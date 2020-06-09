@@ -1,13 +1,16 @@
 package com.model2.mvc.service.discount.impl;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.model2.mvc.common.Search;
 import com.model2.mvc.service.discount.DiscountDAO;
 import com.model2.mvc.service.domain.Discount;
 import com.model2.mvc.service.domain.Product;
@@ -55,6 +58,20 @@ public class DiscountDaoImpl implements DiscountDAO{
 		List<Discount> list = sqlSession.selectList("DiscountMapper.getDiscountSimpleList", userId);
 
 		return list;
+	}
+
+	@Override
+	public Map<String, Object> getDiscountCouponList(Search search, String ownerId) throws Exception {
+		Map<String,Object> map = new HashMap<String,Object>();
+		search.setSearchKeyword(ownerId);
+		
+		List<Discount> list = 	sqlSession.selectList("DiscountMapper.getDiscountList", search);		
+		int totalProductCount = sqlSession.selectOne("DiscountMapper.getCountDiscount", ownerId);
+		
+		map.put("count", totalProductCount);
+		map.put("list", list);		
+		
+		return map;
 	}
 
 }

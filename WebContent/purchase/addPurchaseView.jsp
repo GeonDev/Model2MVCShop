@@ -61,7 +61,7 @@
 				}),
 				success : function(JSONData, status) {					
 					var  discountPrice = originPrice +'<br/><h5 style="color: red">' + "(할인가격 : " +JSONData.price +") </h5>";							
-				
+					alert("원래 가격" +originPrice);
 					$("#totalPrice").html(discountPrice);					
 				}
 
@@ -74,7 +74,8 @@
 		});
 
 		$("button:contains('취소')").on("click", function() {
-			window.history.back();
+			//window.history.back();
+			self.location = document.referrer;
 		});
 		
 		$("i").on("click", function() {				
@@ -130,7 +131,7 @@
 			
 			<div class="row">
 			  	<div class="col-xs-4 col-md-2"><strong>가격</strong></div>
-				<div id="totalPrice" class="col-xs-8 col-md-4">${product.price}원</div>
+				<div id="totalPrice" class="col-xs-8 col-md-4" >${product.price}</div>
 			</div>
 			
 			<hr/>
@@ -143,7 +144,7 @@
 			  	<div class="col-xs-4 col-md-2"><strong>적용가능쿠폰</strong></div>
 				<div class="col-xs-8 col-md-4">
 					<select name="discountCoupon" id="discountCoupon" class="form-control">
-						<option value="none">===== 선택 =====</option>
+						<option>===== 선택 =====</option>
 						<c:forEach var="discount" items="${list}">
 							<option value="${discount.discountNo}">${discount.discountCoupon.couponName}</option>
 						</c:forEach>

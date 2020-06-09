@@ -1,14 +1,21 @@
 package com.model2.mvc.web.discount;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.model2.mvc.common.Page;
+import com.model2.mvc.common.Search;
 import com.model2.mvc.service.coupon.CouponService;
 import com.model2.mvc.service.discount.DiscountService;
 import com.model2.mvc.service.domain.Coupon;
@@ -67,6 +74,57 @@ public class DiscountController {
 		
 		return new ModelAndView("forward:/common/alertView.jsp", "message", "쿠폰이 지급되었습니다.");		
 	}
+	
+	
+	@RequestMapping(value = "deleteDiscount")
+	public ModelAndView deleteDiscount(@RequestParam("discountNo")int discountNo) throws Exception {
+		System.out.println("선택된 쿠폰"+ discountNo );
+		
+		
+		discountService.deleteDiscount(discountNo);
+		
+		
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "쿠폰이 삭제되었습니다.");	
+	}
+	
+	
+	
+	@RequestMapping("DiscountList")
+	public ModelAndView listDiscount(@ModelAttribute("search") Search search, HttpSession session) throws Exception {
+		
+		//현재 페이지값이 없으면 첫번째 페이지로 설정
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		User owner = (User)session.getAttribute("user");
+		
+		Map<String , Object> map = discountService.getDiscountCouponList(search, owner.getUserId());
+		
+				
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("count")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		
+		// Model 과 View 연결
+		modelAndView.setViewName("forward:/coupon/listDiscount.jsp");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
+		
+		
+		return modelAndView;
+	}
+	
+	
+	
+	
+	
+	
 	
 
 }
