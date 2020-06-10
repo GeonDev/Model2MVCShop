@@ -74,31 +74,42 @@
 			<div class="col-xs-8 col-md-4">${product.prodName}</div>
 		</div>
 		
+		<hr/>
+		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>상품상세정보</strong></div>
 			<div class="col-xs-8 col-md-4">${product.prodDetail}</div>
 		</div>
+		
+		<hr/>
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
 			<div class="col-xs-8 col-md-4">${product.manuDate}</div>
 		</div>
 		
+		<hr>
+		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>가격</strong></div>
 			<div class="col-xs-8 col-md-4">${product.price}</div>
 		</div>
 		
+		<hr/>
+		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>상품이미지</strong></div>
 			<div class="col-xs-8 col-md-4">
 					<td height="26">	
-						<c:set var = "tempSrc" value = "/images/uploadFiles/" />
-						<img src = "${tempSrc}${product.fileName}"  width="200"/>
+						<c:set var = "tempSrc" value = "/images/uploadFiles/" />						
+							<c:forEach var="image" items="${product.fileName}">
+								<img src="${tempSrc}${image.fileName}" width="200" />
+							</c:forEach>						
 					</td>			
 			</div>
 		</div>
 		
+		<hr/>
 		
 		<div class="row">
 	  		<div class="col-md-12 text-right ">
@@ -107,12 +118,7 @@
 	  			<button type="button" class="btn btn-primary">추가등록</button>	  			
 
 	  		</div>
-		</div>
-		
-		
-		
-		
-	
+		</div>	
 	
 	</div>
 

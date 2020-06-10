@@ -31,7 +31,7 @@ public class FileImagesServiceImpl implements FileImagesService {
 
 	@Override
 	public void deleteFileImage(FileImages file) throws Exception {
-		fileImagesDao.addFileImage(file);
+		fileImagesDao.deleteFileImage(file);
 	}
 
 }

@@ -28,7 +28,7 @@
 	</select>
 	
 	
-	<select id="getLastProdNo" parameterType ="int" >
+	<select id="getLastProdNo" parameterType ="int" resultType="int">
 		SELECT
 		MAX(prod_no)	
 		FROM product				

@@ -95,10 +95,20 @@
 	                 </li>	                 
 	                 
 	             </ul>
-	             
-	             <ul class="nav navbar-nav navbar-right">
-	                <li><a href="#">로그아웃</a></li>
-	            </ul>
+	            
+	             <c:if test="${not empty sessionScope.user}">
+	                <ul class="nav navbar-nav navbar-right">
+	                	<li><a href="#">로그아웃</a></li>
+	            	</ul>	             
+	             </c:if>
+
+	            
+	     	     <c:if test="${empty sessionScope.user}">
+	                <ul class="nav navbar-nav navbar-right">
+	                	<li><a href="#">로그인</a></li>
+	            	</ul>	             
+	             </c:if>>
+	            
 		</div>
 		<!-- dropdown hover END -->	       
 	    
@@ -124,6 +134,17 @@
 				//self.location = "/user/logout"
 			}); 
 		 });
+		
+		
+			//============= login Event  처리 =============	
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('로그인')").on("click" , function() {
+				$(self.location).attr("href","../user/loginView.jsp");
+				
+			}); 
+		 });
+		
 		
 		//============= 회원정보조회 Event  처리 =============	
 		 $(function() {

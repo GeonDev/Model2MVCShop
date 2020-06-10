@@ -151,7 +151,7 @@
 				<div class="row">
 				  		<div class="col-xs-4 col-md-2"><strong>상품이미지</strong></div>
 						<div class="col-xs-8 col-md-4">
-							<input type="file" name="uploadFile" placeholder="상품명 입력"  multiple/>
+							<input type="file" class="form-control" name="uploadFile" placeholder="상품명 입력"  multiple/>
 						</div>
 				</div>
 				

@@ -42,7 +42,7 @@
 
 		var name = $("input[name = 'prodName']").val();
 		var detail = $("input[name = 'prodDetail']").val();
-		var manuDate = $("input[name = 'manuDate']").val();
+	
 		var price = $("input[name = 'price']").val();
 
 		if (name == null || name.length < 1) {
@@ -53,10 +53,7 @@
 			alert("상품상세정보는 반드시 입력하여야 합니다.");
 			return;
 		}
-		if (manuDate == null || manuDate.length < 1) {
-			alert("제조일자는 반드시 입력하셔야 합니다.");
-			return;
-		}
+
 		if (price == null || price.length < 1) {
 			alert("가격은 반드시 입력하셔야 합니다.");
 			return;
@@ -66,7 +63,7 @@
 			return;
 		}
 
-		$("form").attr("action", "/product/updateProduct");
+		$("form").attr("action", "/product/updateProduct?menu=manage");
 		$("form").submit();
 
 	}
@@ -129,17 +126,11 @@
 	
 	<div class="row">
 		<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
-			<div class="col-xs-8 col-md-4">
-				<input type="text" name="manuDate" class="form-control" placeholder="제조일자를 선택하세요" readonly/>			
-			</div>			
-			<i class="glyphicon glyphicon-calendar" ></i>			
+			<div class="col-xs-8 col-md-4">${product.manuDate}</div>			
+				
 	</div>
 	
-	<hr/>
-	
-	
-	
-	
+	<hr/>	
 	
 	<div class="row">
 		<div class="col-xs-4 col-md-2"><strong>가격</strong></div>
@@ -151,11 +142,25 @@
 	<hr/>
 	
 	<div class="row">
-		<div class="col-xs-4 col-md-2"><strong>상품이미지</strong></div>
+		<div class="col-xs-4 col-md-2"><strong>상품이미지 삭제</strong></div>
+			<div class="col-xs-8 col-md-4">
+				<c:forEach var="image" items="${product.fileName}">
+					<a href="/product/deleteProductImage?prodNo=${image.prodNo}&fileName=${image.fileName}">${image.fileName}</a>					
+					<br/>
+				</c:forEach>
+			
+			</div>
+	</div>
+	
+	<hr/>
+	
+	<div class="row">
+		<div class="col-xs-4 col-md-2"><strong>상품이미지 추가</strong></div>
 			<div class="col-xs-8 col-md-4">
 			<input type="file" name="uploadFile" class="form-control"  multiple/>
 			</div>
 	</div>
+	
 </form>
 
 			<div class="row">

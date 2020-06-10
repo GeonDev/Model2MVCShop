@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -91,18 +92,20 @@ public class ProductController {
 		service.addProduct(prod);
 		
 		
-		
-        for (MultipartFile multipartFile : files) {
-        	//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......
-    		File f =new File(path+multipartFile.getOriginalFilename());
-    		
-    		//원하는 위치에 파일 저장
-    		multipartFile.transferTo(f);	    		
-    		
-    		FileImages file = new FileImages(prodNo,multipartFile.getOriginalFilename());
-    		
-    		fileService.addFileImage(file);
+		if(files !=null) {
+	        for (MultipartFile multipartFile : files) {
+	        	//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......
+	    		File f =new File(path+multipartFile.getOriginalFilename());
+	    		
+	    		//원하는 위치에 파일 저장
+	    		multipartFile.transferTo(f);	    		
+	    		
+	    		FileImages file = new FileImages(prodNo,multipartFile.getOriginalFilename());
+	    		
+	    		fileService.addFileImage(file);
+			} 			
 		} 
+
 		
 		
 		return "forward:/product/addProduct.jsp";
@@ -186,31 +189,37 @@ public class ProductController {
         path = path.substring(0,path.indexOf("\\.metadata"));         
         path = path +  uploadPath;
 		
-        //임시 처리(DB 처리 전까지는 한개만 등록되도록 한다.)
-        MultipartFile file = files.get(0);
-        
-		
-		/*
-		 * if(file !=null) {
-		 * 
-		 * File f =new File(path+file.getOriginalFilename());
-		 * 
-		 * //원하는 위치에 파일 저장 file.transferTo(f);
-		 * 
-		 * //혹시 바인딩중 이상이 있을수 있어 FileName 재설정
-		 * 
-		 * }
-		 */
+       		
+		if(files !=null) {
+	        for (MultipartFile multipartFile : files) {
+	        	//파일 업로드 구분 - 워크스페이스 경로가 다르면 재 설정을 해야 한다......
+	    		File f =new File(path+multipartFile.getOriginalFilename());
+	    		
+	    		//원하는 위치에 파일 저장
+	    		multipartFile.transferTo(f);	    		
+	    		
+	    		FileImages file = new FileImages(prod.getProdNo(),multipartFile.getOriginalFilename());
+	    		
+	    		fileService.addFileImage(file);
+			} 			
+		}
 		
 		//전달받은 상품 정보 업데이트
 		service.updateProduct(prod);					
 			
 		model.addAttribute("prodNo", prod.getProdNo());
 		
-		return "forward:/product/getProduct";
+		return "forward:/product/getProduct?menu=search";
 	}
 	
-	
+	@RequestMapping(value="deleteProductImage")
+	public ModelAndView  deleteProductImage(@RequestParam("prodNo")int prodNo, @RequestParam("fileName")String fileName) throws Exception {	
+		
+		FileImages file = new FileImages(prodNo, fileName);
+		
+		fileService.deleteFileImage(file);
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "선택하신 이미지가 삭제되었습니다.");
+	}
 	
 	
 	

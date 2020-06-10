@@ -41,9 +41,9 @@
 				self.location = "/purchase/addPurchase?prodNo=${product.prodNo}";
 			});
 			
-			$("button:contains('이전')").on("click", function() {		
+			$("button:contains('목록')").on("click", function() {		
 				//$(self.location).attr("href","/product/listProduct?menu=search");
-				self.location = document.referrer;
+				self.location = "/product/listProduct?menu=search";
 			});	
 			
 			$("button:contains('수정')").on("click", function() {
@@ -137,7 +137,7 @@
 		  				<button type="button" class="btn btn-primary">수정</button>	 
 		  			</c:if>
 		  			
-		  			<button type="button" class="btn btn-primary">이전</button>	  			
+		  			<button type="button" class="btn btn-primary">목록</button>	  			
 	
 		  		</div>
 			</div>	
