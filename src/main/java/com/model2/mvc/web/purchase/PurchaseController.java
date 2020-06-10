@@ -2,6 +2,7 @@ package com.model2.mvc.web.purchase;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,7 @@ public class PurchaseController {
 		for(Discount temp : list) {
 			if(temp.getDiscountCoupon().getMinimum_price() > product.getPrice()) {
 				list.remove(temp);
-			} 			
+			}		
 		}
 		model.addAttribute("list",list);
 		

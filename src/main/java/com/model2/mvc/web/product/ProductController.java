@@ -119,7 +119,7 @@ public class ProductController {
 		Product prod = service.getProduct(prodNo);	
 		
 		// 파일 리스트를 받아서 세팅
-		prod.setFileName(fileService.getFileList(prodNo));
+		//prod.setFileName(fileService.getFileList(prodNo));
 		
 		model.addAttribute("product", prod);
 		
@@ -181,6 +181,25 @@ public class ProductController {
 		
 		return "forward:/product/listProduct.jsp";
 	}
+	
+	@RequestMapping(value="mainProduct")
+	public ModelAndView mainProduct() throws Exception {
+		
+Search search = new Search(); 
+		
+		search.setCurrentPage(1);		
+		search.setPageSize(pageSize);
+		
+		search.setSearchOrder("");
+		search.setSearchKeyword("");
+		
+		List<Product> list =  (List<Product>) service.getProductList(search).get("list");
+		
+		return new ModelAndView("forward:/main.jsp","list",list);
+	}
+	
+	
+	
 	
 	@RequestMapping(value="updateProduct")
 	public String updateProduct(@ModelAttribute("product") Product prod ,Model model, @RequestParam("uploadFile") List<MultipartFile> files) throws Exception {

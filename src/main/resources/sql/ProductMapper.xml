@@ -6,6 +6,11 @@
 
 <mapper namespace="ProductMapper">
  	
+ 	<resultMap id="fileImageSelectMap" type="fileImages">
+		<result property="imagesNo" 	column="image_no" 	jdbcType="NUMERIC"/>
+		<result property="prodNo"		column="prod_no" 	jdbcType="NUMERIC" />
+		<result property="fileName" 	column="image_file" jdbcType="VARCHAR" />
+	</resultMap>
  	
 	<resultMap id="prodSelectMap" type="product">
 		<result property="prodNo" 			column="prod_no" 			jdbcType="NUMERIC"/>
@@ -15,8 +20,16 @@
 		<result property="price" 			column="price" 				jdbcType="NUMERIC" />			
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="proTranCode" 		column="TRAN_CODE" 			jdbcType="VARCHAR" />
+		
+		<collection property="fileName" column="prod_no" javaType="list" ofType="fileImages" select="getImagesfiles"/>
 			
 	</resultMap>
+	
+	 <select id="getImagesfiles" parameterType="int" resultMap="fileImageSelectMap">
+		SELECT * FROM images 
+		WHERE images.prod_no = #{value}
+	 </select>
+	
 	
 
 	<select id="getProduct" parameterType ="int" resultMap="prodSelectMap" >
@@ -144,11 +157,8 @@
 					
 				</if>			
 			</if>						
-		</where>
-		
-					
+		</where>					
 		) WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 	
-	
 	</select>	
 
 	 
