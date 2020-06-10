@@ -194,7 +194,7 @@ insert into product values (seq_product_prod_no.nextval,'종이 카메라','일회용 카
 insert into images values(seq_image_no.nextval,1017,'qweh3hA87943.jpg');
 
 insert into product values (seq_product_prod_no.nextval,'올림푸스 EM5','전문가용 미러리스 카메라','20190425',1290000, sysdate);
-insert into images values(seq_image_no.nextval,1018,'qweh3hA87943.jpg');
+insert into images values(seq_image_no.nextval,1018,'qwergwg453.jpg');
 
 insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 1000,1000);
 insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 10, 5000,5000);
