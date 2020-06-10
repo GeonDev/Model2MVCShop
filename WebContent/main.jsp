@@ -79,13 +79,13 @@
 										displayValue =	"<div class='col-md-6' >"
 													  + "<div id='borad' value="+prod.prodNo+">"
 													  + "<div class='panel-body' id='block'>"
-													  + "<img src='/images/uploadFiles/"+ prod.fileName +"width='250px'/>"	
+													  + "<img src='/images/uploadFiles/"+ prod.fileName[0]["fileName"] +"' width='250px'/>"	
 										              +"</div>"
 										              +"<h4 style='color:Black;''>"+prod.prodName +"</h4>"
 										              +"</div></div>"; 
 									});									
 									
-									$("#borad:last").append(displayValue);
+									$(".col-md-6:last").append(displayValue);
 								}
 						});
 
