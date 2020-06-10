@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.model2.mvc.service.domain.Discount;
 import com.model2.mvc.service.domain.FileImages;
 import com.model2.mvc.service.fileImages.FileImagesDao;
 
@@ -19,9 +20,9 @@ public class FileImagesDaoImpl implements FileImagesDao {
 	
 	
 	@Override
-	public List<String> getFileList(int prodno) throws Exception {
-		
-		return sqlSession.selectList("FileImagesMapper.getImages",prodno);
+	public List<FileImages> getFileList(int prodno) throws Exception {
+		List<FileImages> list = sqlSession.selectList("FileImagesMapper.getImagesList",prodno);
+		return list;
 	}
 
 	@Override

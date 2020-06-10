@@ -1,10 +1,10 @@
-
-DROP TABLE discount;
-DROP TABLE transaction;
 DROP TABLE images;
-DROP TABLE product;
-DROP TABLE users;
-DROP TABLE coupon;
+DROP TABLE transaction;
+DROP TABLE discount;
+
+DROP TABLE product CASCADE constraints;
+DROP TABLE users CASCADE constraints;
+DROP TABLE coupon CASCADE constraints;
 
 
 DROP SEQUENCE seq_product_prod_no;

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Product {
 	
-	private List<String> fileName;
+	private List<FileImages> fileName;
 	private String manuDate;
 	private int price;
 	private String prodDetail;
@@ -24,13 +24,12 @@ public class Product {
 	public void setProTranCode(String proTranCode) {
 		this.proTranCode = proTranCode;
 	}
-	
 
-	public List<String> getFileName() {
+	public List<FileImages> getFileName() {
 		return fileName;
 	}
 
-	public void setFileName(List<String> fileName) {
+	public void setFileName(List<FileImages> fileName) {
 		this.fileName = fileName;
 	}
 

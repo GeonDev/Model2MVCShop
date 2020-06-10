@@ -18,7 +18,7 @@ public class FileImagesServiceImpl implements FileImagesService {
 	private FileImagesDao fileImagesDao;
 	
 	@Override
-	public List<String> getFileList(int prodno) throws Exception {
+	public List<FileImages> getFileList(int prodno) throws Exception {
 		// TODO Auto-generated method stub
 		return fileImagesDao.getFileList(prodno);
 	}

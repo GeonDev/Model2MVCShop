@@ -26,6 +26,7 @@
 		<mapper resource="sql/PurchaseMapper.xml"/>
 		<mapper resource="sql/CouponMapper.xml"/>
 		<mapper resource="sql/DiscountMapper.xml"/>
+		<mapper resource="sql/FileImagesMapper.xml"/>
 	</mappers>
 
 </configuration>

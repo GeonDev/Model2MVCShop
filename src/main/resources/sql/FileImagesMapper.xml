@@ -21,11 +21,9 @@
 	 </insert>
 	 
 	 <!-- SQL : SELECT List -->
-	 <select 	id="getImages"	parameterType="int"	resultType="string">
-		SELECT
-		image_file  		
-		FROM images 
-		WHERE prod_no = #{value}
+	 <select id="getImagesList"	parameterType="int"	resultMap="fileImageSelectMap">
+		SELECT * FROM images 
+		WHERE images.prod_no = #{value}
 	 </select>
 	 
 	 <delete id ="deleteImages" parameterType="fileImages">

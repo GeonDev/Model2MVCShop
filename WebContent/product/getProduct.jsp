@@ -91,7 +91,7 @@
 				<div class="col-xs-8 col-md-4">
 					<c:set var="tempSrc" value="/images/uploadFiles/" />
 					<c:forEach var="image" items="${product.fileName}">
-						<img src="${tempSrc}${image}" width="200" />
+						<img src="${tempSrc}${image.fileName}" width="200" />
 					</c:forEach>
 					
 					
