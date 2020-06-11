@@ -80,8 +80,8 @@
 				return;
 			}
 			
-			if(!checkDupl) {				
-				alert("중복된 아이디 입니다.");
+			if(JSONData != true) {				
+				alert("해당 아이디를 사용할 수 없습니다.");
 				$("input:text[name='userId']").focus();
 				return;
 			}
