@@ -109,15 +109,23 @@
 				changeSearchCondition();
 				
 			});		
+			
+			
+			$("#preView").on("click",function(){
+				alert("클릭!");
+				removePreView();
+				
+			});	
 		
 			
 			$("td:nth-child(2)").on( "click", function() {				
 				
 						var prodNo = $(this).text().trim();						
 						
-						if('${menu}' =='manage'){						
+						if('${menu}' == 'manage'){	
+						
 							
-							$.ajax("/purchase/json/getPurchase/" + prodNo, {
+							$.ajax("/purchase/json/getPurchase/"+prodNo, {
 								method : "GET",
 								dataType : "Json",
 								headers : {
@@ -125,25 +133,25 @@
 									"Content-Type" : "application/json"
 								},
 								success : function(JSONData, status) {					
-	
+									
 									var displayValue =
-										"<h3 id='preView'>"
+										"<h4 id='preView'>"
 										+ "구매자 이름   : "+	JSONData.receiverName +"<br/>"						
 										+ "구매자 연락처 : "+	JSONData.receiverPhone +"<br/>"
 										+ "구매자 주소   : "+	JSONData.divyAddr +"<br/>"
 										+ "배송 희망일   : "+	JSONData.divyDate +"<br/>"
 										+ "배송 요구사항 : "+	JSONData.divyRequest +"<br/>"
-										+ "</h3>";
+										+ "</h4>";
 	
 									$("#preView").remove();
-									$("#" + prodNo + "").html(displayValue);
-								}
+									$("#" + prodNo + "").append(displayValue);
+								}							
 							});						
 							
 							
 						}else{
 							
-							$.ajax("/product/json/getProduct/" + prodNo, {
+							$.ajax("/product/json/getProduct/"+prodNo, {
 								method : "GET",
 								dataType : "Json",
 								headers : {
@@ -155,14 +163,15 @@
 									//<img src = "/images/uploadFiles/"+ JSONData.fileName  width="200"/>;
 	
 									var displayValue =
-										"<h3 id='preView'>"
-										+ JSONData.prodName								
-										+'<i class="glyphicon glyphicon-remove" onclick="javascript:removePreView()"/> <br/>'
-										+"<img src = \"/images/uploadFiles/"+ JSONData.fileName + "\" width= \"200\"/>" +"<br/>"
-										+ "</h3>";
+										"<h4 id='preView'>"
+										+ JSONData.prodName										
+										+"<i class=\"glyphicon glyphicon-remove\"/> <br/>"
+										+"<img src = \"/images/uploadFiles/"+ JSONData.fileName[0]["fileName"] + "\" width= \"200\"/>" +"<br/>"
+										+ "</h4>";
 	
 									$("#preView").remove();
-									$("#" + prodNo + "").html(displayValue);
+									/* $("#" + prodNo + "").html(displayValue); */
+									$("#" + prodNo + "").append(displayValue);
 								}
 							});
 							

@@ -145,7 +145,7 @@ insert into images values(seq_image_no.nextval,1001,'wdqwfgqg234.jpg');
 insert into product values (seq_product_prod_no.nextval,'후지 X-pro3','클래식 미러리스','20190317',1350000, sysdate);
 insert into images values(seq_image_no.nextval,1002,'2016243376werth321106.jpg');
 
-insert into product values (seq_product_prod_no.nextval,'후지 100f','클래식 컴팩트 카메라','20180228',1350000, sysdate);
+insert into product values (seq_product_prod_no.nextval,'후지 100f','클래식 컴팩트 카메라','20180228',630000, sysdate);
 insert into images values(seq_image_no.nextval,1003,'20181384765947qqw52.jpg');
 
 insert into product values (seq_product_prod_no.nextval,'후지 X-T3','클래식 미러리스 카메라','20180520',829000, sysdate);
@@ -196,17 +196,28 @@ insert into images values(seq_image_no.nextval,1018,'qwergwg453.jpg');
 insert into product values (seq_product_prod_no.nextval,'라이카 C-Lux','컴팩트 카메라','20170521',4570000, sysdate);
 insert into images values(seq_image_no.nextval,1019,'unfjkhjk8768.jpg');
 
-insert into product values (seq_product_prod_no.nextval,'라이카 C-Lux','컴팩트 카메라','20170521',4570000, sysdate);
-insert into images values(seq_image_no.nextval,1020,'unfjkhjk8768.jpg');
-
 insert into product values (seq_product_prod_no.nextval,'캐논 200D','DSLR 카메라','20150521',5570000, sysdate);
-insert into images values(seq_image_no.nextval,1021,'u7n46naas5me6d.jpg');
+insert into images values(seq_image_no.nextval,1020,'u7n46naas5me6d.jpg');
 
 insert into product values (seq_product_prod_no.nextval,'라이카 D-Lux ','컴팩트 카메라','20140521',550000, sysdate);
-insert into images values(seq_image_no.nextval,1022,'unnaasdfmedfjhfh6.jpg');
+insert into images values(seq_image_no.nextval,1021,'unnaasdfmedfjhfh6.jpg');
 
-insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 1000,1000);
-insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 10, 5000,5000);
+insert into product values (seq_product_prod_no.nextval,'소니 A5100','컴팩트 카메라','20130521',892000, sysdate);
+insert into images values(seq_image_no.nextval,1022,'asfeginneasdfasgasfd03.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'캐논 200D 화이트','DSLR 카메라','20180521',132000, sysdate);
+insert into images values(seq_image_no.nextval,1023,'asdfasdfefff2345ffa.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'리코 GR','컴팩트 카메라','20170521',9900, sysdate);
+insert into images values(seq_image_no.nextval,1024,'ferh476hf335g3.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'오즈모 포켓','컴팩트 카메라','20180521',19900, sysdate);
+insert into images values(seq_image_no.nextval,1025,'sdf572g46j2gj7oqht.jpg');
+
+
+
+insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 1000,10000);
+insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 10, 50000,5000000);
 insert into coupon values (seq_coupon_no.nextval,'이달의 이벤트 쿠폰', 5, 1500, 1000);
 insert into coupon values (seq_coupon_no.nextval,'누구나 이벤트 쿠폰', 10, 3000, 0);
 

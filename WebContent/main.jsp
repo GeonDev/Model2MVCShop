@@ -53,8 +53,7 @@
    	<script type="text/javascript"> 
    		
    		//최초 페이지 지정
-   		var page = 1;
-   		var displayValue ="";
+   		var page = 1;   
    		
    		$(function() {
    			
@@ -76,25 +75,21 @@
 									$.each(JSONData, function(index,prod) {
 										
 									
-										displayValue =	"<div class='col-md-6' >"
-													  + "<div id='borad' value="+prod.prodNo+">"
+										var displayValue =	"<div class='col-md-6' >"
+													  + "<div id='borad' value='"+prod.prodNo+"'>"
 													  + "<div class='panel-body' id='block'>"
 													  + "<img src='/images/uploadFiles/"+ prod.fileName[0]["fileName"] +"' width='250px'/>"	
 										              +"</div>"
-										              +"<h4 style='color:Black;''>"+prod.prodName +"</h4>"
+										              +"<h4><a href='/product/getProduct?prodNo="+prod.prodNo+"&menu=search'>"+prod.prodName +"</h4>"
 										              +"</div></div>"; 
-									});									
-									
-									$(".col-md-6:last").append(displayValue);
+										              
+										$(".row:last").append(displayValue);
+									});										
 								}
 						});
-
-   			      
-   			      
-/*    			      $("#enters").append("<h1>Page " + page + "</h1><BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~<BR/>So<BR/>MANY<BR/>BRS<BR/>YEAHHH~"); */
-   			      
    			    }
-   			});
+   			});			
+   		
    			
    			
    			
@@ -134,7 +129,11 @@
 			 		<div class="panel-body" id="block">	 		
 			 			<img src="/images/uploadFiles/${prod.fileName.get(0).fileName}" width="250px"/>	 				 			
 			 		</div>			 				 		
-			 		<h4 style="color:Black;">${prod.prodName}</h4>
+			 		<h4>
+			 		<a href="/product/getProduct?prodNo=${prod.prodNo}&menu=search">${prod.prodName}</a>
+			 		
+			 		
+			 		</h4>
 			 	</div>
 		 	</div>
 		 </c:forEach>	
