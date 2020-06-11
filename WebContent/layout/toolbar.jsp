@@ -108,9 +108,14 @@
 	            
 	     	     <c:if test="${empty sessionScope.user}">
 	                <ul class="nav navbar-nav navbar-right">
+	                	<li><a href="#">회원가입</a></li>
+	            	</ul>
+	                
+	                <ul class="nav navbar-nav navbar-right">
 	                	<li><a href="#">로그인</a></li>
-	            	</ul>	             
-	             </c:if>>
+	            	</ul>
+	             
+	             </c:if>
 	            
 		</div>
 		<!-- dropdown hover END -->	       
@@ -146,6 +151,12 @@
 				$(self.location).attr("href","../user/loginView.jsp");
 				
 			}); 
+			
+		 	$("a:contains('회원가입')").on("click" , function() {
+				$(self.location).attr("href","../user/addUserView.jsp");
+				
+			});
+			
 		 });
 		
 		

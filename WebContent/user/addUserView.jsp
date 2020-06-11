@@ -21,7 +21,7 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
        body > div.container{
-        	border: 3px solid #D6CDB7;
+        	border: 3px solid lightGray;
             margin-top: 10px;
         }
     </style>
@@ -186,7 +186,7 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
+	<div class="navbar  navbar-inverse">
         <div class="container">
         	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
    		</div>

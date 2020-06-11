@@ -21,9 +21,10 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
     	 body >  div.container{ 
-        	border: 3px solid #D6CDB7;
+        	border: 3px solid lightGray;
             margin-top: 10px;
-        }
+        }       
+        
     </style>
     
     <!--  ///////////////////////// JavaScript ////////////////////////// -->

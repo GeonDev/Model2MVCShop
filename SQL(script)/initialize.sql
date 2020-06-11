@@ -102,7 +102,7 @@ INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, r
 VALUES ( 'manager', 'manager', '1234', 'admin', NULL, NULL, NULL, 'manager@mvc.com', to_date('2012/01/14', 'YYYY/MM/DD'));          
 
 INSERT INTO users 
-VALUES ( 'user01', 'SCOTT', '1111', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user01', '손건', '1111', 'user', NULL, '010-1111-2222', '서울시 서초구', 'USER@mvc.com', sysdate); 
 
 INSERT INTO users 
 VALUES ( 'user02', 'SCOTT', '2222', 'user', NULL, NULL, NULL, NULL, sysdate); 
@@ -222,15 +222,23 @@ insert into images values(seq_image_no.nextval,1026,'qwevt20qwru000_4.jpg');
 
 insert into product values (seq_product_prod_no.nextval,'후지 X-T4','전문가용 미러리스 카메라','20200517',859500, sysdate);
 insert into images values(seq_image_no.nextval,1027,'gho45t58095jh69g.jpg');
-insert into images values(seq_image_no.nextval,1027,'q5we408gh74qrg4.PNG');
-insert into images values(seq_image_no.nextval,1027,'q5we408gh74qrg4.PNG');
+insert into images values(seq_image_no.nextval,1027,'q5we408gh74qrg4.PNG');;
 insert into images values(seq_image_no.nextval,1027,'ret42uer.PNG');
 insert into images values(seq_image_no.nextval,1027,'12g75nogwg3.jpg');
 insert into images values(seq_image_no.nextval,1027,'234y42uqwt.PNG');
 
+insert into product values (seq_product_prod_no.nextval,'고프로 히어로8','컴팩트 카메라','20190711',39900, sysdate);
+insert into images values(seq_image_no.nextval,1028,'fsh5372836.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'고프로 히어로4','컴팩트 카메라','20140711',19900, sysdate);
+insert into images values(seq_image_no.nextval,1029,'ASDF234523F23.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'소니 FDR-X3000','컴팩트 카메라','20170711',22900, sysdate);
+insert into images values(seq_image_no.nextval,1029,'62324uqt43w8e.jpg');
+
 insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 1000,10000);
-insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 10, 50000,5000000);
-insert into coupon values (seq_coupon_no.nextval,'이달의 이벤트 쿠폰', 5, 1500, 1000);
-insert into coupon values (seq_coupon_no.nextval,'누구나 이벤트 쿠폰', 10, 3000, 0);
+insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 40, 200000,500000);
+insert into coupon values (seq_coupon_no.nextval,'이달의 이벤트 쿠폰', 30, 1500, 1000);
+insert into coupon values (seq_coupon_no.nextval,'누구나 이벤트 쿠폰', 10, 5000, 10000);
 
 commit;

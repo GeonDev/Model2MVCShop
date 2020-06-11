@@ -34,8 +34,17 @@
     
     
     <script type="text/javascript">	
+
+    
+    function setDetailImg(fileName) {
+    	var fileUrl = "/images/uploadFiles/"+fileName;
+		$(".col-md-5 > img").attr("src",fileUrl);
+	}
+    
+    
 	
-	$(function(){
+	$(function(){		
+		
 		
 			$("button:contains('구매')").on("click", function() {
 				self.location = "/purchase/addPurchase?prodNo=${product.prodNo}";
@@ -50,6 +59,12 @@
 					$("form").attr("method", "POST");
 					$("form").attr("action", "/product/updateProduct");
 					$("form").submit();
+			});
+			
+			
+			$(".imageList").on("click", function() {
+				var fileName = $(this).attr("value"); 				
+				setDetailImg(fileName);
 			});
 		
 		});
@@ -71,86 +86,102 @@
 		       <h3 class=" text-info">상품 상세 조회</h3>		   
 		    </div>	
 		    
-		  <form>  
-		    <div class="row">
-	  			<div class="col-xs-4 col-md-2"><strong>상품번호</strong></div>
-				<div class="col-xs-8 col-md-4">${product.prodNo}</div>
-			</div>
-		
-			<hr/>
-			
-			<div class="row">
-	  			<div class="col-xs-4 col-md-2"><strong>상품명</strong></div>
-				<div class="col-xs-8 col-md-4">${product.prodName}</div>
-			</div>
-		
-			<hr/>
-			
-		    <div class="row">
-	  			<div class="col-xs-4 col-md-2"><strong>상품이미지</strong></div>
-				<div class="col-xs-8 col-md-4">
-					<c:set var="tempSrc" value="/images/uploadFiles/" />
-					<c:forEach var="image" items="${product.fileName}">
-						<img src="${tempSrc}${image.fileName}" width="200" />
-					</c:forEach>
+		  <div class="row"> 
+		  
+			  <div class="col-md-5">
+			  
+			  	<img src="/images/uploadFiles/${product.fileName.get(0).fileName}" width="450" />
+			  
+			  </div>
+		  
+			  <div class="col-md-7">
+				  <form>  
+				    <div class="row">
+			  			<div class="col-xs-4 col-md-2"><strong>상품번호</strong></div>
+						<div class="col-xs-8 col-md-4">${product.prodNo}</div>
+					</div>
+				
+					<hr/>
+					
+					<div class="row">
+			  			<div class="col-xs-4 col-md-2"><strong>상품명</strong></div>
+						<div class="col-xs-8 col-md-4">${product.prodName}</div>
+					</div>
+				
+					<hr/>					
+					
+					<div class="row">
+			  			<div class="col-xs-4 col-md-2"><strong>상세정보</strong></div>
+						<div class="col-xs-8 col-md-4">${product.prodDetail}</div>
+					</div>
+				
+					<hr/>
+					
+					<div class="row">
+			  			<div class="col-xs-4 col-md-2"><strong>가격</strong></div>
+						<div class="col-xs-8 col-md-4">${product.price}</div>
+					</div>
+				
+					<hr/>
+					
+					<div class="row">
+			  			<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
+						<div class="col-xs-8 col-md-4">${product.manuDate}</div>
+					</div>
+				
+					<hr/>
 					
 					
-				</div>
-			</div>
-		
-			<hr/>
+					<div class="row">
+			  			<div class="col-xs-4 col-md-2"><strong>등록일자</strong></div>
+						<div class="col-xs-8 col-md-4">${product.regDate}</div>
+					</div>
+				
+					<hr/>
+					
+					</form>
+					
+					<div class="row">
+				  		<div class="col-md-12 text-right ">
+				  		
+				  			<c:if test="${sessionScope.user.role == 'user'}">
+				  				<c:if test="${product.proTranCode =='0'}">
+				  					<button type="button" class="btn btn-primary">구매</button>	
+				  				</c:if>		  				 
+				  			</c:if>
+				  			
+				  			<c:if test="${sessionScope.user.role == 'admin'}">
+				  				<button type="button" class="btn btn-primary">수정</button>	 
+				  			</c:if>
+				  			
+				  			<button type="button" class="btn btn-primary">목록</button>					  			
 			
-			
-			<div class="row">
-	  			<div class="col-xs-4 col-md-2"><strong>상품상세정보</strong></div>
-				<div class="col-xs-8 col-md-4">${product.prodDetail}</div>
-			</div>
-		
-			<hr/>
-			
-			<div class="row">
-	  			<div class="col-xs-4 col-md-2"><strong>가격</strong></div>
-				<div class="col-xs-8 col-md-4">${product.price}</div>
-			</div>
-		
-			<hr/>
-			
-			<div class="row">
-	  			<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
-				<div class="col-xs-8 col-md-4">${product.manuDate}</div>
-			</div>
-		
-			<hr/>
-			
-			
-			<div class="row">
-	  			<div class="col-xs-4 col-md-2"><strong>등록일자</strong></div>
-				<div class="col-xs-8 col-md-4">${product.regDate}</div>
-			</div>
-		
-			<hr/>
-			
-			</form>
-			
-			<div class="row">
-		  		<div class="col-md-12 text-right ">
-		  		
-		  			<c:if test="${sessionScope.user.role == 'user'}">
-		  				<c:if test="${product.proTranCode =='0'}">
-		  					<button type="button" class="btn btn-primary">구매</button>	
-		  				</c:if>		  				 
-		  			</c:if>
-		  			
-		  			<c:if test="${sessionScope.user.role == 'admin'}">
-		  				<button type="button" class="btn btn-primary">수정</button>	 
-		  			</c:if>
-		  			
-		  			<button type="button" class="btn btn-primary">목록</button>	  			
-	
-		  		</div>
-			</div>	
-		</div>		
+				  		</div>
+					</div>	
+				</div> 
+		</div>	
 
+	</div>
+	
+	<div class="container">
+		<div class="page-header">
+	       <h3 class=" text-info">상품 이미지</h3>		   
+	    </div>			
+	    
+   		<div class="row">    												
+			<c:forEach var="image" items="${product.fileName}">
+				<div class= "imageList" value="${image.fileName}">
+					<div class= "col-md-3">
+						<img src="/images/uploadFiles/${image.fileName}" width="200" />						
+					</div>
+				</div>
+
+			</c:forEach>				
+		</div>	
+	</div>
+	
+	
+>	
 
 	</body>
 </html>
