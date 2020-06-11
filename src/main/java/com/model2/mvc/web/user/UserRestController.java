@@ -1,13 +1,18 @@
 package com.model2.mvc.web.user;
 
+
+import java.util.Vector;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.model2.mvc.service.domain.User;
@@ -37,7 +42,7 @@ public class UserRestController {
 	}
 
 	@RequestMapping( value="json/login", method=RequestMethod.POST )
-	public User login(	@RequestBody User user,
+	public User login(@RequestBody User user,
 									HttpSession session ) throws Exception{
 	
 		System.out.println("/user/json/login : POST");
@@ -50,5 +55,13 @@ public class UserRestController {
 		}
 		
 		return dbUser;
+	}
+	
+	
+	@RequestMapping( value="json/checkDuplication/{userId}", method=RequestMethod.GET)
+	public boolean checkDuplication( @PathVariable String userId ) throws Exception{			
+		
+		return userService.checkDuplication(userId);
+		
 	}
 }

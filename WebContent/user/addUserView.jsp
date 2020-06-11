@@ -29,6 +29,8 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
+		var checkDupl = false;
+	
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -75,6 +77,12 @@
 			if( pw != pw_confirm ) {				
 				alert("비밀번호 확인이 일치하지 않습니다.");
 				$("input:text[name='password2']").focus();
+				return;
+			}
+			
+			if(!checkDupl) {				
+				alert("중복된 아이디 입니다.");
+				$("input:text[name='userId']").focus();
 				return;
 			}
 				
@@ -140,16 +148,35 @@
 		 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 		 
-		//==>"ID중복확인" Event 처리 및 연결
 		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $("button.btn.btn-info").on("click" , function() {
-				popWin 
-				= window.open("/user/checkDuplication.jsp",
-											"popWin", 
-											"left=300,top=200,width=780,height=130,marginwidth=0,marginheight=0,"+
-											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
+			$("#userId").on("keyup",function(){
+				
+				var id = $(this).val();
+				
+				$.ajax("/user/json/checkDuplication/"+id, {
+					method : "GET",
+					dataType : "Json",
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status) {					
+						
+						
+						if(JSONData == true){	
+							$("h5").remove();
+							$("#callState").append("<h5>사용 가능한 ID입니다.</h5>");
+						}else{
+							$("h5").remove();
+							$("#callState").append("<h5 class='text-danger'>이미 사용중인 ID입니다.</h5>");	
+						}					
+						
+					}							
+				})
+				
 			});
+			 
+			 
 		});	
 
 	</script>		
@@ -177,13 +204,8 @@
 		  <div class="form-group">
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userId" name="userId" placeholder="중복확인하세요"  readonly>
-		       <span id="helpBlock" class="help-block">
-		      	<strong class="text-danger">입력전 중복확인 부터..</strong>
-		      </span>
-		    </div>
-		    <div class="col-sm-3">
-		      <button type="button" class="btn btn-info">중복확인</button>
+		      <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디(영어)를 입력하세요" >
+		      <span id="callState"></span>	
 		    </div>
 		  </div>
 		  
