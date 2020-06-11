@@ -135,6 +135,7 @@ VALUES ( 'user10', 'SCOTT', '1010', 'user', NULL, NULL, NULL, NULL, sysdate);
 
 insert into product values (seq_product_prod_no.nextval,'소니 A7R3','고화질 미러리스','20190312',3200000, sysdate);
 insert into images values(seq_image_no.nextval,1000,'Q4GH4H580A7R3.jpg');
+insert into images values(seq_image_no.nextval,1000,'4sxi6wsu.png');
 insert into images values(seq_image_no.nextval,1000,'asdfga235sg.jpg');
 insert into images values(seq_image_no.nextval,1000,'dyfd6egt55g4.jpg');
 
@@ -214,7 +215,18 @@ insert into images values(seq_image_no.nextval,1024,'ferh476hf335g3.jpg');
 insert into product values (seq_product_prod_no.nextval,'오즈모 포켓','컴팩트 카메라','20180521',19900, sysdate);
 insert into images values(seq_image_no.nextval,1025,'sdf572g46j2gj7oqht.jpg');
 
+insert into product values (seq_product_prod_no.nextval,'올림푸스 EM1','전문가용 미러리스 카메라','20200325',259900, sysdate);
+insert into images values(seq_image_no.nextval,1026,'1fhqw23qwe4qwqw.jpg');
+insert into images values(seq_image_no.nextval,1026,'34793w12e5315221980.jpg');
+insert into images values(seq_image_no.nextval,1026,'qwevt20qwru000_4.jpg');
 
+insert into product values (seq_product_prod_no.nextval,'후지 X-T4','전문가용 미러리스 카메라','20200517',859500, sysdate);
+insert into images values(seq_image_no.nextval,1027,'gho45t58095jh69g.jpg');
+insert into images values(seq_image_no.nextval,1027,'q5we408gh74qrg4.PNG');
+insert into images values(seq_image_no.nextval,1027,'q5we408gh74qrg4.PNG');
+insert into images values(seq_image_no.nextval,1027,'ret42uer.PNG');
+insert into images values(seq_image_no.nextval,1027,'12g75nogwg3.jpg');
+insert into images values(seq_image_no.nextval,1027,'234y42uqwt.PNG');
 
 insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 1000,10000);
 insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 10, 50000,5000000);
