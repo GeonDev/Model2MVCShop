@@ -116,6 +116,14 @@
 			<hr/>
 			
 			<div class="row">
+	  			<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
+				<div class="col-xs-8 col-md-4">${product.manuDate}</div>
+			</div>
+		
+			<hr/>
+			
+			
+			<div class="row">
 	  			<div class="col-xs-4 col-md-2"><strong>등록일자</strong></div>
 				<div class="col-xs-8 col-md-4">${product.regDate}</div>
 			</div>

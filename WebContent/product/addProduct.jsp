@@ -100,10 +100,9 @@
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>상품이미지</strong></div>
 			<div class="col-xs-8 col-md-4">
-					<td height="26">	
-						<c:set var = "tempSrc" value = "/images/uploadFiles/" />						
+					<td height="26">											
 							<c:forEach var="image" items="${product.fileName}">
-								<img src="${tempSrc}${image.fileName}" width="200" />
+								<img src="/images/uploadFiles/${image.fileName}" width="200" />
 							</c:forEach>						
 					</td>			
 			</div>

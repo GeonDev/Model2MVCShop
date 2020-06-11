@@ -84,9 +84,8 @@
 			self.location = document.referrer;
 		});
 		
-		$("i").on("click", function() {				
-			/* show_calendar(document.detailForm.manuDate, document.detailForm.manuDate.value); */
-			show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)
+		$("i").on("click", function() {	
+			show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value);
 		});
 		
 		

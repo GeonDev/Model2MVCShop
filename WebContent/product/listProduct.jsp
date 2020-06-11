@@ -110,9 +110,8 @@
 				
 			});		
 			
-			
-			$("#preView").on("click",function(){
-				alert("Å¬¸¯!");
+				
+			$(document).on("click", "#preView", function(){			
 				removePreView();
 				
 			});	
@@ -164,9 +163,8 @@
 	
 									var displayValue =
 										"<h4 id='preView'>"
-										+ JSONData.prodName										
-										+"<i class=\"glyphicon glyphicon-remove\"/> <br/>"
 										+"<img src = \"/images/uploadFiles/"+ JSONData.fileName[0]["fileName"] + "\" width= \"200\"/>" +"<br/>"
+										+ JSONData.prodName										
 										+ "</h4>";
 	
 									$("#preView").remove();

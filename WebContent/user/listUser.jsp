@@ -54,12 +54,10 @@
 		 $(function() {		
 			 $( "button.btn.btn-default" ).on("click" , function() {
 				 funcGetList(1);
-			});
-		 });
-		
+			});	
 		
 		//============= userId 에 회원정보보기  Event  처리(Click) =============	
-		 $(function() {		
+			
 	
 			$( "td:nth-child(2)" ).on("click" , function() {
 				 self.location ="/user/getUser?userId="+$(this).text().trim();
@@ -68,7 +66,15 @@
 			//==> userId LINK Event End User 에게 보일수 있도록 
 			$( "td:nth-child(2)" ).css("color" , "red");
 			
+			
+			$(document).on("click", "#info", function(){						
+				$("#info").remove();
+			});	
+			
 		});	
+		
+		
+
 		
 		
 		//============= userId 에 회원정보보기  Event  처리 (double Click)=============
@@ -89,15 +95,15 @@
 								},
 								success : function(JSONData , status) {
 
-									var displayValue = "<h6>"
+									var displayValue = "<h6 id='info'>"
 																+"아이디 : "+JSONData.userId+"<br/>"
 																+"이  름 : "+JSONData.userName+"<br/>"
 																+"이메일 : "+JSONData.email+"<br/>"
-																+"ROLE : "+JSONData.role+"<br/>"
+																+"ROLE   : "+ JSONData.role+"<br/>"
 																+"등록일 : "+JSONData.regDate+"<br/>"
 																+"</h6>";
 									$("h6").remove();
-									$( "#"+userId+"" ).html(displayValue);
+									$( "#"+userId+"" ).append(displayValue);
 								}
 						});
 						////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,8 +190,9 @@
 			  <td align="left">${user.userName}</td>
 			  <td align="left">${user.email}</td>
 			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id= "${user.userId}"></i>
+			  	<i class="glyphicon glyphicon-ok" ></i>
 			  	<input type="hidden" value="${user.userId}">
+			  	<span id="${user.userId}" > </span>
 			  </td>
 			</tr>
           </c:forEach>

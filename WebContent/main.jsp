@@ -32,19 +32,19 @@
             padding-top : 70px;
         }
         
-        #block{	        	
+        .block{	        	
         	 border-bottom-style: solid;
         	 color : WhiteSmoke;      	
         	 margin: 5px 5px;        	          	 
-        	 height: 300px;      	
+        	 height: 320px;      	
         	 text-align: center;
         }
         
-        #borad{
+        .borad{
         	border : 1px solid;        	
         	color : WhiteSmoke;
         	margin: 10px 10px;
-        	height: 350px;
+        	height: 400px;
         	text-align: center;
         }
         
@@ -75,21 +75,35 @@
 									$.each(JSONData, function(index,prod) {
 										
 									
-										var displayValue =	"<div class='col-md-6' >"
-													  + "<div id='borad' value='"+prod.prodNo+"'>"
-													  + "<div class='panel-body' id='block'>"
+										var displayValue =	"<div class='col-md-6' >"													
+													  + "<div class='borad' value='"+prod.prodNo+"'>"
+													  + "<div class = 'block'>"
 													  + "<img src='/images/uploadFiles/"+ prod.fileName[0]["fileName"] +"' width='250px'/>"	
 										              +"</div>"
-										              +"<h4><a href='/product/getProduct?prodNo="+prod.prodNo+"&menu=search'>"+prod.prodName +"</h4>"
-										              +"</div></div>"; 
+										              +"<h4 style='color:Black;'>"+prod.prodName +"</h4>";
+										              
+										  if(prod.proTranCode=='0'){
+											  displayValue = displayValue	
+											  +"<h5 style='color:red;'>(판매중)</h5>"										            
+								              +"</div></div>";											  
+										  }else{
+											  displayValue = displayValue
+											  +"</div></div>";
+										  }            
 										              
 										$(".row:last").append(displayValue);
 									});										
 								}
 						});
    			    }
-   			});			
-   		
+   			});			   		
+
+			
+   			
+   			$(document).on("click", ".borad", function() {				
+   				var prodNo = $(this).attr("value");    			
+   				self.location =  "/product/getProduct?prodNo="+prodNo+"&menu=search"
+   			});
    			
    			
    			
@@ -123,20 +137,21 @@
 	    </div>
 	
 	
-		<c:forEach var = "prod" items="${list}">
-			<div class="col-md-6" >
-				<div id="borad" value="${prod.prodNo}">
-			 		<div class="panel-body" id="block">	 		
-			 			<img src="/images/uploadFiles/${prod.fileName.get(0).fileName}" width="250px"/>	 				 			
+ 		<c:forEach var = "prod" items="${list}">
+			<div class="col-md-6" >		
+				<div class="borad" value="${prod.prodNo}">				
+			 		<div class="block" >			 		
+			 			<img src="/images/uploadFiles/${prod.fileName.get(0).fileName}" width="250px"/>			 				 				 				 			
 			 		</div>			 				 		
-			 		<h4>
-			 		<a href="/product/getProduct?prodNo=${prod.prodNo}&menu=search">${prod.prodName}</a>
-			 		
-			 		
-			 		</h4>
-			 	</div>
+			 		<h4 style="color:Black;">${prod.prodName}</h4>
+			 			<c:if test ="${prod.proTranCode eq '0'}">
+			 				<h5 style="color:red;">(판매중)</h5>
+			 			</c:if>
+			 	</div>			 	
 		 	</div>
-		 </c:forEach>	
+		 </c:forEach>
+		 
+
 	 	
 	</div>
 	

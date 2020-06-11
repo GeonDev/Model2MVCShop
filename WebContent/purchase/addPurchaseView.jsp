@@ -29,6 +29,7 @@
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="../javascript/calendar.js"></script>	
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -60,8 +61,7 @@
 
 				}),
 				success : function(JSONData, status) {					
-					var  discountPrice = originPrice +'<br/><h5 style="color: red">' + "(할인가격 : " +JSONData.price +") </h5>";							
-					alert("원래 가격" +originPrice);
+					var  discountPrice = originPrice +'<br/><h5 style="color: red">' + "(할인가격 : " +JSONData.price +") </h5>";											
 					$("#totalPrice").html(discountPrice);					
 				}
 
@@ -76,17 +76,16 @@
 		$("button:contains('취소')").on("click", function() {
 			//window.history.back();
 			self.location = document.referrer;
+		});	
+		
+		$("i").on("click", function() {		
+			show_calendar('document.detailForm.divyDate', document.detailForm.divyDate.value);
 		});
-		
-		$("i").on("click", function() {				
-			/* show_calendar(document.detailForm.manuDate, document.detailForm.manuDate.value); */
-			show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)
-		});
-		
-		
-		
+
 
 	});
+	
+	
 </script>
 </head>
 
@@ -136,7 +135,7 @@
 			
 			<hr/>
 			
-			<form name="addPurchase" method="post">
+			<form name="detailForm"  method="post">
 			
 			<input type="hidden" name="prodNo" value="${product.prodNo}" />
 			
@@ -217,13 +216,18 @@
 			<hr/>
 			
 			
-			<div class="row">
+
+			
+			
+				<div class="row">
 			  		<div class="col-xs-4 col-md-2"><strong>배송희망일자</strong></div>
 					<div class="col-xs-8 col-md-4">
 						<input type="text" name="divyDate" class="form-control" placeholder="원하는 배송일을 지정해주세요" readonly/>			
 					</div>			
 					<i class="glyphicon glyphicon-calendar" ></i>			
-			</div>			
+				</div>
+				
+				<hr/>				
 		
 		</form>		
 		
