@@ -35,7 +35,7 @@
 	
 		$(function() {
 			 $("button:contains('결제 확인')").on("click",function(){
-					self.location =  "/product/listProduct?menu=search";
+				 $(self.location).attr("href","/product/listProduct?menu=search");
 			 });
 			 
 		});
@@ -74,7 +74,7 @@
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
-			<div class="col-xs-8 col-md-4">${product.manuDate}</div>
+			<div class="col-xs-8 col-md-4">${(purchase.purchaseProd).manuDate}</div>
 		</div>
 		
 		<hr/>

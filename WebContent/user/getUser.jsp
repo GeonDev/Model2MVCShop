@@ -50,6 +50,13 @@
 				});			
 			
 			 $( "button:contains('쿠폰지급')" ).on("click" , function() {
+				 
+				 var couponNo = $("select[name='selectCoupon']").val();
+				 if(couponNo == 0){
+					 alert("지급할 쿠폰을 선택하세요.");
+					 return;
+				 }				 
+				 
 					$("form").attr("method", "POST");
 					$("form").attr("action", "/discount/addDiscount");
 					$("form").submit();	
@@ -132,7 +139,7 @@
 					<div class="col-xs-8 col-md-4">				
 									 
 						<select name="selectCoupon" class="form-control" style="width:150px">
-							<option value="none" >선택</option>	
+							<option value="0" >==지급가능쿠폰==</option>	
 							<c:forEach var="coupon" items="${list}">				
 							<option value="${coupon.couponNo}" >${coupon.couponName}</option>
 							</c:forEach>				

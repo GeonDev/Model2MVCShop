@@ -177,6 +177,15 @@
 	
 				});	
 			
+			
+			
+			$("i").on("click",function(){					
+				var url = "/purchase/updateTranCodeByProd?prodNo=";
+				url = url.concat($(this).children('span').text(),"&tranCode=2"); 		
+				self.location.href = url;				
+			});
+			
+			
 		});
 	</script>
 </head>
@@ -258,6 +267,10 @@
 	            <th align="left">가격</th>
 	            <th align="left">등록일</th>
 	            <th align="left">현재상태</th>
+	            <c:if test="${menu == 'manage'}">
+	            	<th align="left">배송하기</th>
+	            </c:if>
+	            
 	          </tr>
 	        </thead>
 	       
@@ -278,16 +291,22 @@
 						<td align="left">
 						<c:choose>
 							<c:when test="${prod.proTranCode == '0'}">판매중</c:when>
-							<c:when test="${prod.proTranCode == '1'}">구매완료 					
-								<c:if test="${menu eq 'manage'}">
-										<a	href="/purchase/updateTranCodeByProd?prodNo=${prod.prodNo}&tranCode=2">배송하기</a>
-								</c:if>
-							</c:when>
-							
+							<c:when test="${prod.proTranCode == '1'}">구매완료</c:when>							
 							<c:when test="${prod.proTranCode == '2'}">배송중</c:when>
 						<c:otherwise>배송완료</c:otherwise>
 						</c:choose>
-						</td>			
+						</td>
+						
+						<c:if test="${menu == 'manage'}">
+	            			<td align="left">
+		            			<c:if test="${prod.proTranCode == '1'}">
+		            				<i class="glyphicon glyphicon-ok" >
+		            				<span style="display:none" >${prod.prodNo}</span>
+		            				</i>
+		            			</c:if>
+	            			</td>
+	            		</c:if>						
+								
 					</tr>
 					
 				</c:forEach>

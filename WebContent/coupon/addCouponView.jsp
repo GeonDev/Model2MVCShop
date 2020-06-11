@@ -135,7 +135,7 @@
 			<div class="row">
 				<div class="col-xs-4 col-md-2"><strong>할인율</strong></div>
 					<div class="col-xs-8 col-md-4">
-						<input type="text" name="discountRatio" class="form-control" placeholder="할인율(%)"/>					
+						<input type="text" name="discountRatio" class="form-control" placeholder="퍼센트(%)로 입력해주세요."/>					
 					</div>
 					<span>%</span>
 			</div>

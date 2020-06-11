@@ -65,14 +65,14 @@ public class DiscountController {
 		User user = userService.getUser(userId);
 		Coupon coupon = couponService.findCoupon(selectCoupon);
 		
+		
 		Discount discount = new Discount();
 		
 		discount.setDiscountCoupon(coupon);
 		discount.setOwner(user);
 		
 		discountService.addDiscount(discount);	
-		
-		return new ModelAndView("forward:/common/alertView.jsp", "message", "쿠폰이 지급되었습니다.");		
+		return new ModelAndView("forward:/common/alertView.jsp", "message", "쿠폰이 지급되었습니다.");				
 	}
 	
 	

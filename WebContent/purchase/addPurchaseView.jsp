@@ -68,7 +68,8 @@
 			});
 		});
 
-		$("button:contains('구매')").on("click", function() {
+		$("button:contains('구매')").on("click", function() {			
+			
 			$("form").attr("action", "/purchase/addPurchase");
 			$("form").submit();
 		});
@@ -143,7 +144,7 @@
 			  	<div class="col-xs-4 col-md-2"><strong>적용가능쿠폰</strong></div>
 				<div class="col-xs-8 col-md-4">
 					<select name="discountCoupon" id="discountCoupon" class="form-control">
-						<option>===== 선택 =====</option>
+						<option value='0'>===== 선택 =====</option>
 						<c:forEach var="discount" items="${list}">
 							<option value="${discount.discountNo}">${discount.discountCoupon.couponName}</option>
 						</c:forEach>

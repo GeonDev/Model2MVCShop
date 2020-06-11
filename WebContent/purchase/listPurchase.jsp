@@ -50,13 +50,7 @@
 	
 	
 	$(function(){
-		$("td:nth-child(1)").on("click",function(){		
-			
-			var url = "/purchase/getPurchase?tranNo=";
-			url = url.concat($(this).children('span').text()); 		
-			self.location.href = url;
-			
-		});
+
 		
 		$("td:nth-child(2)").on("click",function(){		
 			
@@ -74,7 +68,16 @@
 				self.location.href = url;
 			}
 			
-		});		
+		});	
+		
+		
+		$("td:nth-child(7)").on("click",function(){		
+			
+			var url = "/purchase/getPurchase?tranNo=";
+			url = url.concat($(this).children('span').text()); 		
+			self.location.href = url;
+			
+		});
 
 		
 	});
@@ -117,6 +120,7 @@
 		            <th align="left">전화번호</th>
 		            <th align="left">배송현황</th>
 		            <th align="left">도착확인</th>
+		            <th align="left">구매정보 수정</th>
 		          </tr>
 		        </thead>
 			
@@ -127,9 +131,7 @@
 							<c:set var="i" value="${ i+1 }" />
 		
 							<tr>
-								<td align="center">${i}
-									<span style="display:none" >${purchase.tranNo} </span>	
-								</td>
+								<td align="center">${i}	</td>
 								<td align="left" >${(purchase.purchaseProd).prodName}
 									<span style="display:none" >${(purchase.purchaseProd).prodNo} </span>
 								</td>
@@ -155,10 +157,17 @@
 								<td align="left">
 									<c:choose>			
 										<c:when test="${purchase.tranCode =='2'}">				
-											도착 확인
+											<i class="glyphicon glyphicon-ok" ></i>
 											<span style="display:none" >${purchase.tranNo} </span>
 										</c:when>					
 									</c:choose>									
+								</td>
+								
+								<td align="left">
+								<c:if test="${purchase.tranCode == '1'}">
+									<i class="glyphicon glyphicon-ok" ></i>
+									<span style="display:none" >${purchase.tranNo} </span>
+								</c:if>	
 								</td>											
 							</tr>
 							
