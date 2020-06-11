@@ -80,7 +80,7 @@
 				return;
 			}
 			
-			if(JSONData != true) {				
+			if(checkDupl != true) {				
 				alert("해당 아이디를 사용할 수 없습니다.");
 				$("input:text[name='userId']").focus();
 				return;
@@ -161,7 +161,7 @@
 						"Content-Type" : "application/json"
 					},
 					success : function(JSONData, status) {					
-						
+						checkDupl = JSONData;
 						
 						if(JSONData == true){	
 							$("h5").remove();

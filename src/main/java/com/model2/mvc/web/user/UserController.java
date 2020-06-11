@@ -53,8 +53,7 @@ public class UserController {
 	int pageSize;
 	
 	
-	//@RequestMapping("/addUserView.do")
-	//public String addUserView() throws Exception {
+
 	@RequestMapping( value="addUser", method=RequestMethod.GET )
 	public String addUser() throws Exception{
 	
@@ -63,15 +62,16 @@ public class UserController {
 		return "redirect:/user/addUserView.jsp";
 	}
 	
-	//@RequestMapping("/addUser.do")
+
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
-	public String addUser( @ModelAttribute("user") User user ) throws Exception {
+	public String addUser( @ModelAttribute("user") User user, HttpSession session ) throws Exception {
 
 		System.out.println("/user/addUser : POST");
 		//Business Logic
 		userService.addUser(user);
 		
-		return "redirect:/user/loginView.jsp";
+		session.setAttribute("user", userService.getUser(user.getUserId()));
+		return "redirect:/index.jsp";		
 	}
 	
 	//@RequestMapping("/getUser.do")

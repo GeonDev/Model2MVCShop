@@ -54,8 +54,10 @@
 	
 	
 		<div class="page-header">
-	       <h3 class=" text-info">결제정보확인</h3>
-	       <h5 class="text-muted">다음과 같이 <strong class="text-danger">구매 완료</strong> 되었습니다.</h5>
+			<div class="jumbotron">
+	       		<h3 class=" text-info">결제정보확인</h3>
+	       		<h5 class="text-muted">다음과 같이 <strong class="text-danger">구매 완료</strong> 되었습니다.</h5>
+	       </div>
 	    </div>
 	    
 	    <div class="row">
@@ -70,14 +72,7 @@
 			<div class="col-xs-8 col-md-4">${(purchase.purchaseProd).prodName}</div>
 		</div>
 		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
-			<div class="col-xs-8 col-md-4">${(purchase.purchaseProd).manuDate}</div>
-		</div>
-		
-		<hr/>
+		<hr/>	
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>구매자아이디</strong></div>
