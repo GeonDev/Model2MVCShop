@@ -85,9 +85,11 @@ CREATE TABLE coupon(
 CREATE TABLE discount(
 	discount_no				NUMBER 			NOT NULL,
 	owner_id				VARCHAR2(20) 	NOT NULL REFERENCES users(user_id),
-	coupon_no				NUMBER			NOT NULL REFERENCES coupon(coupon_no), 	
+	coupon_no				NUMBER			NOT NULL REFERENCES coupon(coupon_no),
+	
 	issued_date				DATE,
 	expiration_date			DATE,
+	use_date				DATE,
 	PRIMARY KEY(discount_no)
 );
 

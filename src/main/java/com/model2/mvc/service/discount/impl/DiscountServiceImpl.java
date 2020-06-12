@@ -46,9 +46,9 @@ public class DiscountServiceImpl implements DiscountService{
 	}
 
 	@Override
-	public List<Discount> getDiscountList(String userId) throws Exception {
+	public List<Discount> getDiscountSimpleList(Map<String, Object> value) throws Exception {
 		// TODO Auto-generated method stub
-		return discountDAO.getDiscountList(userId);
+		return discountDAO.getDiscountSimpleList(value);
 	}
 
 	@Override

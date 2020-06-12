@@ -40,10 +40,7 @@
     
 <script type="text/javascript">
 	// Jquery 실행 문
-	$(function() {
-
-	var originPrice = $("#totalPrice").text();
-		
+	$(function() {		
 
 	$("#discountCoupon").change(function() {
 
@@ -57,11 +54,11 @@
 				},
 				data : JSON.stringify({
 					discountNo : $("#discountCoupon").val(),
-					price : originPrice
+					price : '${product.price}'
 
 				}),
 				success : function(JSONData, status) {					
-					var  discountPrice = originPrice +'<br/><h5 style="color: red">' + "(할인가격 : " +JSONData.price +") </h5>";											
+					var  discountPrice = '${product.price}' +'<br/><h5 style="color: red">' + "(할인가격 : " +JSONData +") </h5>";											
 					$("#totalPrice").html(discountPrice);					
 				}
 

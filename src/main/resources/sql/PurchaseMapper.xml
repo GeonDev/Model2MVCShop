@@ -25,8 +25,7 @@
 		<result property="prodName"			column="prod_name" 			jdbcType="VARCHAR" />
 		<result property="prodDetail" 		column="prod_detail" 		jdbcType="VARCHAR" />
 		<result property="manuDate" 		column="manufacture_day" 	jdbcType="VARCHAR" />
-		<result property="price" 			column="price" 				jdbcType="NUMERIC" />
-		<result property="fileName" 		column="image_file" 		jdbcType="VARCHAR" />		
+		<result property="price" 			column="price" 				jdbcType="NUMERIC" />	
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="proTranCode" 		column="TRAN_CODE" 			jdbcType="VARCHAR" />
 	</resultMap>

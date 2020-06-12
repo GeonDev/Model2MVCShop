@@ -54,8 +54,8 @@ public class DiscountDaoImpl implements DiscountDAO{
 	}
 
 	@Override
-	public List<Discount> getDiscountList(String userId) throws Exception {
-		List<Discount> list = sqlSession.selectList("DiscountMapper.getDiscountSimpleList", userId);
+	public List<Discount> getDiscountSimpleList(Map<String, Object> value) throws Exception {
+		List<Discount> list = sqlSession.selectList("DiscountMapper.getDiscountSimpleList", value);
 
 		return list;
 	}

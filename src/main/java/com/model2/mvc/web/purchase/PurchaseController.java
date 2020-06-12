@@ -3,6 +3,7 @@ package com.model2.mvc.web.purchase;
 import static org.junit.Assert.assertNotNull;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,27 +66,14 @@ public class PurchaseController {
 	public ModelAndView addPurchaseView(@RequestParam("prodNo") int prodNo, Model model, HttpSession session)throws Exception {
 
 		Product product = prodService.getProduct(prodNo);
-
-		///////////////////////////////////// 해당 유저가 보유한 쿠폰정보
-		///////////////////////////////////// ////////////////////////////////////
-		List<Discount> list = discountService.getDiscountList(((User) session.getAttribute("user")).getUserId());
-
-		if(list != null) {
-			/*
-			 * for (Discount temp : list) { if (temp.getDiscountCoupon().getMinimum_price()
-			 * > product.getPrice()) { list.remove(temp); } }
-			 */
+		
+		Map<String, Object> value = new HashMap<String, Object>();
+		
+		value.put("userId", ((User) session.getAttribute("user")).getUserId());
+		value.put("price", Integer.toString(product.getPrice()));		
+		
+		List<Discount> list = discountService.getDiscountSimpleList(value);
 			
-				int size = list.size();
-				for (int i = 0; i < size; i++) {
-					if (list.get(i).getDiscountCoupon().getMinimum_price() > product.getPrice()) {
-						list.remove(list.get(i));
-						size--;
-						i--;
-					}
-				}
-				
-			}		
 		
 		model.addAttribute("list", list);
 		

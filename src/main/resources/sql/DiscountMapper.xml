@@ -69,9 +69,12 @@
 	 
 	 
 	 <!-- 저장된 쿠폰 정보를 받아오도록 처리 (결제시 사용)-->
-	 <select id="getDiscountSimpleList" parameterType="string" resultMap="discountSelectMap">
-	 	SELECT *  FROM discount
-	 	WHERE discount.owner_id = #{value} 	 	
+	 <select id="getDiscountSimpleList" parameterType="hashMap" resultMap="discountSelectMap">
+	 	SELECT discount.* FROM discount,coupon
+	 	WHERE discount.coupon_no = coupon.coupon_no
+	 	AND discount.owner_id = #{userId}
+	 	AND #{price} > coupon.minimum_price
+	 	AND discount.expiration_date > SYSDATE	
 	 </select>
 	 
 	 

@@ -14,7 +14,7 @@ public interface DiscountService {
 	
 	public void deleteDiscount(int discountNo) throws Exception;
 	
-	public List<Discount> getDiscountList(String userId) throws Exception;	
+	public List<Discount> getDiscountSimpleList(Map<String, Object> value) throws Exception;	
 	
 	public Map<String, Object> getDiscountCouponList(Search search,String ownerId) throws Exception;
 }
