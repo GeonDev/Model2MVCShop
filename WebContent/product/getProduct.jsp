@@ -146,15 +146,15 @@
 				  		
 				  			<c:if test="${sessionScope.user.role == 'user'}">
 				  				<c:if test="${product.proTranCode =='0'}">
-				  					<button type="button" class="btn btn-primary">구매</button>	
+				  					<button type="button" class="btn btn-primary btn-lg">구매</button>	
 				  				</c:if>		  				 
 				  			</c:if>
 				  			
 				  			<c:if test="${sessionScope.user.role == 'admin'}">
-				  				<button type="button" class="btn btn-primary">수정</button>	 
+				  				<button type="button" class="btn btn-primary btn-lg">수정</button>	 
 				  			</c:if>
 				  			
-				  			<button type="button" class="btn btn-primary">목록</button>					  			
+				  			<button type="button" class="btn btn-primary btn-lg">목록</button>					  			
 			
 				  		</div>
 					</div>	

@@ -101,47 +101,73 @@
 		      <h3 class=" text-info">상품 구매 정보</h3>	
 		</div>	
 			
+		<div class="col-md-5">	
+		
+		
 			<div class="row">
-			  		<div class="col-xs-4 col-md-2"><strong>상품번호</strong></div>
-					<div class="col-xs-8 col-md-4">${product.prodNo}</div>
+			  		<div class="col-xs-4 col-md-4">
+			  			<img src="/images/uploadFiles/${product.fileName.get(0).fileName}" width="400" />			  		
+			  		</div>				
+			</div>
+		
+			<div class="row">
+			  		<div class="col-xs-4 col-md-4"><strong>상품번호</strong></div>
+					<div class="col-xs-8 col-md-5">${product.prodNo}</div>
 			</div>
 			
 			<hr/>
 			
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>상품명</strong></div>
-				<div class="col-xs-8 col-md-4">${product.prodName}</div>
+			  	<div class="col-xs-4 col-md-4"><strong>상품명</strong></div>
+				<div class="col-xs-8 col-md-5">${product.prodName}</div>
 			</div>
 			
 			<hr/>
 			
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>상품상세정보</strong></div>
-				<div class="col-xs-8 col-md-4">${product.prodDetail}</div>
+			  	<div class="col-xs-4 col-md-4"><strong>상품상세정보</strong></div>
+				<div class="col-xs-8 col-md-5">${product.prodDetail}</div>
 			</div>
 			
 			<hr/>
 			
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
-				<div class="col-xs-8 col-md-4">${product.manuDate}</div>
+			  	<div class="col-xs-4 col-md-4"><strong>제조일자</strong></div>
+				<div class="col-xs-8 col-md-5">${product.manuDate}</div>
+			</div>
+			
+			<hr/>			
+
+		</div>
+		
+		<div class="col-md-1">
+		<!-- 공간을 벌리기 위해 설정 -->
+		</div>
+		
+			
+		<div class="col-md-6">	
+		
+			<div class="row">
+			  	<div class="col-xs-4 col-md-3"><strong>회원아이디</strong></div>
+				<div class="col-xs-8 col-md-4">${user.userId}</div>
 			</div>
 			
 			<hr/>
-			
+		
+		
+		
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>가격</strong></div>
+			  	<div class="col-xs-4 col-md-3"><strong>가격</strong></div>
 				<div id="totalPrice" class="col-xs-8 col-md-4" >${product.price}</div>
 			</div>
 			
 			<hr/>
-			
 			<form name="detailForm"  method="post">
 			
 			<input type="hidden" name="prodNo" value="${product.prodNo}" />
 			
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>적용가능쿠폰</strong></div>
+			  	<div class="col-xs-4 col-md-3"><strong>적용가능쿠폰</strong></div>
 				<div class="col-xs-8 col-md-4">
 					<select name="discountCoupon" id="discountCoupon" class="form-control">
 						<option value='0'>===== 선택 =====</option>
@@ -155,21 +181,7 @@
 			<hr/>
 			
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>등록일자</strong></div>
-				<div class="col-xs-8 col-md-4">${product.regDate}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>회원아이디</strong></div>
-				<div class="col-xs-8 col-md-4">${user.userId}</div>
-			</div>
-			
-			<hr/>
-			
-			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>구매방법</strong></div>
+			  	<div class="col-xs-4 col-md-3"><strong>구매방법</strong></div>
 				<div class="col-xs-8 col-md-4">				
 					<select name="paymentOption" class="form-control">
 							<option value="1" selected="selected">현금구매</option>
@@ -181,7 +193,7 @@
 			<hr/>
 			
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>구매자이름</strong></div>
+			  	<div class="col-xs-4 col-md-3"><strong>구매자이름</strong></div>
 				<div class="col-xs-8 col-md-4">				
 					<input type="text" name="receiverName" class="form-control" value="${user.userName}" />
 				</div>
@@ -190,7 +202,7 @@
 			<hr/>
 			
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>구매자연락처</strong></div>
+			  	<div class="col-xs-4 col-md-3"><strong>구매자연락처</strong></div>
 				<div class="col-xs-8 col-md-4">				
 					<input type="text" name="receiverPhone" class="form-control" value="${user.phone}" />
 				</div>
@@ -199,7 +211,7 @@
 			<hr/>
 			
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>구매자주소</strong></div>
+			  	<div class="col-xs-4 col-md-3"><strong>구매자주소</strong></div>
 				<div class="col-xs-8 col-md-4">				
 					<input type="text" name="divyAddr" class="form-control" value="${user.addr}" />
 				</div>
@@ -208,35 +220,31 @@
 			<hr/>
 			
 			<div class="row">
-			  	<div class="col-xs-4 col-md-2"><strong>배송요청사항</strong></div>
+			  	<div class="col-xs-4 col-md-3"><strong>배송요청사항</strong></div>
 				<div class="col-xs-8 col-md-4">				
 					<input type="text" name="divyRequest" class="form-control" placeholder="배송시 요청사항을 적어 주세요"/>
 				</div>
 			</div>
 			
-			<hr/>
+			<hr/>			
 			
-			
-
-			
-			
-				<div class="row">
-			  		<div class="col-xs-4 col-md-2"><strong>배송희망일자</strong></div>
-					<div class="col-xs-8 col-md-4">
-						<input type="text" name="divyDate" class="form-control" placeholder="원하는 배송일을 지정해주세요" readonly/>			
-					</div>			
-					<i class="glyphicon glyphicon-calendar" ></i>			
-				</div>
+			<div class="row">
+		  		<div class="col-xs-4 col-md-3"><strong>배송희망일자</strong></div>
+				<div class="col-xs-8 col-md-4">
+					<input type="text" name="divyDate" class="form-control" placeholder="원하는 배송일을 지정해주세요" readonly/>			
+				</div>			
+				<i class="glyphicon glyphicon-calendar" ></i>			
+			</div>			
+			<hr/>				
+		
+			</form>	
+		</div>
 				
-				<hr/>				
-		
-		</form>		
-		
 					<div class="row">
-			  			<div class="col-md-12 text-right ">
+			  			<div class="col-md-12 text-center">
 			  		
-			  			<button type="button" class="btn btn-primary">구매</button>	 
-			  			<button type="button" class="btn btn-primary">취소</button>	  			
+			  			<button type="button" class="btn btn-primary  btn-lg">구매</button>	 
+			  			<button type="button" class="btn btn-primary  btn-lg">취소</button>	  			
 		
 			  			</div>
 					</div>		
