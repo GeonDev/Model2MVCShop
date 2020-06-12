@@ -51,10 +51,12 @@
    	
    	<script type="text/javascript"> 
    		
+   		
+   	
    		//최초 페이지 지정
    		var page = 1;   
    		
-   		$(function() {
+   		$(function() {   			
    			
    			$(window).scroll(function() {
    			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
@@ -66,6 +68,7 @@
 								url : "/product/json/listProduct/"+page ,
 								method : "GET" ,
 								dataType : "json" ,
+								cache : false,
 								headers : {
 									"Accept" : "application/json",
 									"Content-Type" : "application/json"

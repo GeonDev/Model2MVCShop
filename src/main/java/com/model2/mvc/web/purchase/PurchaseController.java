@@ -62,8 +62,7 @@ public class PurchaseController {
 
 	// getProduct.jsp에서 넘어감
 	@RequestMapping(value = "addPurchase", method = RequestMethod.GET)
-	public ModelAndView addPurchaseView(@RequestParam("prodNo") int prodNo, Model model, HttpSession session)
-			throws Exception {
+	public ModelAndView addPurchaseView(@RequestParam("prodNo") int prodNo, Model model, HttpSession session)throws Exception {
 
 		Product product = prodService.getProduct(prodNo);
 
@@ -71,15 +70,26 @@ public class PurchaseController {
 		///////////////////////////////////// ////////////////////////////////////
 		List<Discount> list = discountService.getDiscountList(((User) session.getAttribute("user")).getUserId());
 
-		for (Discount temp : list) {
-			if (temp.getDiscountCoupon().getMinimum_price() > product.getPrice()) {
-				list.remove(temp);
-			}
-		}
+		if(list != null) {
+			/*
+			 * for (Discount temp : list) { if (temp.getDiscountCoupon().getMinimum_price()
+			 * > product.getPrice()) { list.remove(temp); } }
+			 */
+			
+				int size = list.size();
+				for (int i = 0; i < size; i++) {
+					if (list.get(i).getDiscountCoupon().getMinimum_price() > product.getPrice()) {
+						list.remove(list.get(i));
+						size--;
+						i--;
+					}
+				}
+				
+			}		
+		
 		model.addAttribute("list", list);
-
-		///////////////////////////////////// 해당 유저가 보유한 쿠폰정보
-		///////////////////////////////////// ////////////////////////////////////
+		
+		
 		model.addAttribute("product", product);
 
 		System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ 선택된 쿠폰 " + list);

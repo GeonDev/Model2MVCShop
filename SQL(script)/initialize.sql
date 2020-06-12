@@ -234,11 +234,11 @@ insert into product values (seq_product_prod_no.nextval,'고프로 히어로4','컴팩트
 insert into images values(seq_image_no.nextval,1029,'ASDF234523F23.jpg');
 
 insert into product values (seq_product_prod_no.nextval,'소니 FDR-X3000','컴팩트 카메라','20170711',22900, sysdate);
-insert into images values(seq_image_no.nextval,1029,'62324uqt43w8e.jpg');
+insert into images values(seq_image_no.nextval,1030,'62324uqt43w8e.jpg');
 
-insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 1000,10000);
-insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 40, 200000,500000);
-insert into coupon values (seq_coupon_no.nextval,'이달의 이벤트 쿠폰', 30, 1500, 1000);
+insert into coupon values (seq_coupon_no.nextval,'신규 가입자 쿠폰', 10, 10000,100000);
+insert into coupon values (seq_coupon_no.nextval,'이달의 VIP 쿠폰', 40, 200000, 500000);
+insert into coupon values (seq_coupon_no.nextval,'이달의 이벤트 쿠폰', 30, 15000, 10000);
 insert into coupon values (seq_coupon_no.nextval,'누구나 이벤트 쿠폰', 10, 5000, 10000);
 
 commit;
