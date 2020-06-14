@@ -70,9 +70,7 @@ public class CouponController {
 		return new ModelAndView("forward:/coupon/getCoupon.jsp");
 	}
 	
-	
-	
-	
+		
 	@RequestMapping("listCoupon")
 	public ModelAndView listCoupon(@ModelAttribute("search") Search search) throws Exception {
 		

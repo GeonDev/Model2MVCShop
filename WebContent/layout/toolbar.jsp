@@ -72,6 +72,7 @@
 			                     	<c:if test="${sessionScope.user.role == 'admin'}">
 			                        	<li><a href="#">신규쿠폰등록</a></li>
 			                         	<li><a href="#">발급쿠폰조회</a></li>
+			                         	<li><a href="#">쿠폰사용현황</a></li>
 			                        </c:if>
 			                        <c:if test="${sessionScope.user.role == 'user'}">
 			                        	<li><a href="#">보유쿠폰조회</a></li>
@@ -190,6 +191,10 @@
 	 	
 		$( "a:contains('발급쿠폰조회')" ).on("click" , function() {		
 			$(self.location).attr("href","/coupon/listCoupon");
+		});
+		
+		$( "a:contains('쿠폰사용현황')" ).on("click" , function() {		
+			$(self.location).attr("href","/discount/listDiscountHistory");
 		});
 				
 		$( "a:contains('보유쿠폰조회')" ).on("click" , function() {		

@@ -53,9 +53,19 @@ public class DiscountServiceImpl implements DiscountService{
 
 	@Override
 	public Map<String, Object> getDiscountCouponList(Search search, String ownerId) throws Exception {
-		// TODO Auto-generated method stub	
-		
+		// TODO Auto-generated method stub			
 		return discountDAO.getDiscountCouponList(search, ownerId);
+	}
+
+	@Override
+	public void useDiscount(Map<String, Object> value) throws Exception {
+		discountDAO.useDiscount(value);		
+	}
+
+	@Override
+	public Map<String, Object> getDiscountCouponList(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return discountDAO.getDiscountCouponList(search);
 	}
 
 }

@@ -107,8 +107,14 @@ public class PurchaseController {
 			System.out.println("★★★★★★★★★★★★★★★★★★★★★선택된 쿠폰 : " + discount.getDiscountCoupon().getCouponName());
 			System.out.println("★★★★★★★★★★★★★★★★★★★★★★할인 금액 : " + discountPrice);
 
-			// 사용한 쿠폰 삭제
-			discountService.deleteDiscount(discountNo);
+			// 사용한 쿠폰 히스토리 저장
+			Map<String,Object> value = new HashMap<String, Object>();
+			
+			value.put("discountNo", discountNo);
+			value.put("productNo", prodNo);	
+			
+			discountService.useDiscount(value);
+
 			product.setPrice(totalPrice);
 		}
 

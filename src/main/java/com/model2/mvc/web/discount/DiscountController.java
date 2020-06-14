@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.common.util.CommonUtil;
 import com.model2.mvc.service.coupon.CouponService;
 import com.model2.mvc.service.discount.DiscountService;
 import com.model2.mvc.service.domain.Coupon;
@@ -120,10 +121,73 @@ public class DiscountController {
 		return modelAndView;
 	}
 	
+		
+	@RequestMapping(value = "listDiscountHistory" ,method = RequestMethod.POST)
+	public ModelAndView listDiscountHistory(@ModelAttribute("search") Search search) throws Exception {
+		
+		//현재 페이지값이 없으면 첫번째 페이지로 설정
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
+		
+		//Condition, order 가없을 경우 기본 값 세팅
+		if(CommonUtil.null2str(search.getSearchCondition()) == "") {
+			search.setSearchCondition("0");
+		}
+		
+		if(CommonUtil.null2str(search.getSearchOrder()) == "") {
+			search.setSearchOrder("0");			
+		}			
+		
+		search.setPageSize(pageSize);
+		
+		Map<String , Object> map = discountService.getDiscountCouponList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("count")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		
+		// Model 과 View 연결
+		modelAndView.setViewName("forward:/coupon/listDiscountHistory.jsp");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
+		
+		
+		return modelAndView;
+	}
 	
-	
-	
-	
+	@RequestMapping(value = "listDiscountHistory" ,method = RequestMethod.GET)
+	public ModelAndView listDiscountHistory(@RequestParam("couponNo")int couponNo) throws Exception {
+		
+		Search search = new Search();		
+
+		search.setCurrentPage(1);	
+		search.setSearchCondition("0");	
+		search.setSearchOrder("0");			
+		search.setPageSize(pageSize);
+		search.setSearchKeyword(Integer.toString(couponNo));
+		
+		Map<String , Object> map = discountService.getDiscountCouponList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("count")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);		
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		
+		// Model 과 View 연결
+		modelAndView.setViewName("forward:/coupon/listDiscountHistory.jsp");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
+		
+		
+		return modelAndView;
+	}
 	
 	
 

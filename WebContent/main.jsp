@@ -49,54 +49,56 @@
         
    	</style>
    	
-   	<script type="text/javascript"> 
-   		
-   		
+   	<script type="text/javascript">    		
    	
    		//최초 페이지 지정
    		var page = 1;   
    		
+   		function getProdList(page) {
+			$.ajax( 
+					{
+						url : "/product/json/listProduct/"+page ,
+						method : "GET" ,
+						dataType : "json" ,
+						cache : false,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData , status) {
+							$.each(JSONData, function(index,prod) {
+								
+							
+								var displayValue =	"<div class='col-md-6' >"													
+											  + "<div class='borad' value='"+prod.prodNo+"'>"
+											  + "<div class = 'block'>"
+											  + "<img src='/images/uploadFiles/"+ prod.fileName[0]["fileName"] +"' style='width: 300px;'/>"	
+								              +"</div>"
+								              +"<h4 style='color:Black;'>"+prod.prodName +"</h4>";
+								              
+								  if(prod.proTranCode=='0'){
+									  displayValue = displayValue	
+									  +"<h5 style='color:red;'>(판매중)</h5>"										            
+						              +"</div></div>";											  
+								  }else{
+									  displayValue = displayValue
+									  +"</div></div>";
+								  }            
+								              
+								$(".row:last").append(displayValue);
+							});										
+						}
+				});
+		} 
+   		
+   		
    		$(function() {   			
+   			getProdList(1);
    			
    			$(window).scroll(function() {
    			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-   			     page++;
-   			     
-   			     
-					$.ajax( 
-							{
-								url : "/product/json/listProduct/"+page ,
-								method : "GET" ,
-								dataType : "json" ,
-								cache : false,
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								success : function(JSONData , status) {
-									$.each(JSONData, function(index,prod) {
-										
-									
-										var displayValue =	"<div class='col-md-6' >"													
-													  + "<div class='borad' value='"+prod.prodNo+"'>"
-													  + "<div class = 'block'>"
-													  + "<img src='/images/uploadFiles/"+ prod.fileName[0]["fileName"] +"' style='width: 300px;'/>"	
-										              +"</div>"
-										              +"<h4 style='color:Black;'>"+prod.prodName +"</h4>";
-										              
-										  if(prod.proTranCode=='0'){
-											  displayValue = displayValue	
-											  +"<h5 style='color:red;'>(판매중)</h5>"										            
-								              +"</div></div>";											  
-										  }else{
-											  displayValue = displayValue
-											  +"</div></div>";
-										  }            
-										              
-										$(".row:last").append(displayValue);
-									});										
-								}
-						});
+   			     page++;   			     
+   			  	 getProdList(page);
    			    }
    			});			   		
 
@@ -182,37 +184,11 @@
 	<!-- 참조 : http://getbootstrap.com/css/   : container part..... -->
 	<div class="container">
 	
-	<div class="row" >
-	
-	
-		<div class="page-header">
-	       <h3 class=" text-info">등록된 상품</h3>	
-	    </div>
-	
-	
- 		<c:forEach var = "prod" items="${list}">
-			<div class="col-md-6" >		
-				<div class="borad" value="${prod.prodNo}">				
-			 		<div class="block" >			 		
-			 			<img src="/images/uploadFiles/${prod.fileName.get(0).fileName}" style="width: 300px;"/>			 				 				 				 			
-			 		</div>			 				 		
-			 		<h4 style="color:Black;">${prod.prodName}</h4>
-			 			<c:if test ="${prod.proTranCode eq '0'}">
-			 				<h5 style="color:red;">(판매중)</h5>
-			 			</c:if>
-			 	</div>			 	
-		 	</div>
-		 </c:forEach>
-		 
-
-	 	
-	</div>
-	
-	
-	
-
-	 	
-
+		<div class="row" >				
+			<div class="page-header">
+		       <h3 class=" text-info">등록된 상품</h3>	
+		    </div>		 	
+		</div>	
 	 
 	 </div> 
 

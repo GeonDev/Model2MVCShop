@@ -43,6 +43,19 @@
 			$("form").attr("action", "/coupon/listCoupon");
 			$("form").submit();
 		}
+		
+		
+		
+		$(document).on("click","td:nth-child(7)" , function(){
+			var couponNo = $(this).children("div").attr("value")
+			if(couponNo != null){
+				var url = "/discount/listDiscountHistory?couponNo="+couponNo;				
+				self.location = url;	
+			}
+					
+		});
+		
+		
     </script>
     
     
@@ -79,6 +92,7 @@
 	            <th align="left">최대할인가</th>
 	            <th align="left">최소적용가격</th>
 	            <th align="left">발급 개수</th>
+	            <th align="left">사용기록보기</th>
 	            <th align="left">정보 수정</th>
 	          </tr>
 	        </thead>  
@@ -97,6 +111,12 @@
 								<td align="left">${coupon.maximumDiscount} 원</td>
 								<td align="left">${coupon.minimum_price} 원</td>
 								<td align="left">${coupon.couponCount}</td>
+								<td align="left" >
+									<c:if test="${coupon.couponCount != 0}">
+										<div class = "glyphicon glyphicon-ok" value = "${coupon.couponNo}"></div>
+									</c:if>
+									
+								</td>
 								<td align="left">
 									<c:if test="${coupon.couponCount == 0}">
 										<a href="/coupon/updateCoupon?couponNo=${coupon.couponNo}">수정</a>

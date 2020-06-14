@@ -4,33 +4,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="PurchaseMapper">
- 	
- 	
- 	<resultMap id="userSelectMap" type="user">
-		<result property="userId" 		column="user_id" 		jdbcType="VARCHAR"/>
-		<result property="userName"		column="user_name" 		jdbcType="VARCHAR" />
-		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
-		<result property="role" 		column="role" 			jdbcType="VARCHAR" />
-		<result property="ssn" 			column="ssn" 			jdbcType="VARCHAR" />
-		<result property="phone" 		column="cell_phone" 	jdbcType="VARCHAR" />
-		<result property="addr" 		column="addr" 			jdbcType="VARCHAR" />
-		<result property="email" 		column="email" 			jdbcType="NUMERIC"  />
-		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
-	</resultMap>
-	
-	
-	<resultMap id="prodSelectMap" type="product">
-		<result property="prodNo" 			column="prod_no" 			jdbcType="NUMERIC"/>
-		<result property="prodName"			column="prod_name" 			jdbcType="VARCHAR" />
-		<result property="prodDetail" 		column="prod_detail" 		jdbcType="VARCHAR" />
-		<result property="manuDate" 		column="manufacture_day" 	jdbcType="VARCHAR" />
-		<result property="price" 			column="price" 				jdbcType="NUMERIC" />	
-		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
-		<result property="proTranCode" 		column="TRAN_CODE" 			jdbcType="VARCHAR" />
-	</resultMap>
- 	
- 	
+<mapper namespace="PurchaseMapper">	
  	
 	<resultMap id="purchaseSelectMap" type="purchase">
 		<result property="tranNo" 				column="tran_no" 			jdbcType="VARCHAR"/>
@@ -49,12 +23,12 @@
 	
 	
 	
-	<select id="setBuyer" parameterType="string" resultMap="userSelectMap">
+	<select id="setBuyer" parameterType="string" resultMap="UserMapper.userSelectMap">
 		SELECT * FROM users WHERE user_id = #{value}
 	</select>	
 	
 	
-	<select id="setPurchase"  parameterType="int" resultMap="prodSelectMap">
+	<select id="setPurchase"  parameterType="int" resultMap="ProductMapper.prodSelectMap">
 		SELECT * FROM product WHERE prod_no = #{value}
 	</select>
 

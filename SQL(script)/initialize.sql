@@ -86,10 +86,10 @@ CREATE TABLE discount(
 	discount_no				NUMBER 			NOT NULL,
 	owner_id				VARCHAR2(20) 	NOT NULL REFERENCES users(user_id),
 	coupon_no				NUMBER			NOT NULL REFERENCES coupon(coupon_no),
-	
+	product_no				NUMBER			REFERENCES product(prod_no),	
 	issued_date				DATE,
 	expiration_date			DATE,
-	use_date				DATE,
+	purchase_date			DATE,
 	PRIMARY KEY(discount_no)
 );
 
@@ -224,7 +224,7 @@ insert into images values(seq_image_no.nextval,1026,'qwevt20qwru000_4.jpg');
 
 insert into product values (seq_product_prod_no.nextval,'후지 X-T4','전문가용 미러리스 카메라','20200517',859500, sysdate);
 insert into images values(seq_image_no.nextval,1027,'gho45t58095jh69g.jpg');
-insert into images values(seq_image_no.nextval,1027,'q5we408gh74qrg4.PNG');;
+insert into images values(seq_image_no.nextval,1027,'q5we408gh74qrg4.PNG');
 insert into images values(seq_image_no.nextval,1027,'ret42uer.PNG');
 insert into images values(seq_image_no.nextval,1027,'12g75nogwg3.jpg');
 insert into images values(seq_image_no.nextval,1027,'234y42uqwt.PNG');

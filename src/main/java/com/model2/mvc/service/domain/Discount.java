@@ -6,11 +6,12 @@ import java.sql.Date;
 
 public class Discount {
 	private int discountNo;
-	private User owner;
+	private User owner;	
 	private Coupon discountCoupon;
+	private Product purchaseProduct;
 	private Date issuedDate;
 	private Date expirationDate;
-	
+	private Date purchaseDate;
 	
 	public Discount(){
 	}
@@ -63,6 +64,27 @@ public class Discount {
 
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
+	}
+
+	
+
+	public Product getPurchaseProduct() {
+		return purchaseProduct;
+	}
+
+
+	public void setPurchaseProduct(Product purchaseProduct) {
+		this.purchaseProduct = purchaseProduct;
+	}
+
+
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
+
+
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
 	}
 
 

@@ -5,60 +5,40 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!--  사용자가 쿠폰을 보유하고 있는 쿠폰 정보를 저장하는 테이블 -->
-<mapper namespace="DiscountMapper">
- 	
- 	
- 	<resultMap id="userMap" type="user">
-		<result property="userId" 		column="user_id" 		jdbcType="VARCHAR"/>
-		<result property="userName"		column="user_name" 		jdbcType="VARCHAR" />
-		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
-		<result property="role" 		column="role" 			jdbcType="VARCHAR" />
-		<result property="ssn" 			column="ssn" 			jdbcType="VARCHAR" />
-		<result property="phone" 		column="cell_phone" 	jdbcType="VARCHAR" />
-		<result property="addr" 		column="addr" 			jdbcType="VARCHAR" />
-		<result property="email" 		column="email" 			jdbcType="NUMERIC"  />
-		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
-	</resultMap>
-	
- 	
- 	<resultMap id="couponMap" type="coupon">
-		<result property="couponNo" 		column="coupon_no" 					jdbcType="NUMERIC"/>
-		<result property="couponName"		column="coupon_name" 				jdbcType="VARCHAR" />
-		<result property="discountRatio" 	column="discount_ratio" 			jdbcType="NUMERIC" />
-		<result property="maximumDiscount" 	column="maximum_discount_price" 	jdbcType="NUMERIC" />
-		<result property="minimum_price" 	column="minimum_price" 				jdbcType="NUMERIC" />
-		<result property="couponCount" 		column="count" 						jdbcType="NUMERIC" />
-	</resultMap>
- 	
- 	
+<mapper namespace="DiscountMapper"> 	
  	
  	<!--  여기가 Discount 의 매핑 부분 -->
 	<resultMap id="discountSelectMap" type="discount">
 		<result property="discountNo" 		column="discount_no" 		jdbcType="NUMERIC"/>	
 		<result property="issuedDate" 		column="issued_date" 		jdbcType="DATE" />
-		<result property="expirationDate" 	column="expiration_date" 	jdbcType="DATE" />		
+		<result property="expirationDate" 	column="expiration_date" 	jdbcType="DATE" />
+		<result property="purchaseDate" 	column="purchase_date" 		jdbcType="DATE" />			
 		
-		<association property="owner" 			 column="owner_id"	javaType="user"  	select="setOwner"/>	
-		<association property="discountCoupon" 	 column="coupon_no"	javaType="coupon"  	select="setCoupon"/>			
+		<association property="owner" 			 column="owner_id"		javaType="user"  	select="setOwner"/>	
+		<association property="discountCoupon" 	 column="coupon_no"		javaType="coupon"  	select="setCoupon"/>
+		<association property="purchaseProduct"  column="product_no"	javaType="product"  select="setProduct"/>			
 	
 	</resultMap>
 	
 	
 	
-	<select id="setOwner" parameterType="string" resultMap="userMap">
+	<select id="setOwner" parameterType="string" resultMap="UserMapper.userSelectMap">
 		SELECT * FROM users WHERE user_id = #{value}
 	</select>	
 	
-	<select id="setCoupon" parameterType="int" resultMap="couponMap">
+	<select id="setCoupon" parameterType="int" resultMap="CouponMapper.couponSelectMap">
 		SELECT * FROM coupon WHERE coupon_no = #{value}
+	</select>
+	
+	<select id="setProduct" parameterType="int" resultMap="ProductMapper.prodSelectMap">
+		SELECT * FROM product WHERE prod_no = #{value}
 	</select>
 	
 	
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addDiscount" parameterType="discount" >
-	 	INSERT
-		INTO discount
+	 	INSERT INTO discount (discount_no, owner_id, coupon_no, issued_date, expiration_date)
 		VALUES	 (seq_discount_no.nextval, #{owner.userId}, #{discountCoupon.couponNo}, SYSDATE, SYSDATE+30 )
 	 </insert>
 	 
@@ -74,20 +54,118 @@
 	 	WHERE discount.coupon_no = coupon.coupon_no
 	 	AND discount.owner_id = #{userId}
 	 	AND #{price} > coupon.minimum_price
-	 	AND discount.expiration_date > SYSDATE	
+	 	AND discount.expiration_date > SYSDATE
+	 	AND discount.purchase_date IS NULL 	
 	 </select>
 	 
 	 
 	 
-	 	 <!-- 저장된 쿠폰 정보를 받아오도록 처리(보유한 쿠폰 확인용) -->
+	 <!-- 저장된 쿠폰 정보를 받아오도록 처리(보유한 쿠폰 확인용 - 유저 ) -->
 	 <select id="getDiscountList" parameterType="search" resultMap="discountSelectMap">
-		SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY discount.discount_no) num, discount.* FROM discount WHERE owner_id = #{searchKeyword} )
+		SELECT *  FROM (SELECT ROW_NUMBER() OVER(ORDER BY discount.discount_no) num, discount.* FROM discount WHERE owner_id = #{searchKeyword} AND purchase_date IS NULL)
 		WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 	
-	 </select>	 
+	 </select>	
 	 
+	 	  
+	 <!-- 저장된 쿠폰 정보를 받아오도록 처리(보유한 쿠폰 확인용 - 유저 ) -->
 	 <select id="getCountDiscount"  parameterType="string" resultType="int">
 		SELECT COUNT(discount_no) FROM  discount WHERE owner_id = #{value}	
 	</select>
+	
+	
+	 <select id="getCountDiscountHistory"  parameterType="search" resultType="int">
+		SELECT COUNT(discount_no) FROM  discount	
+		<where>
+			<if test="searchCondition == 0">
+				
+				<if test="searchOrder == 1">
+					expiration_date > SYSDATE
+	 				AND purchase_date IS NULL
+	 				<if test="searchKeyword !=''">
+	 					AND coupon_no = #{searchKeyword}
+	 				</if>  
+				</if>
+				<if test="searchOrder == 2">
+					SYSDATE >= discount.expiration_date 
+	 				AND discount.purchase_date IS NOT NULL
+	 				<if test="searchKeyword !=''">
+	 					AND owner_id = #{searchKeyword}
+	 				</if>
+				</if>
+			</if>
+			
+			<if test="searchCondition == 1">
+				
+				<if test="searchOrder == 1">
+					expiration_date > SYSDATE
+	 				AND purchase_date IS NULL
+	 				<if test="searchKeyword !=''">
+	 					AND coupon_no = #{searchKeyword}
+	 				</if>	 				
+				</if>
+				<if test="searchOrder == 2">				
+					SYSDATE >= discount.expiration_date 
+	 				AND purchase_date IS NOT NULL
+	 				<if test="searchKeyword !=''">
+	 					AND owner_id = #{searchKeyword}
+	 				</if>	 				
+				</if>
+			</if>		
+		</where>	
+	</select>
+	 
+	 
+	 
+	 <select id="getDiscountListHistory" parameterType="search" resultMap="discountSelectMap">
+		SELECT *  FROM 
+		(SELECT ROW_NUMBER() OVER(ORDER BY discount.discount_no) num, discount.* 
+		FROM discount
+		<where>
+			<if test="searchCondition == 0">
+				
+				<if test="searchOrder == 1">
+					expiration_date > SYSDATE
+	 				AND purchase_date IS NULL
+	 				<if test="searchKeyword !=''">
+	 					AND coupon_no = #{searchKeyword}
+	 				</if>  
+				</if>
+				<if test="searchOrder == 2">
+					SYSDATE >= discount.expiration_date 
+	 				AND discount.purchase_date IS NOT NULL
+	 				<if test="searchKeyword !=''">
+	 					AND owner_id = #{searchKeyword}
+	 				</if>
+				</if>
+			</if>
+			
+			<if test="searchCondition == 1">
+				
+				<if test="searchOrder == 1">
+					expiration_date > SYSDATE
+	 				AND purchase_date IS NULL
+	 				<if test="searchKeyword !=''">
+	 					AND coupon_no = #{searchKeyword}
+	 				</if>	 				
+				</if>
+				<if test="searchOrder == 2">				
+					SYSDATE >= discount.expiration_date 
+	 				AND purchase_date IS NOT NULL
+	 				<if test="searchKeyword !=''">
+	 					AND owner_id = #{searchKeyword}
+	 				</if>	 				
+				</if>
+			</if>		
+		</where>	
+		)WHERE num BETWEEN #{startRowNum} AND #{endRowNum} 	
+	 </select>	
+	 
+	 
+	 <insert  id="useDiscount" parameterType="hashmap">
+	 	UPDATE discount
+	 	SET product_no = #{productNo}, purchase_date = SYSDATE
+	 	WHERE discount_no = #{discountNo}	 		 
+	 </insert>
 	 
 	 
 	 	 

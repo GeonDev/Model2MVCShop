@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +54,7 @@ public class ProductController {
 	
 	@Autowired
 	private ServletContext context;
- 	
-
-	
+ 		
 	
 	//디폴트 생성자
 	public ProductController() {
@@ -104,9 +101,7 @@ public class ProductController {
 	    		
 	    		fileService.addFileImage(file);
 			} 			
-		} 
-
-		
+		}		
 		
 		return "forward:/product/addProduct.jsp";
 	}
@@ -130,8 +125,7 @@ public class ProductController {
 			if(menu.equals("manage")) {
 				return "forward:/product/updateProduct.jsp";				
 			}
-		}		
-		
+		}				
 		
 		/***************************쿠키에 상품번호 추가*****************************/		
 		history += prodNo+",";
@@ -185,17 +179,16 @@ public class ProductController {
 	@RequestMapping(value="mainProduct")
 	public ModelAndView mainProduct() throws Exception {
 		
-Search search = new Search(); 
+		Search search = new Search(); 
 		
 		search.setCurrentPage(1);		
 		search.setPageSize(pageSize);
 		
 		search.setSearchOrder("");
 		search.setSearchKeyword("");
+				
 		
-		List<Product> list =  (List<Product>) service.getProductList(search).get("list");
-		
-		return new ModelAndView("forward:/main.jsp","list",list);
+		return new ModelAndView("forward:/main.jsp","list",(List<Product>)service.getProductList(search).get("list"));
 	}
 	
 	

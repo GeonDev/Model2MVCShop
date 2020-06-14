@@ -6,12 +6,6 @@
 
 <mapper namespace="ProductMapper">
  	
- 	<resultMap id="fileImageSelectMap" type="fileImages">
-		<result property="imagesNo" 	column="image_no" 	jdbcType="NUMERIC"/>
-		<result property="prodNo"		column="prod_no" 	jdbcType="NUMERIC" />
-		<result property="fileName" 	column="image_file" jdbcType="VARCHAR" />
-	</resultMap>
- 	
 	<resultMap id="prodSelectMap" type="product">
 		<result property="prodNo" 			column="prod_no" 			jdbcType="NUMERIC"/>
 		<result property="prodName"			column="prod_name" 			jdbcType="VARCHAR" />
@@ -25,7 +19,7 @@
 			
 	</resultMap>
 	
-	 <select id="getImagesfiles" parameterType="int" resultMap="fileImageSelectMap">
+	 <select id="getImagesfiles" parameterType="int" resultMap="FileImagesMapper.fileImageSelectMap">
 		SELECT * FROM images 
 		WHERE images.prod_no = #{value}
 	 </select>
