@@ -158,30 +158,33 @@
 			
 				  		</div>
 					</div>	
+					<hr/>
 				</div> 
 		</div>	
 
 	</div>
 	
 	<div class="container">
-		<div class="page-header">
-	       <h3 class=" text-info">상품 이미지</h3>		   
-	    </div>			
-	    
-   		<div class="row">    												
-			<c:forEach var="image" items="${product.fileName}">
-				<div class= "imageList" value="${image.fileName}">
-					<div class= "col-md-3">
-						<img src="/images/uploadFiles/${image.fileName}" width="200" />						
+	
+	    <ul class="nav nav-tabs">
+		  <li role="presentation" class="active"><a href="#prodImage" data-toggle="tab">상품이미지</a></li>
+		  <li role="presentation"><a href="#prodReview" data-toggle="tab">상품 리뷰</a></li>
+		</ul>
+		
+		
+		<div class="tab-pane active" id="prodImage">
+			 <div class="row">    												
+				<c:forEach var="image" items="${product.fileName}">
+					<div class= "imageList" value="${image.fileName}">
+						<div class= "col-md-3">
+							<img src="/images/uploadFiles/${image.fileName}" width="200" />						
+						</div>
 					</div>
-				</div>
-
-			</c:forEach>				
+	
+				</c:forEach>				
+			</div>
 		</div>	
-	</div>
 	
-	
->	
 
 	</body>
 </html>
