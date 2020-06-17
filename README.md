@@ -9,5 +9,7 @@ Model2 MVC 패턴(?)을 학습하기 위한 간단한 쇼핑몰 프로젝트
 #### 4. Mybatis 3.2.1
 #### 5. JSTL/EL 적용 
 
-기타 : apache tomcat 7.0(servlet 3.0) 사용
-      (backEnd 집중 프로젝트 입니다)
+기타 적용 내용 
+apache tomcat 7.0(servlet 3.0) 사용
+bootstrap 3.4 적용
+Ajax/RestFul 서버 적용
