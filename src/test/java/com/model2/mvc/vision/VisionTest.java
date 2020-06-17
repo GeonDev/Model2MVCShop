@@ -20,7 +20,9 @@ public class VisionTest {
 		
 		try {
 	
+			//String imageFilePath = "C:\\workspace\\Model2MVCShop\\src\\test\\java\\com\\model2\\mvc\\vision\\face.jpg"; //여기 설정해줘야함(test이미지 경로)
 			String imageFilePath = "C:\\workspace\\Model2MVCShop\\src\\test\\java\\com\\model2\\mvc\\vision\\logo-spring.png"; //여기 설정해줘야함(test이미지 경로)
+
 			
 			List<AnnotateImageRequest> requests = new ArrayList<>();
 		
@@ -28,7 +30,7 @@ public class VisionTest {
 		
 			Image img = Image.newBuilder().setContent(imgBytes).build();
 			//Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
-			Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
+			Feature feat = Feature.newBuilder().setType(Type.LOGO_DETECTION).build();
 			AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
 			requests.add(request);
 		
@@ -43,10 +45,9 @@ public class VisionTest {
 			    		return;
 			    	}
 		
-			    	System.out.println("Text : ");
+			    	System.out.println("출력 정보 확인 ");
 			    	//System.out.println(res.getTextAnnotationsList().get(0).getDescription());			      	
-			    	System.out.println(res);
-			    	
+			    	System.out.println(res);			    	
 				
 			    	
 			    }

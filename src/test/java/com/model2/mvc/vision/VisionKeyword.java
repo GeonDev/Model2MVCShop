@@ -24,23 +24,25 @@ public class VisionKeyword {
 	public VisionKeyword() {}	
 	
 	//컬러값을 차후 고려 (R,G,B) 형태로 받아 따로 객체를 만들어 전달해야 함
-	//private static final Type typeColor = Type.IMAGE_PROPERTIES;	
+	//private static final Type typeColor = Type.IMAGE_PROPERTIES;		
 	
-	//결과 값을 저장할 리스트 - 중복값을 저장하지 않기 위하여 hashset 으로 지정
-	private  HashSet<String> result = new HashSet<String>();	
 	
-	public  List<String> getKeywordForVision(String imageFilePath) {
+	public  List<ImageKeyword> getKeywordForVision(String imageFilePath) {
 		
-		requestVision(imageFilePath, Type.TEXT_DETECTION);
-		requestVision(imageFilePath, Type.LABEL_DETECTION);
-		requestVision(imageFilePath, Type.LANDMARK_DETECTION);
-		requestVision(imageFilePath, Type.LOGO_DETECTION);
+		//결과 값을 저장할 리스트 - 중복값을 저장하지 않기 위하여 hashset 으로 지정
+		HashSet<ImageKeyword> result = new HashSet<ImageKeyword>();	
+		
+		
+		requestVision(imageFilePath, Type.TEXT_DETECTION, result);
+		requestVision(imageFilePath, Type.LABEL_DETECTION, result);
+		requestVision(imageFilePath, Type.LANDMARK_DETECTION, result );
+		requestVision(imageFilePath, Type.LOGO_DETECTION, result);
 		
 		//최종 값 반환을 위한 객체
-		return new ArrayList<String>(result);
+		return new ArrayList<ImageKeyword>(result);
 	}
 	
-	private  void requestVision(String imageFilePath, Type type) {		
+	private  void requestVision(String imageFilePath, Type type, HashSet<ImageKeyword> list) {		
 		try {		
 			
 			List<AnnotateImageRequest> requests = new ArrayList<>();
@@ -65,7 +67,7 @@ public class VisionKeyword {
 			    		//오류 발생시 정지
 			    		return;
 			    	}			    	
-			    	addKeywordList(type, res);		    	
+			    	addKeywordList(type, res, list);		    	
 			    }		    
 		
 			}
@@ -76,22 +78,33 @@ public class VisionKeyword {
 	}	
 	
 	//각 타입마다 받아야 하는 리스트 값이 다름 - 여기서 묶어서 처리한다.
-	private void addKeywordList(Type type, AnnotateImageResponse res) {
+	private void addKeywordList(Type type, AnnotateImageResponse res, HashSet<ImageKeyword> result) {
+		
+		ImageKeyword imageKeyword = new ImageKeyword();
+		
 		if(type ==  Type.TEXT_DETECTION) {
-		      for (EntityAnnotation annotation : res.getTextAnnotationsList()) {		           
-		           result.add(annotation.getDescription());
+		      for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+		    	  imageKeyword.setKeyword(annotation.getDescription());
+		    	  imageKeyword.setScore(annotation.getScore());
+		           result.add(imageKeyword);
 		        }			
 		}else if(type ==  Type.LABEL_DETECTION) {
 		      for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
-		    	  result.add(annotation.getDescription());
+		    	  imageKeyword.setKeyword(annotation.getDescription());
+		    	  imageKeyword.setScore(annotation.getScore());
+		           result.add(imageKeyword);
 		        }
 		}else if(type ==  Type.LANDMARK_DETECTION) {			
 			for (EntityAnnotation annotation : res.getLandmarkAnnotationsList()) {
-				result.add(annotation.getDescription());
+		    	  imageKeyword.setKeyword(annotation.getDescription());
+		    	  imageKeyword.setScore(annotation.getScore());
+		           result.add(imageKeyword);
 		      }
 		}else if(type ==  Type.LOGO_DETECTION) {
 	          for (EntityAnnotation annotation : res.getLogoAnnotationsList()) {
-	        	  result.add(annotation.getDescription());
+		    	  imageKeyword.setKeyword(annotation.getDescription());
+		    	  imageKeyword.setScore(annotation.getScore());
+		           result.add(imageKeyword);
 	            }
 		}
 		
