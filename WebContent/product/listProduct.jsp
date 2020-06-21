@@ -94,6 +94,14 @@
 		
 	
 		$(function() {
+			
+		    var availableTags = [
+		        "ActionScript",
+		        "AppleScript",
+		        "Asp"		        
+		      ];
+			
+			
 			changeSearchCondition();
 	
 			$("button:contains('°Ë»ö')").on("click", function() {			
@@ -184,7 +192,7 @@
 			
 			
 			 
-				$("#Keyword").on("keyup", function(){
+ 				$("#Keyword").on("keyup", function(){
 					
 					if($("#Condition").val() == '1'){
 						$.ajax("json/getProductName",
@@ -196,23 +204,21 @@
 								"Content-Type" : "application/json"
 							},
 							data :  JSON.stringify({name : $("#Keyword").val() }),						
-							success : function(JSONData, status) {
-								
-							 $( "#Keyword" ).autocomplete({
-				                source: JSONData,
-				                minLength: 2
-				             });
+							success : function(JSONData, status) {								
+							availableTags = JSONData;
 						
 							}							
 						});
 					}					
-				});
+				}); 
 					 
-					 
-			
-			
-			
-			
+
+				
+ 			if($("#Condition").val() == '1'){
+		      $( "#Keyword" ).autocomplete({
+		        source: availableTags
+		      });	 			
+ 			}
 			
 		});
 	</script>
