@@ -21,7 +21,7 @@
 	
 	 <select id="getImagesfiles" parameterType="int" resultMap="FileImagesMapper.fileImageSelectMap">
 		SELECT * FROM images 
-		WHERE images.prod_no = #{value}
+		WHERE images.prod_no = #{value}		
 	 </select>
 	
 	
@@ -64,6 +64,13 @@
 		VALUES(seq_product_prod_no.nextval, #{prodName:VARCHAR}, #{prodDetail:VARCHAR}, #{manuDate:VARCHAR}, #{price:NUMERIC}, SYSDATE)	
 	</insert>
 	
+	
+	<select id="getProductNameList" parameterType="string" resultType="string">
+	SELECT prod_name FROM
+	(SELECT ROW_NUMBER() OVER(ORDER BY length(prodName.prod_name)) NUM, prod_name FROM 
+	(SELECT	prod_name FROM product WHERE prod_name LIKE '%'||#{value}||'%' ) prodName)
+	WHERE 5 >= NUM
+	</select>		
 	
 	<select id="getCountProduct" parameterType="search" resultType="int">
 		SELECT 

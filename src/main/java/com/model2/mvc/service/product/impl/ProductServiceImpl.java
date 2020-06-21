@@ -1,5 +1,6 @@
 package com.model2.mvc.service.product.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,10 @@ public class ProductServiceImpl implements ProductService{
 	public int getLastProdno() throws Exception {
 		
 		return productDAO.getLastProdno();
+	}
+
+	@Override
+	public List<String> getProductNameList(String prodName) throws Exception {		
+		return productDAO.getProductNameList(prodName);
 	}
 }

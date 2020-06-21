@@ -1,10 +1,7 @@
 <%@ page import="com.model2.mvc.service.domain.*"%>
 <%@ page import="com.model2.mvc.common.*"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
-
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 
 
 <!DOCTYPE html>
@@ -21,16 +18,16 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">	
 	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>	
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
     <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>   
    
    <!-- jQuery UI toolTip »ç¿ë CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -126,7 +123,7 @@
 							
 							$.ajax("/purchase/json/getPurchase/"+prodNo, {
 								method : "GET",
-								dataType : "Json",
+								dataType : "Json",								
 								headers : {
 									"Accept" : "application/json",
 									"Content-Type" : "application/json"
@@ -179,11 +176,42 @@
 			
 			
 			
-			$("i").on("click",function(){					
+			$("i").on("click", function(){					
 				var url = "/purchase/updateTranCodeByProd?prodNo=";
 				url = url.concat($(this).children('span').text(),"&tranCode=2"); 		
 				self.location.href = url;				
 			});
+			
+			
+			 
+				$("#Keyword").on("keyup", function(){
+					
+					if($("#Condition").val() == '1'){
+						$.ajax("json/getProductName",
+						  {
+							method : "POST",
+							dataType : "Json",							
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							data :  JSON.stringify({name : $("#Keyword").val() }),						
+							success : function(JSONData, status) {
+								
+							 $( "#Keyword" ).autocomplete({
+				                source: JSONData,
+				                minLength: 2
+				             });
+						
+							}							
+						});
+					}					
+				});
+					 
+					 
+			
+			
+			
 			
 			
 		});

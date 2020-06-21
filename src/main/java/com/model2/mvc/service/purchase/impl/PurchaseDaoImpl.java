@@ -28,16 +28,12 @@ public class PurchaseDaoImpl implements PurchaseDAO {
 	public Purchase findPurchase(int Tran_No) throws Exception {		
 		
 		return sqlSession.selectOne("PurchaseMapper.getPurchaseTransNo", Tran_No);
-	}
-	
+	}	
 	
 	public Purchase findPurchase2(int ProdNo) throws Exception {
 		
 		return sqlSession.selectOne("PurchaseMapper.getPurchaseProdNo", ProdNo);
-	}
-	
-	
-	
+	}	
 	
 	public void insertPurchase(Purchase purchase) throws Exception {
 					

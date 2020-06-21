@@ -1,5 +1,6 @@
 package com.model2.mvc.web.product;
 
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.common.util.CommonUtil;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
 
@@ -48,6 +51,19 @@ public class ProductRestController {
 	}
 	
 	
+	@RequestMapping( value="json/getProductName" , method=RequestMethod.POST)
+	public List<String> getProductNameList(@RequestBody Map<String, String> jsonData) throws Exception{		
+		//Business Logic			       
+		if(CommonUtil.null2str(jsonData.get("name")).equals("")) {
+			return null;
+		}
+		
+		System.out.println("전달 된 값 : "+jsonData.get("name"));
+		return prodService.getProductNameList(jsonData.get("name"));				
+	}
+	
+	
+	
 	@RequestMapping(value="json/listProduct/{page}")
 	public List<Product> listProduct(@PathVariable int page) throws Exception {
 			
@@ -57,8 +73,8 @@ public class ProductRestController {
 		search.setPageSize(pageSize);
 		
 		search.setSearchOrder("");
-		search.setSearchKeyword("");				
-		
+		search.setSearchKeyword("");					 
+	
 		return (List<Product>) prodService.getProductList(search).get("list");
 	}
 	
