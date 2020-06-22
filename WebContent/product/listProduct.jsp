@@ -18,7 +18,7 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-    <link rel="stylesheet" href="/resources/demos/style.css">	
+ 
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>	
@@ -43,6 +43,7 @@
 
 
 	<script type="text/javascript">
+	
 		function funcGetList(currentPage){
 						
 			var keyword = $("input[name = 'searchKeyword']").val(); 
@@ -94,14 +95,6 @@
 		
 	
 		$(function() {
-			
-		    var availableTags = [
-		        "ActionScript",
-		        "AppleScript",
-		        "Asp"		        
-		      ];
-			
-			
 			changeSearchCondition();
 	
 			$("button:contains('°Ë»ö')").on("click", function() {			
@@ -191,10 +184,13 @@
 			});
 			
 			
+			
 			 
- 				$("#Keyword").on("keyup", function(){
+				$("#Keyword").on("keyup", function(){
 					
-					if($("#Condition").val() == '1'){
+					console.log(($("#Keyword").val()).length );
+					
+					if($("#Condition").val() == '1' && $("#Keyword").val().length >= 2){
 						$.ajax("json/getProductName",
 						  {
 							method : "POST",
@@ -204,46 +200,24 @@
 								"Content-Type" : "application/json"
 							},
 							data :  JSON.stringify({name : $("#Keyword").val() }),						
-							success : function(JSONData, status) {								
-							availableTags = JSONData;
-						
+							success : function(JSONData, status) {
+							var arraylist = JSONData;
+								console.log( JSONData );
+							//alert(JSONData);
+							 	$( "#Keyword" ).autocomplete({
+							 		
+							        source: arraylist
+							    });		
 							}							
 						});
 					}					
-				}); 
-					 
-
+				});
 				
- 			if($("#Condition").val() == '1'){
-		      $( "#Keyword" ).autocomplete({
-		        source: function(request, response) {
-					$.ajax("json/getProductName",
-							  {
-								method : "POST",
-								dataType : "Json",							
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								data :  JSON.stringify({name : request.term }),						
-								success : function(JSONData) {											
-									response(
-									$.map(JSONData, function(item) {
-										return{
-											label : item.data,
-											value : item.data											
-										}										
-									})									
-								);							
-							}								
-						});
-					},
-					minLength: 3,
-					select: function( event, ui ) {}
-		      });	 			
- 			}
+				
+			   	
 			
-		});
+			
+		}); //end of funtion()
 	</script>
 </head>
 
