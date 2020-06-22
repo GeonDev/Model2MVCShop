@@ -216,7 +216,30 @@
 				
  			if($("#Condition").val() == '1'){
 		      $( "#Keyword" ).autocomplete({
-		        source: availableTags
+		        source: function(request, response) {
+					$.ajax("json/getProductName",
+							  {
+								method : "POST",
+								dataType : "Json",							
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								data :  JSON.stringify({name : request.term }),						
+								success : function(JSONData) {											
+									response(
+									$.map(JSONData, function(item) {
+										return{
+											label : item.data,
+											value : item.data											
+										}										
+									})									
+								);							
+							}								
+						});
+					},
+					minLength: 3,
+					select: function( event, ui ) {}
 		      });	 			
  			}
 			
