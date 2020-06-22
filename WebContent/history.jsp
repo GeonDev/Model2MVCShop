@@ -25,8 +25,7 @@
 </table>
 <br>
 <%
-	//request.setCharacterEncoding("euc-kr");
-	//response.setCharacterEncoding("euc-kr");
+
 	
 	String history = null;
 	
