@@ -25,7 +25,9 @@
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   <script src="/javascript/lazyload.js"></script>
+   
+   <!-- lazyload CDN  -->
+   <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
 	
 	<!--  CSS 추가 : 툴바에 화면 가리는 현상 해결 :  주석처리 전, 후 확인-->
 	<style>
@@ -73,7 +75,7 @@
 								var displayValue =	"<div class='col-md-6' >"													
 											  + "<div class='borad' value='"+prod.prodNo+"'>"
 											  + "<div class = 'block'>"
-											  + "<img class ='lazy' src='/images/uploadFiles/"+ prod.fileName[0]["fileName"] +"' style='width: 300px;'/>"	
+											  + "<img class='lazyload'  data-src='/images/others/loading.gif' src='/images/uploadFiles/"+ prod.fileName[0]["fileName"] +"' style='width: 300px;'/>"	
 								              +"</div>"
 								              +"<h4 style='color:Black;'>"+prod.prodName +"</h4>";
 								              
@@ -113,15 +115,8 @@
    			$(".carousel-caption").on("click", function() {				
    				var prodNo = $(this).attr("value");    			
    				self.location =  "/product/getProduct?prodNo="+prodNo+"&menu=search"
-   			});
-   			
-   			   			
-   			$("img.lazy").lazyload(
-   				{
-   				placeholder : '/images/others/loading.gif',
-   				threshold : 200 				
-   				}
-   			);   			
+   			});   			
+   		  			
    			
 		});
    	
