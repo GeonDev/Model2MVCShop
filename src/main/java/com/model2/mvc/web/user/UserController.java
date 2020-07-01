@@ -206,4 +206,14 @@ public class UserController {
 		return "forward:/user/listUser.jsp";
 	}	
 	
+	
+	@RequestMapping(value="googleLogin")
+	public String googleLogin( @RequestParam("code") String code) throws Exception{
+		System.out.println(code);
+		
+		
+	
+		return "redirect:/index.jsp";
+	}
+	
 }
