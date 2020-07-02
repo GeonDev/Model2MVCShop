@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.common.util.CommonUtil;
 import com.model2.mvc.service.coupon.CouponService;
 import com.model2.mvc.service.domain.Coupon;
+import com.model2.mvc.service.domain.GoogleProfile;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.user.UserService;
-
+import com.model2.mvc.service.domain.Token;
 
 //==> 회원관리 Controller
 @Controller
@@ -208,8 +211,29 @@ public class UserController {
 	
 	
 	@RequestMapping(value="googleLogin")
-	public String googleLogin( @RequestParam("code") String code) throws Exception{
-		System.out.println(code);
+	public String googleLogin( @RequestParam("code") String code, HttpSession session) throws Exception{
+		String query = "code=" + code;
+		query += "&client_id=" + "1066684939894-ov1i6t12dtlchrirrgasm2oa133nmut5.apps.googleusercontent.com";
+		query += "&client_secret=" + "7fAqt-iMU2JhiTYJyHFo9Dyj";
+		query += "&redirect_uri=" + "http://localhost:8080/user/googleLogin";
+		query += "&grant_type=authorization_code";
+
+		String tokenJson = CommonUtil.getHttpConnection("https://accounts.google.com/o/oauth2/token", query);	
+		System.out.println(tokenJson);
+		
+		Gson gson = new Gson();
+		Token token = gson.fromJson(tokenJson, Token.class);
+		String ret = CommonUtil.getHttpConnection("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.getAccess_token());
+		System.out.println(ret);
+		
+		GoogleProfile profile = gson.fromJson(ret, GoogleProfile.class);
+		
+		//구글에 연결된 정보가 있다면 정보를 불러옴
+		if(userService.getGoogleID(profile.getId()) != null ) {
+			session.setAttribute("user", userService.getGoogleID(profile.getId()));
+			return "redirect:/index.jsp";
+		}
+		
 		
 		
 	

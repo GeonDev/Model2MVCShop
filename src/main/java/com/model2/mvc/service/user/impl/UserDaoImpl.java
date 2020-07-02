@@ -51,4 +51,9 @@ public class UserDaoImpl implements UserDao{
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("UserMapper.getTotalCount", search);
 	}
+
+	@Override
+	public User getGoogleID(String googleId) throws Exception {		
+		return sqlSession.selectOne("UserMapper.getGoogleLogin", googleId);
+	}
 }

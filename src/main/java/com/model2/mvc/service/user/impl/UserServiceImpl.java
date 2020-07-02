@@ -62,4 +62,9 @@ public class UserServiceImpl implements UserService{
 		}
 		return result;
 	}
+
+	@Override
+	public User getGoogleID(String googleId) throws Exception {
+		return userDao.getGoogleID(googleId);
+	}
 }

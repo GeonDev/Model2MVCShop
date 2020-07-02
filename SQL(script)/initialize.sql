@@ -22,15 +22,16 @@ CREATE SEQUENCE seq_discount_no			INCREMENT BY 1 START WITH 5000;
 
 
 CREATE TABLE users ( 
-	user_id 			VARCHAR2(20)		NOT NULL,
-	user_name 			VARCHAR2(50)		NOT NULL,
-	password 			VARCHAR2(10)		NOT NULL,
-	role 				VARCHAR2(5) 		DEFAULT 'user',
-	ssn 				VARCHAR2(13),
-	cell_phone			VARCHAR2(14),
-	addr 				VARCHAR2(100),
-	email 				VARCHAR2(50),
-	reg_date 			DATE,
+	user_id 				VARCHAR2(20)		NOT NULL,
+	user_name 				VARCHAR2(50)		NOT NULL,
+	password 				VARCHAR2(10)		NOT NULL,
+	role 					VARCHAR2(5) 		DEFAULT 'user',
+	ssn 					VARCHAR2(13),
+	cell_phone				VARCHAR2(14),
+	addr 					VARCHAR2(100),
+	email 					VARCHAR2(50),
+	google_id				VARCHAR2(100),
+	reg_date 				DATE,
 	PRIMARY KEY(user_id)
 );
 
@@ -96,42 +97,42 @@ CREATE TABLE discount(
 
 
 INSERT 
-INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) 
-VALUES ( 'admin', 'admin', '1234', 'admin', NULL, NULL, '서울시 서초구', 'admin@mvc.com',to_date('2012/01/14', 'YYYY/MM/DD')); 
+INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, google_id, reg_date ) 
+VALUES ( 'admin', 'admin', '1234', 'admin', NULL, NULL, '서울시 서초구', 'admin@mvc.com', NULL, to_date('2012/01/14', 'YYYY/MM/DD')); 
 
 INSERT 
-INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) 
-VALUES ( 'manager', 'manager', '1234', 'admin', NULL, NULL, NULL, 'manager@mvc.com', to_date('2012/01/14', 'YYYY/MM/DD'));          
+INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, google_id, reg_date ) 
+VALUES ( 'manager', 'manager', '1234', 'admin', NULL, NULL, NULL, 'manager@mvc.com', NULL, to_date('2012/01/14', 'YYYY/MM/DD'));          
 
 INSERT INTO users 
-VALUES ( 'user01', '손건', '1111', 'user', NULL, '010-1111-2222', '서울시 서초구', 'USER@mvc.com', sysdate); 
+VALUES ( 'user01', '손건', '1111', 'user', NULL, '010-1111-2222', '서울시 서초구', 'kadadue@gmail.com', '108025935646215926145', sysdate); 
 
 INSERT INTO users 
-VALUES ( 'user02', 'SCOTT', '2222', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user02', 'SCOTT', '2222', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 
 
 INSERT INTO users 
-VALUES ( 'user03', 'SCOTT', '3333', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user03', 'SCOTT', '3333', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 
 
 INSERT INTO users 
-VALUES ( 'user04', 'SCOTT', '4444', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user04', 'SCOTT', '4444', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 
 
 INSERT INTO users 
-VALUES ( 'user05', 'SCOTT', '5555', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user05', 'SCOTT', '5555', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 
 
 INSERT INTO users 
-VALUES ( 'user06', 'SCOTT', '6666', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user06', 'SCOTT', '6666', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 
 
 INSERT INTO users 
-VALUES ( 'user07', 'SCOTT', '7777', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user07', 'SCOTT', '7777', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 
 
 INSERT INTO users 
-VALUES ( 'user08', 'SCOTT', '8888', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user08', 'SCOTT', '8888', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 
 
 INSERT INTO users 
-VALUES ( 'user09', 'SCOTT', '9999', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user09', 'SCOTT', '9999', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 
 
 INSERT INTO users 
-VALUES ( 'user10', 'SCOTT', '1010', 'user', NULL, NULL, NULL, NULL, sysdate); 
+VALUES ( 'user10', 'SCOTT', '1010', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 
 
        
 

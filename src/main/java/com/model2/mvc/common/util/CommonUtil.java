@@ -1,13 +1,22 @@
 package com.model2.mvc.common.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
-import org.springframework.web.multipart.MultipartFile;
+import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.ServletException;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.Date;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public class CommonUtil {
@@ -165,5 +174,53 @@ public class CommonUtil {
 		}
 	
 	
+		public static String getHttpConnection(String uri, String param) throws ServletException, IOException {
+			URL url = new URL(uri);
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			try (OutputStream stream = conn.getOutputStream()) {
+				try (BufferedWriter wd = new BufferedWriter(new OutputStreamWriter(stream))) {
+					wd.write(param);
+				}
+			}
+			int responseCode = conn.getResponseCode();
+			System.out.println(responseCode);
+			String line;
+			StringBuffer buffer = new StringBuffer();
+			try (InputStream stream = conn.getInputStream()) {
+				try (BufferedReader rd = new BufferedReader(new InputStreamReader(stream))) {
+					while ((line = rd.readLine()) != null) {
+						buffer.append(line);
+						buffer.append('\r');
+					}
+				}
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+			return buffer.toString();
+		}
+		
+		public static String getHttpConnection(String uri) throws ServletException, IOException {
+			URL url = new URL(uri);
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			int responseCode = conn.getResponseCode();
+			System.out.println(responseCode);
+			String line;
+			StringBuffer buffer = new StringBuffer();
+			try (InputStream stream = conn.getInputStream()) {
+				try (BufferedReader rd = new BufferedReader(new InputStreamReader(stream))) {
+					while ((line = rd.readLine()) != null) {
+						buffer.append(line);
+						buffer.append('\r');
+					}
+				}
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+			return buffer.toString();
+		}
+
 	
 }

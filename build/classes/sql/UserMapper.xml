@@ -16,16 +16,25 @@
 		<result property="phone" 		column="cell_phone" 	jdbcType="VARCHAR" />
 		<result property="addr" 		column="addr" 			jdbcType="VARCHAR" />
 		<result property="email" 		column="email" 			jdbcType="NUMERIC"  />
+		<result property="googleId" 	column="google_id" 		jdbcType="VARCHAR" />
 		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addUser"		parameterType="user" >
+	<insert 	id="addUser"	parameterType="user" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
+		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email, google_id, reg_date) 
+		VALUES	 (	#{userId}, #{userName}, #{password}, 'user', #{ssn:VARCHAR}, 
+							#{phone:VARCHAR}, #{addr:VARCHAR}, #{email:VARCHAR}, #{googleId:VARCHAR}, SYSDATE )
 	 </insert>
+	 
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select id="getGoogleLogin" parameterType="string" resultMap="userSelectMap">
+	 	SELECT * from users
+	 	WHERE  google_id = #{value}	 
+	 </select>
+	 	 
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">

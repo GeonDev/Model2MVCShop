@@ -71,7 +71,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#googlelogin").on("click" , function() {
 				location.href="https://accounts.google.com/o/oauth2/auth?client_id="+
-				"220458850151-3varsnqai8qutmf3k4c77mmnq4bk9dls.apps.googleusercontent.com"+
+				"1066684939894-ov1i6t12dtlchrirrgasm2oa133nmut5.apps.googleusercontent.com"+
 				"&redirect_uri="+
 				"http://localhost:8080/user/googleLogin" +
 				"&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&approval_prompt=force&access_type=offline";				
@@ -128,12 +128,15 @@
 					  <div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-6 text-center">
 					      <button id="login"  type="button" class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
-					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
-					      <button id="googlelogin" type="button" class="btn btn-primary"  >구글로그인</button>
+					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>					
 					    </div>
 					  </div>
 			
 					</form>
+					
+					  <div class="col-sm-offset-4 col-sm-6 text-center">					  
+					      <button id="googlelogin" type="button" class="btn btn-primary">구글로그인</button>
+					  </div>
 			   	 </div>
 			
 			</div>

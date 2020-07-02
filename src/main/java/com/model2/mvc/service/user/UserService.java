@@ -24,4 +24,7 @@ public interface UserService {
 	// 회원 ID 중복 확인
 	public boolean checkDuplication(String userId) throws Exception;
 	
+	//구글에 연결되어 있는지 확인 - 연결되어 있으면 유저 정보를 넘김
+	public User getGoogleID(String googleId) throws Exception ;
+	
 }

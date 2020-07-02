@@ -15,6 +15,7 @@ public class User {
 	private String phone;
 	private String addr;
 	private String email;
+	private String googleId;
 	private Date regDate;
 	/////////////// EL 적용 위해 추가된 Field ///////////
 	private String phone1;
@@ -89,6 +90,15 @@ public class User {
 		this.regDate = regDate;
 	}		
 
+	
+
+	public String getGoogleId() {
+		return googleId;
+	}
+
+	public void setGoogleId(String googleId) {
+		this.googleId = googleId;
+	}
 
 	/////////////// EL 적용 위해 추가된 getter Method ///////////
 	public String getPhone1() {
