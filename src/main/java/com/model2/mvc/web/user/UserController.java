@@ -211,7 +211,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value="googleLogin")
-	public String googleLogin( @RequestParam("code") String code, HttpSession session) throws Exception{
+	public String googleLogin( @RequestParam("code") String code, Model model, HttpSession session) throws Exception{
 		String query = "code=" + code;
 		query += "&client_id=" + "1066684939894-ov1i6t12dtlchrirrgasm2oa133nmut5.apps.googleusercontent.com";
 		query += "&client_secret=" + "7fAqt-iMU2JhiTYJyHFo9Dyj";
@@ -219,12 +219,10 @@ public class UserController {
 		query += "&grant_type=authorization_code";
 
 		String tokenJson = CommonUtil.getHttpConnection("https://accounts.google.com/o/oauth2/token", query);	
-		System.out.println(tokenJson);
 		
 		Gson gson = new Gson();
 		Token token = gson.fromJson(tokenJson, Token.class);
-		String ret = CommonUtil.getHttpConnection("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.getAccess_token());
-		System.out.println(ret);
+		String ret = CommonUtil.getHttpConnection("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.getAccess_token());	
 		
 		GoogleProfile profile = gson.fromJson(ret, GoogleProfile.class);
 		
@@ -234,10 +232,14 @@ public class UserController {
 			return "redirect:/index.jsp";
 		}
 		
-		
-		
+		//구글 연동이 안되어 있으면 가입 화면으로 이동
+		User user = new User();
+		user.setEmail(profile.getEmail());
+		user.setGoogleId(profile.getId());		
 	
-		return "redirect:/index.jsp";
+		model.addAttribute("user", user);
+		
+		return "forward:/user/addUserView.jsp";
 	}
 	
 }

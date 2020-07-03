@@ -24,7 +24,7 @@ CREATE SEQUENCE seq_discount_no			INCREMENT BY 1 START WITH 5000;
 CREATE TABLE users ( 
 	user_id 				VARCHAR2(20)		NOT NULL,
 	user_name 				VARCHAR2(50)		NOT NULL,
-	password 				VARCHAR2(10)		NOT NULL,
+	password 				VARCHAR2(10),
 	role 					VARCHAR2(5) 		DEFAULT 'user',
 	ssn 					VARCHAR2(13),
 	cell_phone				VARCHAR2(14),
@@ -105,7 +105,7 @@ INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, g
 VALUES ( 'manager', 'manager', '1234', 'admin', NULL, NULL, NULL, 'manager@mvc.com', NULL, to_date('2012/01/14', 'YYYY/MM/DD'));          
 
 INSERT INTO users 
-VALUES ( 'user01', '손건', '1111', 'user', NULL, '010-1111-2222', '서울시 서초구', 'kadadue@gmail.com', '108025935646215926145', sysdate); 
+VALUES ( 'user01', '손건', '1111', 'user', NULL, '010-1111-2222', '서울시 서초구', 'kadadue@gmail.com', NULL, sysdate); 
 
 INSERT INTO users 
 VALUES ( 'user02', 'SCOTT', '2222', 'user', NULL, NULL, NULL, NULL, NULL, sysdate); 

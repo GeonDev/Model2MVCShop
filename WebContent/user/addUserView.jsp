@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 <!DOCTYPE html>
@@ -57,28 +58,36 @@
 			var name=$("input[name='userName']").val();
 			
 			
+							
 			if(id == null || id.length <1){
 				alert("아이디는 반드시 입력하셔야 합니다.");
 				return;
 			}
-			if(pw == null || pw.length <1){
-				alert("패스워드는  반드시 입력하셔야 합니다.");
-				return;
-			}
-			if(pw_confirm == null || pw_confirm.length <1){
-				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
-				return;
-			}
+				
+			if('${user.googleId}' == null){	
+				if(pw == null || pw.length <1){
+					alert("패스워드는  반드시 입력하셔야 합니다.");
+					return;
+				}
+				if(pw_confirm == null || pw_confirm.length <1){
+					alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+					return;
+				}
+				
+				if( pw != pw_confirm ) {				
+					alert("비밀번호 확인이 일치하지 않습니다.");
+					$("input:text[name='password2']").focus();
+					return;
+				}				
+			}		
+	
+			
 			if(name == null || name.length <1){
 				alert("이름은  반드시 입력하셔야 합니다.");
 				return;
 			}
 			
-			if( pw != pw_confirm ) {				
-				alert("비밀번호 확인이 일치하지 않습니다.");
-				$("input:text[name='password2']").focus();
-				return;
-			}
+
 			
 			if(checkDupl != true) {				
 				alert("해당 아이디를 사용할 수 없습니다.");
@@ -201,6 +210,7 @@
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
+		
 		  <div class="form-group">
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
 		    <div class="col-sm-4">
@@ -209,24 +219,28 @@
 		    </div>
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
-		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
-		    </div>
-		  </div>
 		  
-		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
-		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
-		    </div>
-		  </div>
+		  <c:if test="${empty user.googleId}">		  
+		  
+			  <div class="form-group">
+			    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
+			    <div class="col-sm-4">
+			      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
+			    <div class="col-sm-4">
+			      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
+			    </div>
+			  </div>
+		  </c:if>
 		  
 		  <div class="form-group">
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="userName" name="userName" placeholder="회원이름">
+		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
 		    </div>
 		  </div>
 		  
@@ -270,18 +284,21 @@
 		   <div class="form-group">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
+		      <input type="text" class="form-control" id="email" name="email" placeholder="이메일" value="${user.email}">
 		    </div>
 		  </div>
+		  		  
+		  <input type="hidden" name="googleId" value="${user.googleId}">
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
-		  </div>
+		  </div>		  
+		  
 		</form>
-		<!-- form Start /////////////////////////////////////-->
+		<!-- form end /////////////////////////////////////-->
 		
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->

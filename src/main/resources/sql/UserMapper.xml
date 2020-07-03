@@ -24,8 +24,7 @@
 	<insert 	id="addUser"	parameterType="user" >
 	 	INSERT
 		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email, google_id, reg_date) 
-		VALUES	 (	#{userId}, #{userName}, #{password}, 'user', #{ssn:VARCHAR}, 
-							#{phone:VARCHAR}, #{addr:VARCHAR}, #{email:VARCHAR}, #{googleId:VARCHAR}, SYSDATE )
+		VALUES	 (	#{userId}, #{userName}, #{password:VARCHAR}, 'user', #{ssn:VARCHAR}, #{phone:VARCHAR}, #{addr:VARCHAR}, #{email:VARCHAR}, #{googleId:VARCHAR}, SYSDATE )
 	 </insert>
 	 
 	 
