@@ -72,7 +72,7 @@
 			                     	<c:if test="${sessionScope.user.role == 'admin'}">
 			                        	<li><a href="#">신규쿠폰등록</a></li>
 			                         	<li><a href="#">발급쿠폰조회</a></li>
-			                         	<li><a href="#">쿠폰사용현황</a></li>
+			                         	<!-- <li><a href="#">쿠폰사용현황</a></li> -->
 			                        </c:if>
 			                        <c:if test="${sessionScope.user.role == 'user'}">
 			                        	<li><a href="#">보유쿠폰조회</a></li>
@@ -212,15 +212,7 @@
 		
 		$( "a:contains('최근조회상품')" ).on("click" , function() {		
 			history();
-		});
-		
-		
-
-		
-		
-		
-		
-		
+		});	
 		
 		
 	</script>  

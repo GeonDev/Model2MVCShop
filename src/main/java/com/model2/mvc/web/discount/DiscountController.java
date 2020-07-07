@@ -122,7 +122,7 @@ public class DiscountController {
 	}
 	
 		
-	@RequestMapping(value = "listDiscountHistory" ,method = RequestMethod.POST)
+	@RequestMapping(value = "listDiscountHistory", method = RequestMethod.POST)
 	public ModelAndView listDiscountHistory(@ModelAttribute("search") Search search) throws Exception {
 		
 		//현재 페이지값이 없으면 첫번째 페이지로 설정
@@ -144,24 +144,21 @@ public class DiscountController {
 		Map<String , Object> map = discountService.getDiscountCouponList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("count")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+		System.out.println(resultPage);		
 		
-		
-		ModelAndView modelAndView = new ModelAndView();
-		
+		ModelAndView modelAndView = new ModelAndView();		
 		
 		// Model 과 View 연결
 		modelAndView.setViewName("forward:/coupon/listDiscountHistory.jsp");
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
-		modelAndView.addObject("search", search);
-		
+		modelAndView.addObject("search", search);		
 		
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "listDiscountHistory" ,method = RequestMethod.GET)
-	public ModelAndView listDiscountHistory(@RequestParam("couponNo")int couponNo) throws Exception {
+	public ModelAndView listDiscountHistory(@RequestParam("couponNo") int couponNo) throws Exception {
 		
 		Search search = new Search();		
 
