@@ -2,6 +2,7 @@ package com.model2.mvc.web.product;
 
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -133,7 +134,7 @@ public class ProductController {
 		history = history.trim();
 		
 		//CommonUtil.checkOvperlap(",", history, Integer.toString(prodNo))
-		Cookie cookie = new Cookie("history", history);
+		Cookie cookie = new Cookie("history", URLEncoder.encode(history, "UTF-8"));
 		cookie.setPath("/");
 		response.addCookie(cookie);		
 		
