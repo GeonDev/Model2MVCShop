@@ -23,6 +23,7 @@ encoding//src/main/java/com/model2/mvc/service/product/impl/ProductDaoImpl.java=
 encoding//src/main/java/com/model2/mvc/service/product/impl/ProductServiceImpl.java=EUC-KR
 encoding//src/main/java/com/model2/mvc/service/purchase/impl/PurchaseDaoImpl.java=EUC-KR
 encoding//src/main/java/com/model2/mvc/service/purchase/impl/PurchaseServiceImpl.java=EUC-KR
+encoding//src/main/java/com/model2/mvc/service/user/UserDao.java=EUC-KR
 encoding//src/main/java/com/model2/mvc/service/user/impl/UserDaoImpl.java=EUC-KR
 encoding//src/main/java/com/model2/mvc/service/user/impl/UserServiceImpl.java=EUC-KR
 encoding//src/main/java/com/model2/mvc/web/coupon/CouponController.java=EUC-KR
